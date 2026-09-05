@@ -106,7 +106,17 @@ export function textToPath(text, { fontFile, size = 100, direction, script, lang
     const raw = font.glyphToPath(g.g ?? g.glyphId ?? g.codepoint)
     if (raw) {
       const ox = (penX + (g.xOffset ?? g.dx ?? 0)) * s
-      const oy = (penY + (g.yOffset ?? g.dy ?? 0)) * s
+      // NEGATED, because bake flips the y axis and an offset is in FONT space.
+      // A mark placed 450 units above the baseline has dy=+450 there and must
+      // land at y=-450 here. Added instead of subtracted, it lands at +450 and
+      // the dots fall as far BELOW the word as they should have sat above it.
+      // Invisible for most faces: Cairo, Tajawal and Almarai carry Arabic dots
+      // inside the base glyph and report dy=0 for every glyph in a word. Reem
+      // Kufi attaches them as marks, so it is the one catalogue face that shows
+      // this — and it is the documented alternative wordmark face, one
+      // `npm run font:set arabic.wordmark=reem-kufi` away from every mark in
+      // logos/dist shipping with detached dots.
+      const oy = -(penY + (g.yOffset ?? g.dy ?? 0)) * s
       d += bake(raw, ox, oy, s) + ' '
     }
     penX += g.xAdvance ?? g.ax ?? 0
@@ -274,8 +284,12 @@ export function textToGlyphs(text, { fontFile, size = 100, baseDir = 'rtl', lang
       const adv = (g.xAdvance ?? g.ax ?? 0) * s
       if (raw) {
         out.push({
-          d: bake(raw, 0, (g.yOffset ?? 0) * -s, s),   // at the origin, on the baseline
-          x: x + (penX + (g.xOffset ?? 0)) * s,
+          // `dx`/`dy` as well as `xOffset`/`yOffset`: harfbuzzjs reports the
+          // short names, so reading only the long ones finds undefined and
+          // quietly places every mark at the origin — see the note in
+          // textToPath. Everything else in this file already reads both.
+          d: bake(raw, 0, (g.yOffset ?? g.dy ?? 0) * -s, s),  // at the origin, on the baseline
+          x: x + (penX + (g.xOffset ?? g.dx ?? 0)) * s,
           adv,
         })
       }
