@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" width="512" height="512"><title>Afjar — أفجار</title>
+  
+    <defs><clipPath id="clip-afjar"><path d="M 76,72 H 436 V 296 A 180,180 0 0 1 76,296 Z"></path></clipPath></defs>
+    <path fill="#2a0d14" d="M 76,72 H 436 V 296 A 180,180 0 0 1 76,296 Z"></path>
+    <g clip-path="url(#clip-afjar)">
+      <circle cx="256" cy="252" r="80" fill="#b23a4c"></circle>
+      <g stroke="#b23a4c" stroke-width="13" stroke-linecap="round">
+        <path d="M 160,252 L 130,252"></path>
+        <path d="M 167.3,215.3 L 139.6,203.8"></path>
+        <path d="M 188.1,184.1 L 166.9,162.9"></path>
+        <path d="M 219.3,163.3 L 207.8,135.6"></path>
+        <path d="M 256,156 L 256,126"></path>
+        <path d="M 292.7,163.3 L 304.2,135.6"></path>
+        <path d="M 323.9,184.1 L 345.1,162.9"></path>
+        <path d="M 344.7,215.3 L 372.4,203.8"></path>
+        <path d="M 352,252 L 382,252"></path>
+      </g>
+      <path fill="#f2ece0" d="M 50,344 C 130,306 200,356 284,342 C 344,332 402,304 462,332 L 462,510 L 50,510 Z"></path>
+      <path fill="#b23a4c" d="M 50,398 C 150,366 240,410 340,390 C 392,379 424,374 462,384 L 462,510 L 50,510 Z"></path>
+    </g>
+    <path fill="none" stroke="#b23a4c" stroke-width="14" stroke-linejoin="round" d="M 76,72 H 436 V 296 A 180,180 0 0 1 76,296 Z"></path>
+    <path fill="none" stroke="#b23a4c" stroke-width="3" stroke-linejoin="round" transform="translate(256,256) scale(0.9) translate(-256,-256)" d="M 76,72 H 436 V 296 A 180,180 0 0 1 76,296 Z"></path>
+    <g transform="translate(319,321) scale(0.430)">
+      <circle r="100" fill="#f2ece0"></circle>
+      <g stroke="#2a0d14" stroke-width="15" stroke-linecap="round" fill="none">
+      <path d="M 0,-34 L 0,-100"></path>
+      <path d="M 32.34,-10.51 L 95.1,-30.9"></path>
+      <path d="M 19.99,27.51 L 58.8,80.9"></path>
+      <path d="M -19.99,27.51 L -58.8,80.9"></path>
+      <path d="M -32.34,-10.51 L -95.1,-30.9"></path>
+      </g>
+      <path fill="#2a0d14" d="M 0,-34 L 32.34,-10.51 L 19.99,27.51 L -19.99,27.51 L -32.34,-10.51 Z"></path>
+      <circle r="99" fill="none" stroke="#2a0d14" stroke-width="13"></circle>
+    </g>
+    <text x="256" y="438" text-anchor="middle" fill="#f2ece0" style="font-family:'Almarai',sans-serif;font-weight:800;font-size:42px">أفجار</text>
+  </svg>

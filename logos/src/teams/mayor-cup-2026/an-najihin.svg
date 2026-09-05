@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" width="512" height="512"><title>An-Najihin — الناجحين</title>
+  
+    <path fill="#12233d" d="M 96,64 H 416 V 232 C 416,352 352,432 256,472 C 160,432 96,352 96,232 Z"></path>
+    <path fill="none" stroke="#4a86c8" stroke-width="14" stroke-linejoin="round" d="M 96,64 H 416 V 232 C 416,352 352,432 256,472 C 160,432 96,352 96,232 Z"></path>
+    <path fill="none" stroke="#4a86c8" stroke-width="3" stroke-linejoin="round" transform="translate(256,256) scale(0.9) translate(-256,-256)" d="M 96,64 H 416 V 232 C 416,352 352,432 256,472 C 160,432 96,352 96,232 Z"></path>
+    <path fill="#f2ece0" d="M 256,88 L 266.6,117.4 L 297.9,118.4 L 273.1,137.6 L 281.2,167.6 L 256,150 L 230.8,167.6 L 238.9,137.6 L 214.2,118.4 L 245.4,117.4 Z"></path>
+    <path fill="#4a86c8" d="M 122,312 L 196,204 L 246,266 L 306,178 L 396,312 Z"></path>
+    <path fill="#f2ece0" d="M 306,178 L 286,208 L 300,216 L 320,206 Z"></path>
+    <text x="256" y="352" text-anchor="middle" fill="#f2ece0" style="font-family:'Changa',sans-serif;font-weight:700;font-size:44px">الناجحين</text>
+    <g transform="translate(256,416) scale(0.430)">
+      <circle r="100" fill="#f2ece0"></circle>
+      <g stroke="#12233d" stroke-width="15" stroke-linecap="round" fill="none">
+      <path d="M 0,-34 L 0,-100"></path>
+      <path d="M 32.34,-10.51 L 95.1,-30.9"></path>
+      <path d="M 19.99,27.51 L 58.8,80.9"></path>
+      <path d="M -19.99,27.51 L -58.8,80.9"></path>
+      <path d="M -32.34,-10.51 L -95.1,-30.9"></path>
+      </g>
+      <path fill="#12233d" d="M 0,-34 L 32.34,-10.51 L 19.99,27.51 L -19.99,27.51 L -32.34,-10.51 Z"></path>
+      <circle r="99" fill="none" stroke="#12233d" stroke-width="13"></circle>
+    </g>
+  </svg>

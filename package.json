@@ -8,9 +8,10 @@
     "node": ">=22"
   },
   "scripts": {
-    "build": "npm run build:tokens && npm run build:logos && npm run build:guidelines && npm run build:docs && npm run build:cards",
+    "build": "npm run build:tokens && npm run build:logos && npm run build:crests && npm run build:guidelines && npm run build:docs && npm run build:cards",
     "build:tokens": "node tools/build-tokens.mjs",
     "build:logos": "node tools/build-logos.mjs",
+    "build:crests": "node tools/build-team-crests.mjs",
     "build:guidelines": "node tools/build-guidelines.mjs",
     "build:docs": "node tools/build-docs.mjs",
     "build:decks": "node tools/build-decks.mjs",

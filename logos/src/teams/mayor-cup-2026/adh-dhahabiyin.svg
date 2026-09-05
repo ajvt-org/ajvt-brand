@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" width="512" height="512"><title>Adh-Dhahabiyin — الذهبيين</title>
+  
+    <path fill="#2a2313" d="M 256,44 L 436,120 V 300 L 256,468 L 76,300 V 120 Z"></path>
+    <path fill="none" stroke="#c9a352" stroke-width="14" stroke-linejoin="round" d="M 256,44 L 436,120 V 300 L 256,468 L 76,300 V 120 Z"></path>
+    <path fill="none" stroke="#c9a352" stroke-width="3" stroke-linejoin="round" transform="translate(256,256) scale(0.9) translate(-256,-256)" d="M 256,44 L 436,120 V 300 L 256,468 L 76,300 V 120 Z"></path>
+    <circle cx="256" cy="192" r="60" fill="#c9a352"></circle>
+    <circle cx="256" cy="192" r="74" fill="none" stroke="#c9a352" stroke-width="5"></circle>
+    <g fill="#f2ece0">
+      <path d="M 150,278 C 122,214 140,152 190,112" fill="none" stroke="#f2ece0" stroke-width="9" stroke-linecap="round"></path>
+      <ellipse cx="146" cy="258" rx="20" ry="9" transform="rotate(-72 146 258)"></ellipse>
+      <ellipse cx="134" cy="222" rx="20" ry="9" transform="rotate(-58 134 222)"></ellipse>
+      <ellipse cx="138" cy="182" rx="20" ry="9" transform="rotate(-38 138 182)"></ellipse>
+      <ellipse cx="158" cy="146" rx="20" ry="9" transform="rotate(-20 158 146)"></ellipse>
+      <ellipse cx="188" cy="116" rx="20" ry="9" transform="rotate(-2 188 116)"></ellipse>
+    </g>
+    <g fill="#f2ece0" transform="matrix(-1 0 0 1 512 0)">
+      <path d="M 150,278 C 122,214 140,152 190,112" fill="none" stroke="#f2ece0" stroke-width="9" stroke-linecap="round"></path>
+      <ellipse cx="146" cy="258" rx="20" ry="9" transform="rotate(-72 146 258)"></ellipse>
+      <ellipse cx="134" cy="222" rx="20" ry="9" transform="rotate(-58 134 222)"></ellipse>
+      <ellipse cx="138" cy="182" rx="20" ry="9" transform="rotate(-38 138 182)"></ellipse>
+      <ellipse cx="158" cy="146" rx="20" ry="9" transform="rotate(-20 158 146)"></ellipse>
+      <ellipse cx="188" cy="116" rx="20" ry="9" transform="rotate(-2 188 116)"></ellipse>
+    </g>
+    <text x="256" y="336" text-anchor="middle" fill="#f2ece0" style="font-family:'Lalezar',sans-serif;font-weight:400;font-size:42px">الذهبيين</text>
+    <g transform="translate(256,388) scale(0.370)">
+      <circle r="100" fill="#f2ece0"></circle>
+      <g stroke="#2a2313" stroke-width="15" stroke-linecap="round" fill="none">
+      <path d="M 0,-34 L 0,-100"></path>
+      <path d="M 32.34,-10.51 L 95.1,-30.9"></path>
+      <path d="M 19.99,27.51 L 58.8,80.9"></path>
+      <path d="M -19.99,27.51 L -58.8,80.9"></path>
+      <path d="M -32.34,-10.51 L -95.1,-30.9"></path>
+      </g>
+      <path fill="#2a2313" d="M 0,-34 L 32.34,-10.51 L 19.99,27.51 L -19.99,27.51 L -32.34,-10.51 Z"></path>
+      <circle r="99" fill="none" stroke="#2a2313" stroke-width="13"></circle>
+    </g>
+  </svg>

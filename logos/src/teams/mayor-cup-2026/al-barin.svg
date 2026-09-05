@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" width="512" height="512"><title>Al-Barin — البارين</title>
+  
+    <defs><clipPath id="clip-barin"><path d="M 84,60 H 428 V 452 L 256,404 L 84,452 Z"></path></clipPath></defs>
+    <path fill="#1d2412" d="M 84,60 H 428 V 452 L 256,404 L 84,452 Z"></path>
+    <g clip-path="url(#clip-barin)">
+      <rect x="60" y="44" width="392" height="84" fill="#8ca23c"></rect>
+    </g>
+    <path fill="none" stroke="#8ca23c" stroke-width="14" stroke-linejoin="round" d="M 84,60 H 428 V 452 L 256,404 L 84,452 Z"></path>
+    <path fill="none" stroke="#8ca23c" stroke-width="3" stroke-linejoin="round" transform="translate(256,256) scale(0.9) translate(-256,-256)" d="M 84,60 H 428 V 452 L 256,404 L 84,452 Z"></path>
+    <text x="256" y="105" text-anchor="middle" fill="#1d2412" style="font-family:'Tajawal',sans-serif;font-weight:900;font-size:44px">البارين</text>
+    <g fill="none" stroke="#f2ece0" stroke-width="12" stroke-linecap="round">
+      <path d="M 256,218 C 212,198 178,202 150,222"></path>
+      <path d="M 256,218 C 300,198 334,202 362,222"></path>
+      <path d="M 256,218 C 216,176 192,164 162,164"></path>
+      <path d="M 256,218 C 296,176 320,164 350,164"></path>
+      <path d="M 256,218 C 240,174 236,150 244,152"></path>
+      <path d="M 256,218 C 272,174 276,150 268,152"></path>
+    </g>
+    <circle cx="234" cy="230" r="9" fill="#8ca23c"></circle>
+    <circle cx="256" cy="240" r="9" fill="#8ca23c"></circle>
+    <circle cx="278" cy="230" r="9" fill="#8ca23c"></circle>
+    <path fill="#8ca23c" d="M 244,222 L 268,222 L 274,322 L 238,322 Z"></path>
+    <rect x="206" y="322" width="100" height="14" fill="#8ca23c"></rect>
+    <g transform="translate(256,370) scale(0.330)">
+      <circle r="100" fill="#f2ece0"></circle>
+      <g stroke="#1d2412" stroke-width="15" stroke-linecap="round" fill="none">
+      <path d="M 0,-34 L 0,-100"></path>
+      <path d="M 32.34,-10.51 L 95.1,-30.9"></path>
+      <path d="M 19.99,27.51 L 58.8,80.9"></path>
+      <path d="M -19.99,27.51 L -58.8,80.9"></path>
+      <path d="M -32.34,-10.51 L -95.1,-30.9"></path>
+      </g>
+      <path fill="#1d2412" d="M 0,-34 L 32.34,-10.51 L 19.99,27.51 L -19.99,27.51 L -32.34,-10.51 Z"></path>
+      <circle r="99" fill="none" stroke="#1d2412" stroke-width="13"></circle>
+    </g>
+  </svg>

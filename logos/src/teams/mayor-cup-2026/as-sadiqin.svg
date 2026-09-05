@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" width="512" height="512"><title>As-Sadiqin — الصادقين</title>
+  
+    <path fill="#241426" d="M 440.8,332.6 L 332.6,440.8 L 179.4,440.8 L 71.2,332.6 L 71.2,179.4 L 179.4,71.2 L 332.6,71.2 L 440.8,179.4 Z"></path>
+    <path fill="none" stroke="#a05a9c" stroke-width="14" stroke-linejoin="round" d="M 440.8,332.6 L 332.6,440.8 L 179.4,440.8 L 71.2,332.6 L 71.2,179.4 L 179.4,71.2 L 332.6,71.2 L 440.8,179.4 Z"></path>
+    <path fill="none" stroke="#a05a9c" stroke-width="3" stroke-linejoin="round" transform="translate(256,256) scale(0.9) translate(-256,-256)" d="M 440.8,332.6 L 332.6,440.8 L 179.4,440.8 L 71.2,332.6 L 71.2,179.4 L 179.4,71.2 L 332.6,71.2 L 440.8,179.4 Z"></path>
+    <path fill="#a05a9c" d="M 256,124 L 273.6,193.5 L 335.2,156.8 L 298.5,218.4 L 368,236 L 298.5,253.6 L 335.2,315.2 L 273.6,278.5 L 256,348 L 238.4,278.5 L 176.8,315.2 L 213.5,253.6 L 144,236 L 213.5,218.4 L 176.8,156.8 L 238.4,193.5 Z"></path>
+    <g transform="translate(256,236) scale(0.440)">
+      <circle r="100" fill="#f2ece0"></circle>
+      <g stroke="#241426" stroke-width="15" stroke-linecap="round" fill="none">
+      <path d="M 0,-34 L 0,-100"></path>
+      <path d="M 32.34,-10.51 L 95.1,-30.9"></path>
+      <path d="M 19.99,27.51 L 58.8,80.9"></path>
+      <path d="M -19.99,27.51 L -58.8,80.9"></path>
+      <path d="M -32.34,-10.51 L -95.1,-30.9"></path>
+      </g>
+      <path fill="#241426" d="M 0,-34 L 32.34,-10.51 L 19.99,27.51 L -19.99,27.51 L -32.34,-10.51 Z"></path>
+      <circle r="99" fill="none" stroke="#241426" stroke-width="13"></circle>
+    </g>
+    <text x="256" y="394" text-anchor="middle" fill="#f2ece0" style="font-family:'El Messiri',sans-serif;font-weight:700;font-size:40px">الصادقين</text>
+  </svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" width="512" height="512"><title>Ash-Shanaqita — الشناقطة</title>
+  
+    <defs><clipPath id="clip-shanaqita"><path d="M 96,472 V 208 A 160,160 0 0 1 416,208 V 472 Z"></path></clipPath></defs>
+    <path fill="#2b1a12" d="M 96,472 V 208 A 160,160 0 0 1 416,208 V 472 Z"></path>
+    <g clip-path="url(#clip-shanaqita)">
+      <rect x="60" y="424" width="392" height="60" fill="#c1743a"></rect>
+    </g>
+    <path fill="none" stroke="#c1743a" stroke-width="14" stroke-linejoin="round" d="M 96,472 V 208 A 160,160 0 0 1 416,208 V 472 Z"></path>
+    <path fill="none" stroke="#c1743a" stroke-width="3" stroke-linejoin="round" transform="translate(256,256) scale(0.9) translate(-256,-256)" d="M 96,472 V 208 A 160,160 0 0 1 416,208 V 472 Z"></path>
+    <circle cx="256" cy="78" r="8" fill="#f2ece0"></circle>
+    <path fill="#c1743a" d="M 240,120 L 256,88 L 272,120 Z"></path>
+    <rect x="220" y="120" width="72" height="16" fill="#c1743a"></rect>
+    <rect x="234" y="136" width="44" height="146" fill="#c1743a"></rect>
+    <rect x="216" y="282" width="80" height="20" fill="#c1743a"></rect>
+    <rect x="248" y="164" width="16" height="30" fill="#f2ece0"></rect>
+    <rect x="248" y="216" width="16" height="30" fill="#f2ece0"></rect>
+    <path fill="#f2ece0" d="M 256,314 L 142,292 L 142,330 L 256,346 Z"></path>
+    <path fill="#f2ece0" d="M 256,314 L 370,292 L 370,330 L 256,346 Z"></path>
+    <path fill="none" stroke="#c1743a" stroke-width="7" d="M 256,312 L 256,348"></path>
+    <g transform="translate(256,382) scale(0.400)">
+      <circle r="100" fill="#f2ece0"></circle>
+      <g stroke="#2b1a12" stroke-width="15" stroke-linecap="round" fill="none">
+      <path d="M 0,-34 L 0,-100"></path>
+      <path d="M 32.34,-10.51 L 95.1,-30.9"></path>
+      <path d="M 19.99,27.51 L 58.8,80.9"></path>
+      <path d="M -19.99,27.51 L -58.8,80.9"></path>
+      <path d="M -32.34,-10.51 L -95.1,-30.9"></path>
+      </g>
+      <path fill="#2b1a12" d="M 0,-34 L 32.34,-10.51 L 19.99,27.51 L -19.99,27.51 L -32.34,-10.51 Z"></path>
+      <circle r="99" fill="none" stroke="#2b1a12" stroke-width="13"></circle>
+    </g>
+    <text x="256" y="466" text-anchor="middle" fill="#2b1a12" style="font-family:'Reem Kufi',sans-serif;font-weight:700;font-size:40px">الشناقطة</text>
+  </svg>

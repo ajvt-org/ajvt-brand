@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" width="512" height="512"><title>Al-Hizam — الحزام</title>
+  
+    <defs><clipPath id="clip-hizam"><rect x="88" y="64" width="336" height="384" rx="16"></rect></clipPath></defs>
+    <rect x="88" y="64" width="336" height="384" rx="16" fill="#1b2226"></rect>
+    <g clip-path="url(#clip-hizam)">
+      <path fill="#7e97a6" d="M 60,400 L 60,326 L 452,132 L 452,206 Z"></path>
+      <path fill="none" stroke="#f2ece0" stroke-width="5" d="M 60,326 L 452,132"></path>
+      <path fill="none" stroke="#f2ece0" stroke-width="5" d="M 60,400 L 452,206"></path>
+      <circle cx="158" cy="314" r="9" fill="#f2ece0"></circle>
+      <circle cx="256" cy="266" r="9" fill="#f2ece0"></circle>
+      <circle cx="354" cy="218" r="9" fill="#f2ece0"></circle>
+    </g>
+    <rect x="88" y="64" width="336" height="384" rx="16" fill="none" stroke="#7e97a6" stroke-width="14"></rect>
+    <rect x="106" y="82" width="300" height="348" rx="10" fill="none" stroke="#7e97a6" stroke-width="3"></rect>
+    <g transform="translate(176,170) scale(0.460)">
+      <circle r="100" fill="#f2ece0"></circle>
+      <g stroke="#1b2226" stroke-width="15" stroke-linecap="round" fill="none">
+      <path d="M 0,-34 L 0,-100"></path>
+      <path d="M 32.34,-10.51 L 95.1,-30.9"></path>
+      <path d="M 19.99,27.51 L 58.8,80.9"></path>
+      <path d="M -19.99,27.51 L -58.8,80.9"></path>
+      <path d="M -32.34,-10.51 L -95.1,-30.9"></path>
+      </g>
+      <path fill="#1b2226" d="M 0,-34 L 32.34,-10.51 L 19.99,27.51 L -19.99,27.51 L -32.34,-10.51 Z"></path>
+      <circle r="99" fill="none" stroke="#1b2226" stroke-width="13"></circle>
+    </g>
+    <text x="256" y="404" text-anchor="middle" fill="#f2ece0" style="font-family:'IBM Plex Sans Arabic',sans-serif;font-weight:700;font-size:44px">الحزام</text>
+  </svg>
