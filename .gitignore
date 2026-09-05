@@ -1,0 +1,17 @@
+node_modules/
+
+# Generated output, rebuilt by `npm run build`.
+# Anchored with a leading slash so it means the dist at the root and nothing
+# else — a bare `dist/` also matches logos/dist, and git cannot reliably
+# re-include files under a directory it has already excluded.
+/dist/
+brand/tokens/tokens.css
+brand/tokens/fonts.css
+brand/tokens/tokens.json
+
+# logos/dist IS committed, deliberately. People outside this repository need a
+# logo file without installing Node: a printer, a partner, a member making a
+# poster. `git clone` or a GitHub download has to be enough.
+
+.DS_Store
+*.log

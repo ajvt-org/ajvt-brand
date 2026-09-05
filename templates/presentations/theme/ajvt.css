@@ -1,0 +1,114 @@
+/* @theme ajvt */
+/*
+  AJVT deck theme for Marp.
+
+  Slides are written in Markdown in content/presentations/ and separated by
+  `---`. This file is the only place a deck's appearance is decided, so a change
+  here restyles every deck the association has ever made.
+
+  Build:  npm run build:decks
+  Output: dist/presentations/<name>.pdf, .html and .pptx
+
+  Colours and faces are imported from the generated token files, which means a
+  deck cannot drift from a document or a card.
+*/
+
+@import url("../../../brand/tokens/fonts.css");
+@import url("../../../brand/tokens/tokens.css");
+
+section {
+  width: 1280px;
+  height: 720px;
+  padding: 64px 80px;
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--font-arabic-content);
+  font-size: 26px;
+  line-height: var(--leading-arabic-body);
+  direction: rtl;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* A deck in French switches both direction and face with one directive:
+   <!-- _class: ltr --> on a slide, or `class: ltr` in the deck's front matter. */
+section.ltr {
+  direction: ltr;
+  text-align: left;
+  font-family: var(--font-latin-content);
+  line-height: var(--leading-latin-body);
+}
+
+h1, h2, h3 { color: var(--brand); font-weight: 400; margin: 0 0 0.4em; }
+h1 { font-size: 62px; line-height: 1.1; }
+h2 { font-size: 42px; }
+h3 { font-size: 30px; color: var(--accent); }
+
+strong { color: var(--accent); font-weight: 700; }
+a { color: var(--brand); }
+
+ul, ol { margin: 0; padding-inline-start: 1.1em; }
+li { margin-bottom: 0.45em; }
+li::marker { color: var(--accent); }
+
+blockquote {
+  border: 0;
+  border-inline-start: 4px solid var(--accent-soft);
+  padding-inline-start: 24px;
+  color: var(--text-muted);
+  font-size: 30px;
+}
+
+table { border-collapse: collapse; font-size: 22px; }
+th, td { padding: 10px 16px; border-bottom: 1px solid var(--rule); text-align: start; }
+th { color: var(--accent); }
+
+code { background: var(--brand-soft); color: var(--brand-strong); padding: 2px 7px; border-radius: 4px; }
+
+/* ── Title slide ─────────────────────────────────────────────────────────
+   <!-- _class: title --> */
+section.title {
+  background: linear-gradient(160deg, var(--brand-strong), var(--brand));
+  color: #fff;
+  align-items: center;
+  text-align: center;
+}
+section.title h1 { color: #fff; font-size: 74px; }
+section.title h2 { color: var(--accent-soft); font-size: 32px; font-weight: 400; }
+section.title p { color: rgba(255,255,255,.72); font-size: 22px; }
+
+/* ── Section divider ─────────────────────────────────────────────────────
+   <!-- _class: section --> */
+section.section {
+  background: var(--brand-soft);
+  align-items: center;
+  text-align: center;
+}
+section.section h1 { color: var(--brand-strong); }
+
+/* ── A single large statement ────────────────────────────────────────────
+   <!-- _class: statement --> */
+section.statement { align-items: center; text-align: center; }
+section.statement h1 { font-size: 54px; max-width: 22ch; }
+
+/* ── The mark, on every slide but the title ──────────────────────────────
+   Marp injects the header/footer text; the mark itself is set as a background
+   image by the build so it stays vector. */
+section::after {
+  color: var(--text-faint);
+  font-size: 15px;
+  font-family: var(--font-arabic-content);
+}
+section.title::after { content: none; }
+
+header {
+  color: var(--text-faint);
+  font-size: 16px;
+  letter-spacing: 0.04em;
+}
+footer {
+  color: var(--text-faint);
+  font-size: 15px;
+}

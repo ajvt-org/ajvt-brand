@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>استوديو البطاقات — AJVT</title>
+<style>
+  :root {
+    --mint-50:#f0faf5; --mint-100:#d8f0e6; --mint-200:#c5e8dc; --mint-500:#4a9c7e;
+    --mint-600:#357a62; --mint-700:#265c49; --mint-800:#1a3f33;
+    --copper-600:#b0643e; --cream:#f7f3ee; --text:#1a2e24; --muted:#5a7868;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin:0; background:var(--cream); color:var(--text);
+    font-family: system-ui, "Segoe UI", Tahoma, sans-serif;
+    display:grid; grid-template-columns: 380px 1fr; height:100vh; overflow:hidden;
+  }
+  @media (max-width: 860px) { body { grid-template-columns:1fr; grid-template-rows:auto 1fr; overflow:auto; height:auto } }
+
+  aside { background:#fff; border-inline-end:1px solid var(--mint-100); overflow-y:auto; padding:20px; }
+  header h1 { font-size:17px; margin:0 0 2px; color:var(--mint-700); }
+  header p  { margin:0 0 18px; font-size:12px; color:var(--muted); }
+
+  label { display:block; font-size:12px; color:var(--muted); margin:12px 0 4px; }
+  .req::after { content:" *"; color:var(--copper-600); }
+  input, select, textarea {
+    width:100%; padding:8px 10px; border:1.5px solid var(--mint-200); border-radius:8px;
+    font:inherit; font-size:14px; background:var(--mint-50); color:var(--text);
+  }
+  input:focus, select:focus, textarea:focus { outline:2px solid var(--mint-500); outline-offset:1px; border-color:var(--mint-500); }
+  textarea { min-height:82px; resize:vertical; line-height:1.7; }
+  .hint { font-size:11px; color:var(--muted); margin-top:3px; opacity:.85; }
+  .row { display:grid; grid-template-columns:1fr 88px; gap:10px; align-items:end; }
+
+  .actions { position:sticky; bottom:-20px; background:#fff; padding:16px 0 0; margin-top:22px; border-top:1px solid var(--mint-100); display:grid; gap:8px; }
+  button {
+    padding:11px 14px; border-radius:9px; border:0; font:inherit; font-weight:600; font-size:14px;
+    background:var(--mint-600); color:#fff; cursor:pointer;
+  }
+  button:hover { background:var(--mint-700); }
+  button.ghost { background:var(--mint-100); color:var(--mint-700); }
+  button.ghost:hover { background:var(--mint-200); }
+  button:disabled { opacity:.5; cursor:default; }
+
+  main { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; gap:14px; overflow:auto; }
+  .stage-wrap { position:relative; }
+  #preview { max-width:min(70vh, 100%); max-height:74vh; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.16); display:block; background:var(--mint-100); }
+  #preview.stale { opacity:.45; transition:opacity .15s; }
+  .spinner { position:absolute; inset:0; display:none; align-items:center; justify-content:center; font-size:13px; color:var(--mint-700); }
+  .busy .spinner { display:flex; }
+  .tabs { display:flex; gap:6px; flex-wrap:wrap; }
+  .tabs button { background:#fff; color:var(--muted); border:1.5px solid var(--mint-200); font-weight:500; padding:7px 13px; font-size:13px; }
+  .tabs button[aria-pressed="true"] { background:var(--mint-700); color:#fff; border-color:var(--mint-700); }
+  .msg { font-size:12.5px; min-height:18px; color:var(--mint-600); }
+  .msg.err { color:#b3261e; }
+</style>
+</head>
+<body>
+
+<aside>
+  <header>
+    <h1>استوديو البطاقات</h1>
+    <p>املأ الحقول، ثم نزّل الصورة.</p>
+  </header>
+
+  <label for="card">نوع البطاقة</label>
+  <select id="card"></select>
+
+  <form id="fields"></form>
+
+  <div class="actions">
+    <button id="download">تنزيل الصورة</button>
+    <button id="save" class="ghost">حفظ في المشروع</button>
+    <div class="msg" id="msg"></div>
+  </div>
+</aside>
+
+<main>
+  <div class="tabs" id="formats"></div>
+  <div class="stage-wrap">
+    <img id="preview" alt="معاينة البطاقة">
+    <div class="spinner">…</div>
+  </div>
+  <div class="msg" id="err"></div>
+</main>
+
+<script type="module">
+/*
+  The studio holds no design knowledge. It reads the card definitions, builds a
+  form from their `fields`, and asks the server to render. Adding a field to a
+  card.json makes an input appear here with no change to this file — which is
+  what keeps the two from drifting.
+*/
+const $ = (s) => document.querySelector(s)
+const state = { catalog: null, card: null, format: 'square', values: {}, seq: 0 }
+
+const catalog = await (await fetch('/api/catalog')).json()
+state.catalog = catalog
+
+// ── card picker ────────────────────────────────────────────────────────────
+$('#card').innerHTML = catalog.cards
+  .map((c) => `<option value="${c.id}">${c.name.ar}</option>`).join('')
+$('#card').onchange = () => selectCard($('#card').value)
+
+function selectCard(id) {
+  state.card = catalog.cards.find((c) => c.id === id)
+  state.values = {}
+  for (const f of state.card.fields) state.values[f.key] = f.default ?? ''
+  if (!state.card.formats.includes(state.format)) state.format = state.card.formats[0]
+  renderFormats()
+  renderForm()
+  preview()
+}
+
+function renderFormats() {
+  $('#formats').innerHTML = state.card.formats.map((f) => {
+    const meta = catalog.formats[f]
+    return `<button type="button" data-f="${f}" aria-pressed="${f === state.format}" title="${meta.use}">${meta.label.ar} · ${meta.w}×${meta.h}</button>`
+  }).join('')
+  for (const b of $('#formats').children) {
+    b.onclick = () => { state.format = b.dataset.f; renderFormats(); preview() }
+  }
+}
+
+function renderForm() {
+  const html = []
+  const fields = state.card.fields
+  for (let i = 0; i < fields.length; i++) {
+    const f = fields[i]
+    // A score sits next to the team it belongs to.
+    const next = fields[i + 1]
+    if (f.type === 'text' && next?.type === 'number' && /Score$/.test(next.key)) {
+      html.push(`<div class="row">${input(f)}${input(next)}</div>`)
+      i++
+      continue
+    }
+    html.push(input(f))
+  }
+  $('#fields').innerHTML = html.join('')
+  for (const el of $('#fields').querySelectorAll('[data-key]')) {
+    el.oninput = () => { state.values[el.dataset.key] = el.value; schedule() }
+  }
+}
+
+function input(f) {
+  const id = 'f_' + f.key
+  const v = String(state.values[f.key] ?? '')
+  const label = `<label for="${id}" class="${f.required ? 'req' : ''}">${f.label.ar}</label>`
+  const hint = f.hint ? `<div class="hint">${f.hint.ar}</div>` : ''
+  const common = `id="${id}" data-key="${f.key}"`
+  if (f.type === 'textarea') return `<div>${label}<textarea ${common}>${esc(v)}</textarea>${hint}</div>`
+  if (f.type === 'number')   return `<div>${label}<input ${common} type="number" min="${f.min ?? 0}" max="${f.max ?? 99}" value="${esc(v)}">${hint}</div>`
+  if (f.type === 'date')     return `<div>${label}<input ${common} type="date" value="${esc(v)}">${hint}</div>`
+  return `<div>${label}<input ${common} type="text" value="${esc(v)}">${hint}</div>`
+}
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
+
+// ── preview ────────────────────────────────────────────────────────────────
+let timer
+const schedule = () => { clearTimeout(timer); timer = setTimeout(preview, 320) }
+
+async function preview() {
+  const seq = ++state.seq
+  $('.stage-wrap').classList.add('busy')
+  $('#preview').classList.add('stale')
+  $('#err').textContent = ''
+  try {
+    const blob = await renderBlob(1)
+    if (seq !== state.seq) return               // a newer keystroke already won
+    const old = $('#preview').src
+    $('#preview').src = URL.createObjectURL(blob)
+    if (old.startsWith('blob:')) URL.revokeObjectURL(old)
+  } catch (e) {
+    $('#err').textContent = e.message
+    $('#err').className = 'msg err'
+  } finally {
+    if (seq === state.seq) {
+      $('.stage-wrap').classList.remove('busy')
+      $('#preview').classList.remove('stale')
+    }
+  }
+}
+
+async function renderBlob(scale) {
+  const res = await fetch('/api/render', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ template: state.card.id, data: state.values, format: state.format, locale: 'ar', scale }),
+  })
+  if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error ?? `render failed (${res.status})`)
+  return res.blob()
+}
+
+// ── actions ────────────────────────────────────────────────────────────────
+$('#download').onclick = async () => {
+  const btn = $('#download'); btn.disabled = true; btn.textContent = 'جارٍ التحضير…'
+  try {
+    const blob = await renderBlob(2)            // 2x for print and for reposts
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(blob)
+    a.download = `${state.card.id}-${state.format}-${new Date().toISOString().slice(0, 10)}.png`
+    a.click()
+    URL.revokeObjectURL(a.href)
+    note('تم التنزيل.')
+  } catch (e) { note(e.message, true) }
+  finally { btn.disabled = false; btn.textContent = 'تنزيل الصورة' }
+}
+
+$('#save').onclick = async () => {
+  const name = prompt('اسم الملف (بالحروف اللاتينية):', `${new Date().toISOString().slice(0, 10)}-${state.card.id}`)
+  if (!name) return
+  const spec = { template: state.card.id, formats: [state.format], locale: 'ar', ...state.values }
+  delete spec.mark
+  const res = await fetch('/api/save', {
+    method: 'POST', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ name, spec }),
+  })
+  const body = await res.json()
+  note(res.ok ? `حُفظ في ${body.saved}` : body.error, !res.ok)
+}
+
+function note(text, isErr = false) {
+  $('#msg').textContent = text
+  $('#msg').className = 'msg' + (isErr ? ' err' : '')
+  setTimeout(() => { $('#msg').textContent = '' }, 4000)
+}
+
+selectCard(catalog.cards[0].id)
+</script>
+</body>
+</html>

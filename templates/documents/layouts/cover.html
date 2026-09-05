@@ -1,0 +1,15 @@
+<!--
+  LAYOUT: cover — a title page, then the text.
+  For décisions, règlements, statuts: anything that is an instrument rather than
+  correspondence. Placeholders are filled from the document's front matter.
+-->
+<section class="cover">
+  <div class="cover__mark">{{mark}}</div>
+  <div class="cover__org">{{org}}</div>
+  <div class="cover__rule"></div>
+  <h1 class="cover__title">{{title}}</h1>
+  {{#subtitle}}<div class="cover__subtitle">{{subtitle}}</div>{{/subtitle}}
+  {{#standfirst}}<p class="cover__standfirst">{{standfirst}}</p>{{/standfirst}}
+  <div class="cover__meta">{{dateLabel}} <strong>{{date}}</strong></div>
+</section>
+{{body}}

@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 768" width="768" height="768" role="img" aria-label="الأمانة العامة">
+  <title>الأمانة العامة</title>
+    <g transform="translate(128 128) scale(1)">
+  <title id="i1b69emf0-ajvt-symbol-title">AJVT — رابطة شباب قرية التاكلالت</title>
+
+  <defs>
+    <clipPath id="i1b69emf0-roundel-clip">
+      <circle cx="256" cy="256" r="254"/>
+    </clipPath>
+
+    <!-- Crescent-and-bead finial, drawn once with its foot at the origin and
+         growing upward, then placed four times at different scales. Bottom to
+         top: a bulb, a neck, a small bead, a stem, the crescent, a spike.
+         The crescent's second radius (9) must stay LARGER than its first (7) or
+         the arc degenerates and the shape disappears; see the note in the
+         space.json panel-safe token for how that failure looks. -->
+    <g id="i1b69emf0-finial" fill="#6b6244">
+      <rect x="-1.7" y="-7" width="3.4" height="7"/>
+      <ellipse cx="0" cy="-10" rx="4.7" ry="3.9"/>
+      <rect x="-1.7" y="-15" width="3.4" height="4"/>
+      <ellipse cx="0" cy="-16.9" rx="3.5" ry="2.8"/>
+      <rect x="-1.6" y="-27" width="3.2" height="10"/>
+      <!-- The crescent is an explicit path, not two arcs. A two-circle crescent
+           always curls its horns INWARD; the original's splay outward and taper
+           to points. It is also wide and shallow, which the non-uniform
+           scale below produces from one drawn shape. -->
+      <g transform="translate(0,-28.5) scale(0.84,0.74)">
+        <path d="M -9,-6.8 C -9.4,-1 -5.6,3 0,4.6 C 5.6,3 9.4,-1 9,-6.8 L 6.2,-5 C 6.3,-1.4 3.8,0.9 0,1.9 C -3.8,0.9 -6.3,-1.4 -6.2,-5 Z"/>
+      </g>
+      <rect x="-1.6" y="-32.5" width="3.2" height="5.5"/>
+    </g>
+
+    <!-- A minaret comes in two halves, and they are drawn at different points
+         in the stack.
+
+         The SHAFT sits inside the roundel clip, under the platform, so the
+         platform crosses in front of it the way it does in the original.
+
+         The TOP is drawn OUTSIDE the clip, because the finial deliberately
+         breaks the circle — in the original artwork the crescent stands proud
+         of the mint ground against bare paper. Clipped, everything above the
+         roundel's edge disappears and the finial collapses to a single bead. -->
+    <!-- One dome, drawn once with its base at the origin and placed twice at
+         different scales. Defining it once is what keeps the pair the same
+         shape: as two hand-written paths the smaller one drifted into an egg,
+         nearly as tall as it was wide, while the larger stayed round.
+         Width 97, height 65. Scale it; do not redraw it. -->
+    <g id="i1b69emf0-dome">
+      <path d="M 0,0 C 0,-42 18,-63 48,-65 C 78,-63 97,-42 97,0 Z" fill="#d4905e"/>
+      <path d="M 48,-65 C 78,-63 97,-42 97,0 L 75,0 C 75,-38 64,-58 48,-65 Z"
+            fill="#c47c5a" opacity="0.5"/>
+    </g>
+
+    <g id="i1b69emf0-minaret-shaft">
+      <rect x="-32" y="-165" width="64" height="165" fill="#c5e8dc"/>
+      <rect x="20" y="-165" width="12" height="165" fill="#a0d4c0" opacity="0.6"/>
+      <rect x="-9" y="-125" width="18" height="26" rx="2.5" fill="#4b4539"/>
+      <rect x="-9" y="-37" width="18" height="25" rx="2.5" fill="#4b4539"/>
+    </g>
+
+    <!-- The cap is narrower than the shaft, which is what gives the original
+         its tapered, drawn-by-hand silhouette. The ribs are what make it read
+         as a fluted onion dome rather than a plain bell. -->
+    <g id="i1b69emf0-minaret-top">
+      <!-- A half ellipse: rx 19, ry 33. Sampling the original's cap width at
+           six heights matches an ellipse to within half a unit, where the bezier
+           this replaces rose too steeply and read as a bullet rather than a
+           dome. -->
+      <path d="M -19,-162 A 19,33 0 0 1 19,-162 Z" fill="#f7f3ee"/>
+      <!-- Two ribs, not three. The original has no centre rib: its middle
+           panel is a single wide face. Each rib is the cap's own ellipse at
+           0.57 of the width, so they read as meridians on the dome rather than
+           as lines drawn over it. -->
+      <g fill="none" stroke="#ede7dc" stroke-width="1.5" stroke-linecap="round">
+        <path d="M 0,-195 A 10.8,33 0 0 0 -10.8,-162"/>
+        <path d="M 0,-195 A 10.8,33 0 0 1 10.8,-162"/>
+      </g>
+      <use href="#i1b69emf0-finial" transform="translate(0,-197)"/>
+    </g>
+  </defs>
+
+  <!-- ── Ground ──────────────────────────────────────────────────────────── -->
+  <circle cx="256" cy="256" r="254" fill="#c5e8dc"/>
+
+  <g clip-path="url(#i1b69emf0-roundel-clip)">
+
+    <!-- The body barely separates from the ground — in the original the two
+         mints differ by one value per channel. Almost all of the tonal interest
+         below the platform comes from the banding and the shading, not from
+         this rectangle. Raise its opacity and the mark grows a visible box. -->
+    <!-- ── Panel ─────────────────────────────────────────────────────────
+         A full DISC, not a half one: its radius is the arch's inner edge, and
+         the mosque body is laid over it. That is what leaves a white strip down
+         each flank between the arch and the body — visible from y 174 to 338 in
+         the original, and easy to miss, because the eye reads the white as the
+         courtyard and stops looking once the courtyard is right.
+
+         The usable white area for type is much smaller than this disc, since
+         the minarets, domes and their finials are painted over it. That area is
+         `logo.panel-safe` in brand/tokens/space.json. -->
+    <circle cx="256" cy="256" r="198" fill="#ffffff"/>
+
+    <!-- The mosque body, over the panel, leaving the flanks white. It barely
+         separates from the ground — in the original the two mints differ by one
+         value per channel — so almost all the tonal interest below the platform
+         comes from the banding and the shading, not from this rectangle. -->
+    <rect x="77" y="249" width="357" height="270" fill="#c5e8dc"/>
+    <rect x="345" y="249" width="89" height="270" fill="#a0d4c0" opacity="0.22"/>
+    <g fill="#f0faf5" opacity="0.45">
+      <ellipse cx="196" cy="292" rx="38" ry="9"/>
+      <ellipse cx="330" cy="322" rx="46" ry="10"/>
+      <ellipse cx="180" cy="356" rx="52" ry="11"/>
+      <ellipse cx="336" cy="392" rx="42" ry="10"/>
+      <ellipse cx="212" cy="424" rx="58" ry="12"/>
+    </g>
+
+
+    <!-- ── Arch ──────────────────────────────────────────────────────────
+         NOT a full ring. It runs from 241 degrees round through the top to 120
+         degrees, leaving a 120 degree gap centred on the bottom of the roundel.
+         That gap is deliberate in the original: it is where the association's
+         motto is set along the curve.
+
+         It is a filled annular sector rather than a stroked circle, because the
+         two ends TAPER to a point. A stroke cannot narrow, and butt ends read
+         as though the ring had simply been cut.
+
+         Angles are clockwise from the top. Outer radius 208, inner 198, so
+         the arch is 10 wide at its thickest, tapering over 6 degrees at each
+         end.
+
+         The INNER edge runs the full length at exactly r 198, and the taper is
+         cut entirely from the outer edge, ending in a point on the inner edge.
+         This is load-bearing, not styling: r 198 is also the panel disc's
+         radius, so the arch's inner edge and the white disc's edge are the same
+         curve and cannot separate. Any tip that pulls the inner edge off that
+         radius opens a sliver of bare ground between the arch and the white —
+         small, but it reads as a stray green wedge exactly where the eye
+         follows the arch down. -->
+    <path d="M 82.83,351.99 L 67.49,343.9 A 208,208 0 1 1 442.95,347.18 L 427.47,355 A 198,198 0 1 0 82.83,351.99 Z" fill="#b0643e"/>
+
+    <!-- ── Minaret shafts ────────────────────────────────────────────────
+         BEFORE the domes. In the original the domes pass in front of the
+         shafts: at y 230 the large dome starts at x 123 and covers the shaft
+         out to its edge at 143. Drawn the other way round, that covered strip
+         shows as a slab of mint between the aperture and the dome — visible,
+         wrong, and easy to mistake for stray geometry.
+
+         The caps and finials come later, outside the clip. -->
+    <use href="#i1b69emf0-minaret-shaft" transform="translate(110,257)"/>
+    <use href="#i1b69emf0-minaret-shaft" transform="translate(402,257)"/>
+
+
+    <!-- ── Domes ─────────────────────────────────────────────────────────
+         Two, unequal and well apart, the way the village mosque actually sits.
+         A symmetric pair reads as a generic icon. Drawn over the shafts, so
+         each dome is whole and it is the minaret that is interrupted. -->
+    <use href="#i1b69emf0-dome" transform="translate(121,252)"/>
+    <use href="#i1b69emf0-finial" transform="translate(169,188) scale(0.92)"/>
+
+    <!-- 0.4948 = 48/97, so the smaller dome is 48 wide and keeps the larger
+         one's proportions exactly. The finial is placed separately, or it would
+         scale with the dome and shrink to nothing. -->
+    <use href="#i1b69emf0-dome" transform="translate(324,252) scale(0.4948)"/>
+    <use href="#i1b69emf0-finial" transform="translate(348,221) scale(0.72)"/>
+
+    <!-- ── Platform ──────────────────────────────────────────────────────
+         The mark's optical baseline. It crosses in front of the shafts. -->
+    <rect x="77" y="249" width="357" height="14" fill="#b0643e"/>
+    <rect x="77" y="261" width="357" height="4" fill="#c47c5a" opacity="0.55"/>
+
+    <!-- ── Courtyard window ──────────────────────────────────────────────
+         The one asymmetric detail. It keeps the lower half from reading as
+         empty and gives the eye somewhere to land. -->
+    <g transform="translate(296,300)">
+      <rect x="0" y="0" width="46" height="38" rx="3" fill="#ffffff"/>
+      <rect x="5" y="5" width="36" height="28" rx="2" fill="#a0d4c0"/>
+      <rect x="5" y="13" width="36" height="3.5" fill="#ffffff"/>
+      <rect x="5" y="22" width="36" height="3.5" fill="#ffffff"/>
+      <rect x="16" y="5" width="3.5" height="28" fill="#ffffff"/>
+    </g>
+
+  </g>
+
+  <!-- ── Minaret caps and finials ─────────────────────────────────────────
+       OUTSIDE the roundel clip, deliberately. The finials break the circle, as
+       they do in the original mark. -->
+  <use href="#i1b69emf0-minaret-top" transform="translate(110,257)"/>
+  <use href="#i1b69emf0-minaret-top" transform="translate(402,257)"/>
+</g>
+    <g transform="translate(291.51 217.48) scale(0.75)">
+    <path d="M5.71,0Q3.88,0 2.82,-1.24Q1.9,-2.32 1.9,-4.03L1.9,-5.97L4.95,-7.59L4.95,-4.19Q4.95,-3.5 5.22,-3.23Q5.48,-2.95 6.16,-2.95L12.96,-2.95Q13.64,-2.95 13.9,-3.23Q14.17,-3.5 14.17,-4.19L14.17,-7.86L17.22,-9.49L17.22,-4.03Q17.22,-2.07 16,-0.97Q14.92,0 13.24,0L5.71,0ZM9.38,4.95Q8.66,4.95 8.23,4.52Q7.8,4.09 7.8,3.37Q7.8,2.66 8.23,2.23Q8.66,1.81 9.38,1.81Q10.08,1.81 10.5,2.23Q10.92,2.66 10.92,3.37Q10.92,4.09 10.5,4.52Q10.08,4.95 9.38,4.95Z M25,0Q23.06,0 21.97,-1.24Q21.02,-2.34 21.02,-4.05L21.02,-11.97L24.07,-13.6L24.07,-4.17Q24.07,-3.5 24.35,-3.23Q24.62,-2.95 25.3,-2.95L27.36,-2.95L27.36,0L25,0Z M33.79,-2.95L35.84,-2.95L35.84,0L33.5,0Q32.02,0 31.05,-0.72Q30.04,0 28.58,0L26.22,0L26.22,-2.95L28.29,-2.95Q28.96,-2.95 29.24,-3.23Q29.51,-3.5 29.51,-4.17L29.51,-7.86L32.57,-9.49L32.57,-4.17Q32.57,-3.5 32.83,-3.23Q33.1,-2.95 33.79,-2.95ZM31.3,1.81Q32,1.81 32.42,2.23Q32.84,2.66 32.84,3.37Q32.84,4.09 32.42,4.52Q32,4.95 31.3,4.95Q30.59,4.95 30.15,4.52Q29.72,4.09 29.72,3.37Q29.72,2.66 30.15,2.23Q30.59,1.81 31.3,1.81Z M46.86,-14.65Q46.21,-14.65 45.82,-15.04Q45.43,-15.43 45.43,-16.08Q45.43,-17.5 46.86,-17.5Q48.27,-17.5 48.27,-16.08Q48.27,-15.43 47.88,-15.04Q47.49,-14.65 46.86,-14.65ZM45.11,-11.24Q44.42,-11.24 43.98,-11.68Q43.55,-12.12 43.55,-12.84Q43.55,-13.53 43.98,-13.97Q44.42,-14.4 45.11,-14.4Q45.81,-14.4 46.24,-13.97Q46.67,-13.53 46.67,-12.84Q46.67,-12.1 46.24,-11.67Q45.81,-11.24 45.11,-11.24ZM48.63,-11.24Q47.94,-11.24 47.5,-11.68Q47.07,-12.12 47.07,-12.84Q47.07,-13.53 47.5,-13.97Q47.94,-14.4 48.63,-14.4Q49.33,-14.4 49.76,-13.97Q50.19,-13.53 50.19,-12.84Q50.19,-12.1 49.76,-11.67Q49.33,-11.24 48.63,-11.24ZM34.72,0L34.72,-2.95L37.08,-2.95Q37.75,-2.95 38.02,-3.21Q38.28,-3.48 38.28,-4.17L38.28,-6.87L41.34,-8.5L41.34,-4.17Q41.34,-3.5 41.6,-3.23Q41.86,-2.95 42.56,-2.95L44.18,-2.95Q44.86,-2.95 45.13,-3.23Q45.41,-3.5 45.41,-4.17L45.41,-7.38L48.46,-8.98L48.46,-4.17Q48.46,-3.48 48.73,-3.21Q48.99,-2.95 49.66,-2.95L51.33,-2.95Q52,-2.95 52.27,-3.21Q52.53,-3.48 52.53,-4.17L52.53,-7.86L55.61,-9.49L55.61,-4.05Q55.61,-2.13 54.43,-1.01Q53.4,-0.04 51.77,0L49.39,0Q47.94,0 46.92,-0.78Q46,-0.06 44.65,0L42.27,0Q40.81,0 39.8,-0.78Q38.81,0 37.35,0L34.72,0Z M65.92,-11.91Q65.2,-11.91 64.77,-12.35Q64.34,-12.8 64.34,-13.51Q64.34,-14.21 64.77,-14.63Q65.2,-15.05 65.92,-15.05Q66.61,-15.05 67.03,-14.63Q67.46,-14.21 67.46,-13.51Q67.46,-12.77 67.03,-12.34Q66.61,-11.91 65.92,-11.91ZM69.42,-11.91Q68.72,-11.91 68.29,-12.35Q67.86,-12.8 67.86,-13.51Q67.86,-14.21 68.29,-14.63Q68.72,-15.05 69.42,-15.05Q70.11,-15.05 70.54,-14.63Q70.98,-14.21 70.98,-13.51Q70.98,-12.77 70.55,-12.34Q70.13,-11.91 69.42,-11.91ZM72.83,-2.95L74.9,-2.95L74.9,0L72.54,0Q70.66,0 69.56,-1.16Q68.72,-0.61 67.5,-0.61Q65.52,-0.61 64.34,-2.09Q63.35,-3.31 63.35,-4.97Q63.35,-7.08 64.76,-8.41Q65.9,-9.51 67.41,-9.51Q67.98,-9.51 68.55,-9.34L68.55,-9.76L71.61,-11.36L71.61,-4.17Q71.61,-3.5 71.88,-3.23Q72.16,-2.95 72.83,-2.95ZM68.55,-6.37Q68.15,-6.62 67.65,-6.62Q67.06,-6.62 66.71,-6.16Q66.36,-5.69 66.36,-4.91Q66.36,-3.2 67.69,-3.2Q68.28,-3.2 68.57,-3.54Q68.55,-3.71 68.55,-4.05L68.55,-6.37Z M93.17,-2.95L93.17,0L91.17,0Q89.78,0 88.75,-0.7Q87.8,0 86.36,0L73.76,0L73.76,-2.95L77.05,-2.95L77.05,-11.97L80.1,-13.6L80.1,-7.88Q82.23,-9.87 84.89,-9.87Q87.42,-9.87 88.96,-8.09Q90.24,-6.6 90.24,-4.45L90.24,-4.05Q90.24,-2.95 91.47,-2.95L93.17,-2.95ZM86.26,-2.95Q86.85,-2.95 87.02,-3.16Q87.19,-3.37 87.19,-4.15L87.19,-4.45Q87.19,-5.59 86.55,-6.29Q85.92,-7 84.91,-7Q83.48,-7 82.19,-5.91Q80.91,-4.83 80.1,-2.95L86.26,-2.95Z M92.04,0L92.04,-2.95L94.1,-2.95Q94.78,-2.95 95.05,-3.23Q95.32,-3.5 95.32,-4.17L95.32,-7.86L98.38,-9.49L98.38,-4.05Q98.38,-2.09 97.16,-0.97Q96.08,0 94.4,0L92.04,0ZM95.96,4.95Q95.24,4.95 94.81,4.52Q94.38,4.09 94.38,3.37Q94.38,2.66 94.81,2.23Q95.24,1.81 95.96,1.81Q96.65,1.81 97.07,2.23Q97.5,2.66 97.5,3.37Q97.5,4.09 97.07,4.52Q96.65,4.95 95.96,4.95Z M102.17,0L102.17,-11.97L105.23,-13.6L105.23,0L102.17,0Z M114.55,-1.41Q114.55,0.4 113.81,1.74Q113.07,3.08 111.72,3.69Q110.84,4.11 109.81,4.11Q108.41,4.11 107.09,3.37L107.09,0.72Q108.18,1.33 109.22,1.33Q109.74,1.33 110.19,1.16Q111.47,0.72 111.47,-1.2L111.47,-7.84L114.55,-9.49L114.55,-1.41Z" fill="#b0643e" transform="translate(65.1 16.86)"/>
+    <path d="M22.63,-28.83Q20.52,-28.83 19.25,-30.13Q17.98,-31.43 17.98,-33.54Q17.98,-35.59 19.25,-36.83Q20.52,-38.07 22.63,-38.07Q24.68,-38.07 25.92,-36.83Q27.16,-35.59 27.16,-33.54Q27.16,-31.37 25.92,-30.1Q24.68,-28.83 22.63,-28.83ZM32.98,-28.83Q30.88,-28.83 29.61,-30.13Q28.33,-31.43 28.33,-33.54Q28.33,-35.59 29.61,-36.83Q30.88,-38.07 32.98,-38.07Q35.03,-38.07 36.27,-36.83Q37.51,-35.59 37.51,-33.54Q37.51,-31.37 36.27,-30.1Q35.03,-28.83 32.98,-28.83ZM54.25,-8.68L59.27,-8.68L59.27,0L53.38,0Q49.04,0 46.19,-2.11Q43.21,0 38.94,0L16.8,0Q11.41,0 8.31,-3.66Q5.58,-6.82 5.58,-11.84L5.58,-17.55L14.57,-22.32L14.57,-12.34Q14.57,-10.29 15.35,-9.49Q16.12,-8.68 18.1,-8.68L38.13,-8.68Q40.11,-8.68 40.89,-9.49Q41.66,-10.29 41.66,-12.34L41.66,-23.13L50.65,-27.9L50.65,-12.28Q50.65,-10.29 51.46,-9.49Q52.27,-8.68 54.25,-8.68Z M55.74,0L55.74,-8.68L59.77,-8.68Q62.37,-8.68 63.39,-9.77Q64.42,-10.85 64.42,-13.58L64.42,-35.22L73.41,-39.99L73.41,-13.52Q73.41,-7.19 69.56,-3.47Q66.03,0 60.2,0L55.74,0Z M121.4,-8.68L127.47,-8.68L127.47,0L120.53,0Q115.88,0 112.84,-2.48Q109.49,0 104.66,0L80.23,0L84.75,-8.68L92.57,-8.68L92.57,-27.16L101.56,-31.93L101.56,-8.68L104.22,-8.68Q106.76,-8.68 107.79,-9.77Q108.81,-10.85 108.81,-13.58L108.81,-35.22L117.86,-39.99L117.86,-13.52Q117.86,-12.52 117.8,-12.09Q117.86,-10.17 118.64,-9.42Q119.41,-8.68 121.4,-8.68Z M139.69,-27.84Q143.72,-27.28 146.94,-25.11Q153.64,-20.71 153.64,-12.4L153.64,-11.66Q153.64,-5.95 149.98,-2.79Q146.88,0 141.92,0L124.12,0L124.12,-8.68L141.05,-8.68Q144.58,-8.68 144.58,-11.97L144.58,-12.28Q144.58,-16 141.3,-17.86Q139.13,-19.1 135.97,-19.1Q132.87,-19.1 129.33,-17.86L129.33,-26.54L141.42,-39.99L150.47,-39.99L139.69,-27.84Z M174.65,0Q168.95,0 165.73,-3.66Q162.94,-6.88 162.94,-11.9L162.94,-35.22L171.93,-39.99L171.93,-12.28Q171.93,-10.29 172.73,-9.49Q173.54,-8.68 175.52,-8.68L181.6,-8.68L181.6,0L174.65,0Z M183.4,-32.43Q181.29,-32.43 180.02,-33.73Q178.75,-35.03 178.75,-37.14Q178.75,-39.18 180.02,-40.45Q181.29,-41.73 183.4,-41.73Q185.44,-41.73 186.68,-40.49Q187.92,-39.25 187.92,-37.14Q187.92,-34.97 186.68,-33.7Q185.44,-32.43 183.4,-32.43ZM193.75,-32.43Q191.64,-32.43 190.37,-33.73Q189.1,-35.03 189.1,-37.14Q189.1,-39.18 190.37,-40.45Q191.64,-41.73 193.75,-41.73Q195.8,-41.73 197.04,-40.49Q198.28,-39.25 198.28,-37.14Q198.28,-34.97 197.04,-33.7Q195.8,-32.43 193.75,-32.43ZM200.51,-8.68L206.52,-8.68L206.52,0L199.64,0Q195.3,0 192.45,-2.11Q189.47,0 185.19,0L178.25,0L178.25,-8.68L184.33,-8.68Q186.31,-8.68 187.12,-9.49Q187.92,-10.29 187.92,-12.28L187.92,-23.13L196.91,-27.9L196.91,-12.28Q196.91,-10.29 197.69,-9.49Q198.46,-8.68 200.51,-8.68Z M203.24,0L203.24,-8.68L207.27,-8.68Q209.87,-8.68 210.89,-9.77Q211.92,-10.85 211.92,-13.58L211.92,-35.22L220.91,-39.99L220.91,-13.52Q220.91,-7.19 217.06,-3.47Q213.53,0 207.7,0L203.24,0Z M232.07,0L232.07,-35.22L241.06,-39.99L241.06,0L232.07,0Z" fill="#265c49" transform="translate(0 79.36)"/>
+    </g>
+    <path d="M5.17,-19.21Q4.01,-19.21 3.32,-19.92Q2.62,-20.64 2.62,-21.79Q2.62,-22.92 3.32,-23.6Q4.01,-24.28 5.17,-24.28Q6.29,-24.28 6.97,-23.6Q7.65,-22.92 7.65,-21.79Q7.65,-20.6 6.97,-19.91Q6.29,-19.21 5.17,-19.21ZM10.81,-19.21Q9.69,-19.21 8.99,-19.92Q8.3,-20.64 8.3,-21.79Q8.3,-22.92 8.99,-23.6Q9.69,-24.28 10.81,-24.28Q11.93,-24.28 12.63,-23.6Q13.33,-22.92 13.33,-21.79Q13.33,-20.6 12.65,-19.91Q11.97,-19.21 10.81,-19.21ZM16.32,-4.76L19.65,-4.76L19.65,0L15.84,0Q12.82,0 11.05,-1.87Q9.69,-0.99 7.72,-0.99Q4.52,-0.99 2.62,-3.37Q1.02,-5.34 1.02,-8.02Q1.02,-11.42 3.3,-13.57Q5.13,-15.33 7.58,-15.33Q8.5,-15.33 9.42,-15.06L9.42,-15.74L14.35,-18.33L14.35,-6.73Q14.35,-5.64 14.79,-5.2Q15.23,-4.76 16.32,-4.76ZM9.42,-10.27Q8.77,-10.68 7.96,-10.68Q7,-10.68 6.44,-9.93Q5.88,-9.18 5.88,-7.92Q5.88,-5.17 8.02,-5.17Q8.98,-5.17 9.45,-5.71Q9.42,-5.98 9.42,-6.53L9.42,-10.27Z M23.12,-9.49Q23.12,-12.61 25.06,-14.38Q26.76,-15.91 29.48,-15.91Q32.91,-15.91 34.82,-13.4Q36.45,-11.25 36.45,-7.96Q36.45,-4.18 34.37,-1.97Q32.57,0 29.72,0Q27.03,0 25.36,-1.02Q23.83,0 21.62,0L17.82,0L17.82,-4.76L21.15,-4.76Q22.24,-4.76 22.68,-5.2Q23.12,-5.64 23.12,-6.73L23.12,-9.49ZM28.05,-6.09Q28.05,-4.76 29.48,-4.76Q31.59,-4.76 31.59,-8.13Q31.59,-11.29 29.48,-11.29Q28.05,-11.29 28.05,-9.62L28.05,-6.09Z M48.48,0Q45.36,0 43.59,-2.01Q42.06,-3.77 42.06,-6.53L42.06,-19.31L46.99,-21.93L46.99,-6.73Q46.99,-5.64 47.43,-5.2Q47.87,-4.76 48.96,-4.76L52.29,-4.76L52.29,0L48.48,0Z M76.47,0L66.81,0Q65.08,0 63.44,-0.54Q61.81,0 60.08,0L50.46,0L50.46,-4.76L57.46,-4.76Q56,-6.39 54.6,-8.74L54.6,-10.54Q56.17,-12.95 58.6,-14.43Q61.03,-15.91 63.44,-15.91Q65.79,-15.91 68.25,-14.4Q70.72,-12.89 72.32,-10.47L72.32,-8.74Q70.89,-6.39 69.46,-4.76L76.43,-4.76L76.47,0ZM67.25,-9.59Q65.35,-11.32 63.44,-11.32Q61.34,-11.32 59.64,-9.62Q61.57,-6.66 63.44,-5.68Q65.35,-6.7 67.25,-9.59Z M74.66,0L74.66,-4.76L76.87,-4.76Q78.3,-4.76 78.86,-5.36Q79.42,-5.95 79.42,-7.45L79.42,-19.31L84.35,-21.93L84.35,-7.41Q84.35,-3.94 82.25,-1.9Q80.31,0 77.11,0L74.66,0Z M90.47,0L90.47,-19.31L95.4,-21.93L95.4,0L90.47,0Z M112.03,-19.21Q110.87,-19.21 110.18,-19.92Q109.48,-20.64 109.48,-21.79Q109.48,-22.92 110.18,-23.6Q110.87,-24.28 112.03,-24.28Q113.15,-24.28 113.83,-23.6Q114.51,-22.92 114.51,-21.79Q114.51,-20.6 113.83,-19.91Q113.15,-19.21 112.03,-19.21ZM117.67,-19.21Q116.55,-19.21 115.86,-19.92Q115.16,-20.64 115.16,-21.79Q115.16,-22.92 115.86,-23.6Q116.55,-24.28 117.67,-24.28Q118.8,-24.28 119.49,-23.6Q120.19,-22.92 120.19,-21.79Q120.19,-20.6 119.51,-19.91Q118.83,-19.21 117.67,-19.21ZM123.18,-4.76L126.51,-4.76L126.51,0L122.71,0Q119.68,0 117.91,-1.87Q116.55,-0.99 114.58,-0.99Q111.38,-0.99 109.48,-3.37Q107.88,-5.34 107.88,-8.02Q107.88,-11.42 110.16,-13.57Q112,-15.33 114.44,-15.33Q115.36,-15.33 116.28,-15.06L116.28,-15.74L121.21,-18.33L121.21,-6.73Q121.21,-5.64 121.65,-5.2Q122.09,-4.76 123.18,-4.76ZM116.28,-10.27Q115.63,-10.68 114.82,-10.68Q113.87,-10.68 113.31,-9.93Q112.74,-9.18 112.74,-7.92Q112.74,-5.17 114.89,-5.17Q115.84,-5.17 116.31,-5.71Q116.28,-5.98 116.28,-6.53L116.28,-10.27Z M132.63,-18.36Q131.48,-18.36 130.78,-19.06Q130.08,-19.75 130.08,-20.91Q130.08,-22.07 130.78,-22.75Q131.48,-23.43 132.63,-23.43Q133.76,-23.43 134.44,-22.75Q135.12,-22.07 135.12,-20.91Q135.12,-19.75 134.44,-19.06Q133.76,-18.36 132.63,-18.36ZM124.68,0L124.68,-4.76L128.01,-4.76Q129.1,-4.76 129.54,-5.2Q129.98,-5.64 129.98,-6.73L129.98,-12.68L134.91,-15.3L134.91,-6.53Q134.91,-3.37 132.94,-1.56Q131.21,0 128.49,0L124.68,0Z M147.46,0Q144.33,0 142.56,-2.01Q141.03,-3.77 141.03,-6.53L141.03,-19.31L145.96,-21.93L145.96,-6.73Q145.96,-5.64 146.4,-5.2Q146.85,-4.76 147.93,-4.76L151.27,-4.76L151.27,0L147.46,0Z M154.73,-9.49Q154.73,-12.61 156.67,-14.38Q158.37,-15.91 161.09,-15.91Q164.53,-15.91 166.43,-13.4Q168.06,-11.25 168.06,-7.96Q168.06,-4.18 165.99,-1.97Q164.19,0 161.33,0Q158.64,0 156.98,-1.02Q155.45,0 153.24,0L149.43,0L149.43,-4.76L152.76,-4.76Q153.85,-4.76 154.29,-5.2Q154.73,-5.64 154.73,-6.73L154.73,-9.49ZM159.66,-6.09Q159.66,-4.76 161.09,-4.76Q163.2,-4.76 163.2,-8.13Q163.2,-11.29 161.09,-11.29Q159.66,-11.29 159.66,-9.62L159.66,-6.09Z M184.65,-21.66L183.46,-19.45L176.8,-19.45L177.99,-21.66L179.04,-21.66Q178.67,-22.37 178.67,-23.12Q178.67,-24.24 179.5,-25.06Q180.34,-25.87 181.49,-25.87Q182.65,-25.87 183.57,-25.06L183.57,-22.88Q182.68,-23.66 181.87,-23.66Q180.74,-23.66 180.74,-22.75Q180.74,-22.24 181.19,-21.66L184.65,-21.66ZM186.97,-19.31L191.93,-21.93L191.93,-7.41Q191.93,-3.98 189.82,-1.9Q187.85,0 184.69,0L171.29,0L173.77,-4.76L178.06,-4.76L178.06,-14.89L182.99,-17.51L182.99,-4.76L184.45,-4.76Q185.84,-4.76 186.41,-5.36Q186.97,-5.95 186.97,-7.45L186.97,-19.31Z M198.05,0L198.05,-19.31L202.98,-21.93L202.98,0L198.05,0Z" fill="#265c49" transform="translate(280.98 548) scale(1)"/>
+</svg>

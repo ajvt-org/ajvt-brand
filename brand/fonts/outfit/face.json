@@ -1,0 +1,13 @@
+{
+  "key": "outfit",
+  "family": "Outfit",
+  "license": "OFL-1.1",
+  "source": "https://github.com/Outfitio/Outfit-Fonts",
+  "files": [
+    {
+      "name": "Outfit[wght].ttf",
+      "bytes": 110884,
+      "variable": true
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "key": "cairo",
+  "family": "Cairo",
+  "license": "OFL-1.1",
+  "source": "https://fonts.google.com/specimen/Cairo",
+  "files": [
+    {
+      "name": "Cairo[slnt,wght].ttf",
+      "bytes": 599548,
+      "variable": true
+    }
+  ]
+}

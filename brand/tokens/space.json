@@ -1,0 +1,102 @@
+{
+  "$comment": "Spacing, page geometry and the logo's own proportions. The clear-space and min-size rules are enforced by the build, not just written in a guideline nobody reads.",
+  "space": {
+    "$description": "A 4px base scale.",
+    "0": "0", "1": "0.25rem", "2": "0.5rem", "3": "0.75rem", "4": "1rem",
+    "5": "1.5rem", "6": "2rem", "7": "3rem", "8": "4rem", "9": "6rem", "10": "8rem"
+  },
+  "radius": {
+    "sm": "4px", "md": "8px", "lg": "16px", "full": "9999px"
+  },
+  "page": {
+    "$description": "Print geometry for generated documents. Margins are wider on the binding edge so a stapled or bound copy stays readable.",
+    "size": "A4",
+    "margin": { "top": "22mm", "bottom": "20mm", "outer": "18mm", "inner": "24mm" },
+    "footer-height": "12mm"
+  },
+  "logo": {
+    "$description": "The rules the logo build enforces on every generated file.",
+    "clear-space": {
+      "$rule": "Minimum empty margin around any lockup, expressed as a fraction of the symbol's diameter. Nothing — text, image, page edge, another logo — may enter it.",
+      "factor": 0.25
+    },
+    "min-size": {
+      "$rule": "Below these the mosque arch fills in and the wordmark stops being legible. The build refuses to emit a raster smaller than this.",
+      "symbol-print-mm": 12,
+      "symbol-screen-px": 32,
+      "horizontal-print-mm": 32,
+      "horizontal-screen-px": 120,
+      "badge-print-mm": 18,
+      "badge-screen-px": 64,
+      "$roundel-motto": "Higher than the rest. The motto runs at roughly a third the wordmark's size, so it is the first thing to close up — the mark still looks fine while the motto has already become a texture.",
+      "roundel-motto-print-mm": 40,
+      "roundel-motto-screen-px": 220,
+      "$roundel-name": "The same constraint as the motto and for the same reason — a line of type on the arch's foot. A little lower, because an organ's name is set larger than the motto and is a shorter run.",
+      "roundel-name-print-mm": 34,
+      "roundel-name-screen-px": 190
+    },
+    "symbol-glyph": {
+      "$rule": "Where a committee's or an event's glyph sits inside the mosque: in the courtyard below the platform, between the minaret bases. `size` is the side of the glyph's 100-unit box after scaling.",
+      "$window": "The courtyard window is dropped whenever a glyph is present. Two small marks in the same space compete, and the window is the one that carries no meaning.",
+      "$scale": "Sized against THIS symbol, not against the committee's badge. The badge's mosque sits high in its roundel and leaves a large empty courtyard; this one fills the roundel, so the courtyard is far smaller and the same ratio does not transfer. Judge it here.",
+      "x": 256,
+      "y": 352,
+      "size": 135
+    },
+
+    "badge": {
+      "$rule": "The committee and event badge. The two rings define a band, and the arc type sits INSIDE that band — centred on its ink, not on its baseline. Centred on the baseline instead, a line of type straddles the inner ring and the ring draws straight through the letters.",
+      "$band": "Usable band = from `inner-ring` + half its width to `ring` - half its width. Keep `text-radius` at its middle, and keep the type small enough that its ink clears both edges.",
+      "ring": 250,
+      "ring-width": 7,
+      "inner-ring": 196,
+      "inner-ring-width": 2.5,
+      "text-radius": 223,
+      "top-size": 27,
+      "bottom-size": 34
+    },
+
+    "arch": {
+      "$rule": "The copper arch on the symbol. It is NOT a full ring: it runs from `start` clockwise through the top to `end`, leaving a gap centred on the bottom of the roundel, which is where the motto goes. Angles are degrees clockwise from the top.",
+      "$inner": "`inner` must stay equal to the panel disc's radius. The two are the same curve, and any tip that moves the inner edge off it opens a sliver of bare ground between the arch and the white where they should touch.",
+      "$taper": "How many degrees the OUTER edge is pulled back at each end. Larger is a longer, sharper point; smaller is a blunter, shorter wedge. 10 was a needle, 2.5 is nearly a cut.",
+      "outer": 208,
+      "inner": 198,
+      "start": 241,
+      "end": 120,
+      "taper": 4
+    },
+
+    "roundel-name": {
+      "$rule": "Where an organ's name is set on the roundel-name lockup: HORIZONTALLY, in the opening the arch leaves at the foot of the roundel. Straight and small it reads as a caption naming the body; curved along the arch it blends into the mark and stops being read at all.",
+      "$fit": "`max-width` is what the line is shrunk to if it does not fit. The roundel is 273 units across at this baseline, so 250 keeps a margin either side.",
+      "baseline": 420,
+      "size": 34,
+      "max-width": 250
+    },
+
+    "motto": {
+      "$rule": "The motto's place on the roundel-motto lockup. `radius` is the baseline's distance from the centre, `size` the em size, `sweep` the widest arc it may occupy in degrees. All three are measured off the original artwork. The arch's gap is 120 degrees, so a sweep beyond about 115 runs the motto out under the arch.",
+      "radius": 214,
+      "size": 40,
+      "sweep": 112
+    },
+
+    "panel-safe": {
+      "$rule": "The clear WHITE area inside the symbol's panel — between the two minarets and above the domes. It is much smaller than the panel path itself, because the minarets, the domes and the platform are all painted OVER the panel. Anything typeset here (the roundel lockup's wordmark) must fit inside this box; text sized to the panel instead spills onto a minaret.",
+      "$derived-from": "logos/src/symbol.svg — minaret inner edges at x 143 and 369; the arch ring's inner edge (r 198) drops to y 89 where the box's corners meet it; and the floor is the LEFT DOME'S FINIAL at y 154, not the dome apex at y 187. The finial is the easy one to miss: it is a thin shape well above the dome it sits on, so text sized to the dome clears the dome and still collides with the crescent. Redraw any of that and these four numbers must be rechecked.",
+      "x": 150,
+      "y": 89,
+      "w": 212,
+      "h": 60
+    },
+
+    "grid": {
+      "$description": "The symbol is drawn on a 100x100 unit canvas. Every lockup positions against these units, which is what keeps a committee badge optically the same weight as the parent mark.",
+      "canvas": 100,
+      "symbol-diameter": 100,
+      "badge-ring-width": 6,
+      "wordmark-cap-height": 14
+    }
+  }
+}

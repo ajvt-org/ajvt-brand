@@ -1,0 +1,220 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# THE REGISTRY — every mark AJVT owns is one entry here. Nothing else describes
+# a logo. You do not draw one; you describe one.
+#
+# TO ADD A MARK
+#   1. copy the nearest entry below and change the fields
+#   2. committees: drop a glyph in logos/src/glyphs/<glyph>.svg
+#      events:     drop artwork in logos/src/marks/<mark>.svg and give it a
+#                  block under `marks` in brand/tokens/color.json
+#   3. npm run build
+#
+#   You get every lockup, in colour, grayscale, one-ink and knockout, as SVG +
+#   PNG + PDF, plus a generated guidelines page.
+#
+# GLYPH OR MARK, NEVER BOTH
+#   glyph:  set into the mosque's courtyard. The mark stays the association's.
+#   mark:   replaces the mosque. For events, which run one season and are
+#           allowed artwork of their own. Colours still come from the palette.
+#
+# `kind` DECIDES THE FOLDER
+#   association -> logos/dist/ajvt/            organ     -> logos/dist/organs/<id>/
+#   committee   -> logos/dist/committees/<id>/ event     -> logos/dist/events/<id>/
+#   team        -> logos/dist/teams/<id>/
+#
+# IDS are English and kebab-case, so a path reads the same in both languages.
+# The names that actually appear on the mark live in `name`.
+#
+# FRENCH NAMES take a capital on the FIRST NOUN only; a following adjective
+# stays lowercase — "Bureau exécutif", "Comité de santé". Title case here reads
+# as English typography wearing French words.
+# ─────────────────────────────────────────────────────────────────────────────
+
+meta:
+  org: AJVT
+  domain: ajvt.net
+  locales: [ar, fr]           # ar is primary and right-to-left
+  primary-locale: ar
+
+# Shared defaults. An entity only lists what differs from these.
+defaults:
+  symbol: mosque              # logos/src/symbol.svg — the one piece of drawn artwork
+  accent: copper              # a key in brand/tokens/color.json → accents
+  variants: [color, grayscale, mono-dark, mono-light]
+  formats:
+    svg: true
+    png: [256, 512, 1024]
+    pdf: true
+  status: active
+
+# ═══ THE ASSOCIATION ═════════════════════════════════════════════════════════
+
+entities:
+  - id: ajvt
+    kind: association
+    glyph: null                 # the parent carries no glyph; the mosque IS the mark
+    accent: copper
+    name:
+      ar: رابطة شباب قرية التاكلالت
+      fr: Association des Jeunes de Taguilalett
+    short:
+      ar: شباب التاكلالت
+      fr: AJVT
+    wordmark:
+      ar: { eyebrow: رابطة شباب, main: التاكلالت }
+      fr: { eyebrow: Association des Jeunes de, main: Taguilalett }
+    motto:
+      ar: خيرية - وحدة - تعاون
+      fr: Charité - Unité - Coopération
+    endorsement:
+      ar: رابطة شباب التاكلالت
+      fr: Association des Jeunes de Taguilalett
+    seat:
+      ar: قرية التاكلالت · مقاطعة مذرذرة
+      fr: Village de Taguilalett · Moughataa de Mederdra
+    layouts: [horizontal, vertical, symbol, wordmark, roundel, roundel-motto, favicon]
+    primary: true               # exactly one entity may be primary
+
+  # ═══ STATUTORY ORGANS ═══════════════════════════════════════════════════════
+  # The association acting in a particular capacity. No glyph: they take the
+  # parent mark with a name plate.
+
+  - id: general-assembly
+    kind: organ
+    glyph: null
+    name:
+      ar: الجمعية العامة
+      fr: Assemblée générale
+    wordmark:
+      ar: { main: الجمعية العامة }
+      fr: { main: Assemblée générale }
+    layouts: [horizontal, vertical, roundel-name, seal]
+
+  - id: executive-bureau
+    kind: organ
+    glyph: null
+    name:
+      ar: المكتب التنفيذي
+      fr: Bureau exécutif
+    wordmark:
+      ar: { main: المكتب التنفيذي }
+      fr: { main: Bureau exécutif }
+    layouts: [horizontal, vertical, roundel-name, seal]
+
+  - id: general-secretariat
+    kind: organ
+    glyph: null
+    name:
+      ar: الأمانة العامة
+      fr: Secrétariat général
+    wordmark:
+      ar: { main: الأمانة العامة }
+      fr: { main: Secrétariat général }
+    layouts: [horizontal, vertical, roundel-name, seal]
+
+  - id: transitional-oversight
+    kind: organ
+    status: transitional        # a mark with an end date; see `until`
+    until: 2026-10-01
+    glyph: null
+    name:
+      ar: لجنة الرقابة الانتقالية
+      fr: Comité de contrôle transitoire
+    wordmark:
+      ar: { main: لجنة الرقابة الانتقالية }
+      fr: { main: Contrôle transitoire }
+    layouts: [horizontal, vertical, roundel-name]
+
+  # ═══ STANDING COMMITTEES ═════════════════════════════════════════════════════
+  # A glyph gives each one a badge AND its own symbol: the mosque with that glyph
+  # in the courtyard.
+
+  - id: health
+    kind: committee
+    glyph: stethoscope-heart
+    accent: clinical
+    name:
+      ar: اللجنة الصحية
+      fr: Comité de santé
+    wordmark:
+      ar: { main: اللجنة الصحية }
+      fr: { main: Comité de santé }
+    layouts: [badge, horizontal, vertical, symbol]
+
+  - id: communication
+    kind: committee
+    glyph: mic-camera
+    accent: copper
+    name:
+      ar: اللجنة الإعلامية
+      fr: Comité de communication
+    wordmark:
+      ar: { main: اللجنة الإعلامية }
+      fr: { main: Comité de communication }
+    layouts: [badge, horizontal, vertical, symbol]
+
+  - id: sports
+    kind: committee
+    glyph: football
+    accent: azure
+    name:
+      ar: اللجنة الرياضية
+      fr: Comité des sports
+    wordmark:
+      ar: { main: اللجنة الرياضية }
+      fr: { main: Comité des sports }
+    layouts: [badge, horizontal, vertical, symbol]
+
+  # ═══ EVENTS ══════════════════════════════════════════════════════════════════
+  # Own artwork via `mark:`. They still carry the parent endorsement.
+
+  - id: u18-cup-2026
+    kind: event
+    season: "2026"
+    mark: u18-cup
+    accent: copper
+    ground: "#10271f"
+    name:
+      ar: كأس رابطة شباب التاكلالت الناشئين
+      fr: Coupe des juniors de l'Association des Jeunes de Taguilalett
+    short:
+      ar: كأس الناشئين
+      fr: Coupe des juniors
+    wordmark:
+      ar: { main: كأس الناشئين }
+      fr: { main: Coupe des juniors }
+    layouts: [badge, vertical, horizontal, symbol]
+    cards: [match-result, match-fixture, standings, squad-announcement]
+
+  - id: mayor-cup-2026
+    kind: event
+    season: "2026"
+    mark: mayor-cup
+    accent: saffron             
+    ground: "#10271f"           
+    name:
+      ar: كأس عمدة التاكلالت
+      fr: Coupe du maire de Taguilalett
+    short:
+      ar: كأس العمدة
+      fr: Coupe du maire
+    wordmark:
+      ar: { main: كأس العمدة }
+      fr: { main: Coupe du maire }
+    layouts: [badge, vertical, horizontal, symbol]
+    cards: [match-result, match-fixture, standings, squad-announcement]
+
+  - id: medical-caravan-2026
+    kind: event
+    season: "2026"
+    mark: medical-caravan
+    accent: clinical
+    ground: "#1d5c50"
+    name:
+      ar: القافلة الطبية
+      fr: Caravane médicale
+    wordmark:
+      ar: { main: القافلة الطبية }
+      fr: { main: Caravane médicale }
+    layouts: [badge, horizontal, vertical, symbol]
+    cards: [announcement, schedule]

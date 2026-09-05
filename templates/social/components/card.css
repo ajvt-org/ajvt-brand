@@ -1,0 +1,144 @@
+/*
+  THE CARD SHELL.
+  Shared by every card template. A card file supplies structure and its own few
+  rules; this supplies the ground, the type, the mark and the safe area, so a
+  new card type starts out already looking like AJVT.
+
+  Sizes come from formats.json and are set as --w/--h on .stage by the builder.
+*/
+* , *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; background: transparent; }
+
+.stage {
+  width: var(--w);
+  height: var(--h);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  font-family: var(--font-arabic-content);
+  color: #fff;
+  /* The event's own ground when it has one, the brand green otherwise. */
+  background:
+    radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--ground) 78%, #fff 22%) 0%, var(--ground) 62%),
+    var(--ground);
+}
+
+/* A quiet echo of the symbol's arch, so a card is recognisable at thumbnail
+   size before any word is readable. */
+.stage::before {
+  content: "";
+  position: absolute;
+  left: 50%; top: -14%;
+  width: 128%; aspect-ratio: 1;
+  transform: translateX(-50%);
+  border: calc(var(--w) * 0.012) solid rgba(255,255,255,0.10);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.card {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  /* Safe area. Instagram crops a square to a circle in some surfaces and a
+     story loses the top and bottom bands to the interface. Nothing meaningful
+     goes outside this. */
+  padding: calc(var(--w) * 0.085);
+  text-align: center;
+  align-items: center;
+}
+
+/* Three parts, each owning its own space. Earlier this relied on competing
+   `auto` margins, which let tall content push the mark past the bottom edge —
+   and .stage clips, so the logo silently lost its lower half. */
+.card__head { width: 100%; flex: 0 0 auto; }
+.card__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.card__competition {
+  font-family: var(--font-arabic-wordmark);
+  font-weight: var(--wordmark-weight-arabic);
+  font-size: calc(var(--w) * 0.042);
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+.card__stage {
+  margin-top: calc(var(--w) * 0.012);
+  font-size: calc(var(--w) * 0.028);
+  color: var(--accent-tint);
+  letter-spacing: 0.04em;
+}
+
+.card__foot { width: 100%; flex: 0 0 auto; }
+.card__meta {
+  font-size: calc(var(--w) * 0.026);
+  color: rgba(255,255,255,0.72);
+  display: flex; gap: .5em; justify-content: center; align-items: center;
+}
+.card__meta .dot { opacity: .5; }
+.card__note {
+  margin-top: calc(var(--w) * 0.014);
+  font-size: calc(var(--w) * 0.024);
+  color: rgba(255,255,255,0.55);
+}
+.card__mark {
+  margin: calc(var(--w) * 0.05) auto 0;
+  width: calc(var(--w) * 0.34);
+  height: calc(var(--w) * 0.10);
+  display: flex; align-items: center; justify-content: center;
+}
+/* The lockup keeps its own aspect ratio and is bounded on BOTH axes, so a
+   vertical lockup dropped in here shrinks instead of overflowing the card. */
+.card__mark svg { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; }
+
+/* ── Match result ───────────────────────────────────────────────────────── */
+.score {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: calc(var(--w) * 0.03);
+  width: 100%;
+}
+.score__side { display: flex; flex-direction: column; align-items: center; gap: calc(var(--w) * 0.01); }
+.score__team {
+  font-family: var(--font-arabic-wordmark);
+  font-weight: var(--wordmark-weight-arabic);
+  font-size: calc(var(--w) * 0.052);
+  line-height: 1.2;
+  min-height: 2.4em;
+  display: flex; align-items: center; justify-content: center;
+}
+.score__num {
+  font-family: var(--font-arabic-wordmark);
+  font-weight: 900;
+  font-size: calc(var(--w) * 0.20);
+  line-height: 1;
+  color: var(--accent-tint);
+  font-variant-numeric: tabular-nums;
+}
+.score__sep {
+  font-size: calc(var(--w) * 0.07);
+  color: rgba(255,255,255,0.35);
+  align-self: end;
+  padding-bottom: calc(var(--w) * 0.03);
+}
+.score__pens {
+  font-size: calc(var(--w) * 0.028);
+  color: var(--accent-tint);
+  margin-top: calc(var(--w) * -0.01);
+}
+.scorers {
+  margin-top: calc(var(--w) * 0.04);
+  margin-bottom: calc(var(--w) * 0.03);
+  font-size: calc(var(--w) * 0.028);
+  line-height: 1.9;
+  color: rgba(255,255,255,0.85);
+  white-space: pre-line;
+}

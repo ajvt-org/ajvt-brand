@@ -1,0 +1,13 @@
+{
+  "key": "montserrat",
+  "family": "Montserrat",
+  "license": "OFL-1.1",
+  "source": "https://fonts.google.com/specimen/Montserrat",
+  "files": [
+    {
+      "name": "Montserrat[wght].ttf",
+      "bytes": 744936,
+      "variable": true
+    }
+  ]
+}

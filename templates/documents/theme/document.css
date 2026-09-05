@@ -1,0 +1,188 @@
+/*
+  THE HOUSE STYLE FOR AJVT PAPERS.
+  This one file decides what every generated document looks like. Change it and
+  every décision, règlement, TdR and courrier restyles on the next build — which
+  is the reason documents are written in Markdown and not laid out by hand.
+
+  It reads its colours and faces from brand/tokens/tokens.css. Do not write a
+  hex code or a font name here.
+*/
+
+@page {
+  size: A4;
+  margin: 22mm 18mm 20mm 18mm;
+}
+
+/* Cover pages carry the logo, so they set their own margins. */
+@page :first { margin: 0; }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { font-size: 11pt; }
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: #fff;
+  font-family: var(--font-latin-content);
+  line-height: var(--leading-latin-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Direction ───────────────────────────────────────────────────────────
+   Arabic documents are right to left and set in the Arabic content face at a
+   slightly larger size, because Amiri sets smaller than EB Garamond at the same
+   point size. The ratio comes from type.json → pairing. */
+body[dir="rtl"] {
+  font-family: var(--font-arabic-content);
+  line-height: var(--leading-arabic-body);
+  font-size: calc(1em * var(--arabic-size-ratio));
+}
+
+/* ── Cover ───────────────────────────────────────────────────────────────
+   Used by décisions and règlements: mark, association name, rule, title,
+   subtitle, a short standfirst, then the approval date. */
+.cover {
+  height: 296mm;
+  box-sizing: border-box;
+  padding: 46mm 26mm 24mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  page-break-after: always;
+  background: #fff;
+}
+.cover__mark { width: 42mm; margin-bottom: 7mm; }
+.cover__mark img, .cover__mark svg { width: 100%; height: auto; display: block; }
+.cover__org {
+  font-size: var(--text-md);
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  margin-bottom: 5mm;
+}
+.cover__rule { width: 26mm; height: 1px; background: var(--accent-soft); margin: 0 0 11mm; }
+.cover__title {
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 0 0 4mm;
+  color: var(--text);
+}
+.cover__subtitle {
+  font-size: var(--text-xl);
+  color: var(--accent);
+  font-weight: 400;
+  margin: 0 0 9mm;
+}
+.cover__standfirst {
+  max-width: 118mm;
+  color: var(--text-muted);
+  font-size: var(--text-base);
+  margin: 0 0 auto;
+}
+.cover__meta {
+  margin-top: auto;
+  padding-top: 6mm;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+.cover__meta strong { color: var(--text); font-weight: 400; }
+.cover__seal { width: 30mm; margin: 8mm auto 0; opacity: 0.9; }
+
+/* ── Letterhead ──────────────────────────────────────────────────────────
+   Used by termes de référence, courriers and rapports: the mark and the
+   association's identity across the top of page one, then straight into text. */
+.letterhead {
+  display: flex;
+  align-items: center;
+  gap: 7mm;
+  padding-bottom: 6mm;
+  margin-bottom: 9mm;
+  border-bottom: 1px solid var(--rule);
+}
+.letterhead__mark { width: 22mm; flex: none; }
+.letterhead__mark img, .letterhead__mark svg { width: 100%; height: auto; display: block; }
+.letterhead__org { font-size: var(--text-lg); color: var(--text); line-height: 1.2; }
+.letterhead__seat {
+  font-size: var(--text-xs);
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 1.5mm;
+}
+body[dir="rtl"] .letterhead__seat { letter-spacing: 0; text-transform: none; }
+
+.doc-title { font-size: var(--text-2xl); font-weight: 400; margin: 0 0 2mm; }
+.doc-subtitle { font-size: var(--text-md); color: var(--text-muted); font-style: italic; margin: 0 0 2mm; }
+body[dir="rtl"] .doc-subtitle { font-style: normal; }
+.doc-dateline {
+  color: var(--accent);
+  font-size: var(--text-sm);
+  padding-bottom: 3mm;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 7mm;
+}
+
+/* ── Body ────────────────────────────────────────────────────────────────── */
+h1, h2, h3, h4 { color: var(--accent); font-weight: 400; page-break-after: avoid; }
+h1 { font-size: var(--text-xl); margin: 9mm 0 3mm; }
+h2 { font-size: var(--text-lg); margin: 7mm 0 2.5mm; }
+h3 { font-size: var(--text-md); margin: 5mm 0 2mm; color: var(--accent-soft); }
+h3 { color: var(--text-muted); }
+
+p { margin: 0 0 3.5mm; text-align: justify; hyphens: auto; }
+body[dir="rtl"] p { text-align: justify; }
+
+ul, ol { margin: 0 0 4mm; padding-inline-start: 7mm; }
+li { margin-bottom: 1.8mm; }
+li::marker { color: var(--accent); }
+
+strong { font-weight: 600; color: var(--text); }
+a { color: var(--brand); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+
+blockquote {
+  margin: 4mm 0;
+  padding-inline-start: 5mm;
+  border-inline-start: 2px solid var(--accent-soft);
+  color: var(--text-muted);
+}
+
+hr { border: 0; height: 1px; background: var(--rule); margin: 7mm 0; }
+
+table { width: 100%; border-collapse: collapse; margin: 4mm 0; font-size: var(--text-sm); }
+th, td { padding: 2mm 3mm; border-bottom: 1px solid var(--rule); text-align: start; }
+th { color: var(--accent); font-weight: 600; border-bottom-width: 1.5px; }
+
+/* ── Articles ────────────────────────────────────────────────────────────
+   `## المادة (1): ...` and `## Article 1 — ...` get the rule and spacing the
+   association's existing décisions use. Applied by the build, not by the
+   author — the author just writes a heading. */
+.article { page-break-inside: avoid; }
+.article + .article { border-top: 1px solid var(--rule); padding-top: 5mm; margin-top: 5mm; }
+
+/* ── Signature block ─────────────────────────────────────────────────────── */
+.signatures { display: flex; gap: 14mm; margin-top: 14mm; page-break-inside: avoid; }
+.signature { flex: 1; }
+.signature__role { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 16mm; }
+.signature__line { border-top: 1px solid var(--text-muted); padding-top: 1.5mm; font-size: var(--text-sm); }
+
+/* ── Running footer ──────────────────────────────────────────────────────
+   Chrome cannot put live HTML in a page margin, so the footer is drawn as a
+   fixed element that repeats on every printed page. */
+.running-footer {
+  position: fixed;
+  bottom: 8mm; left: 0; right: 0;
+  display: flex; justify-content: space-between;
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  letter-spacing: 0.04em;
+  padding-top: 2mm;
+  border-top: 1px solid var(--rule);
+}
+.cover ~ .running-footer { display: flex; }
+
+@media screen {
+  body { background: var(--paper); padding: 10mm; }
+  .page { background: #fff; max-width: 210mm; margin: 0 auto; padding: 22mm 18mm; box-shadow: 0 2px 20px rgba(0,0,0,.08); }
+}

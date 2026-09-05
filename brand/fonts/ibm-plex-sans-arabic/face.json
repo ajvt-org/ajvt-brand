@@ -1,0 +1,43 @@
+{
+  "key": "ibm-plex-sans-arabic",
+  "family": "IBM Plex Sans Arabic",
+  "license": "OFL-1.1",
+  "source": "https://github.com/IBM/plex",
+  "files": [
+    {
+      "name": "IBMPlexSansArabic-Bold.ttf",
+      "bytes": 246992,
+      "variable": false
+    },
+    {
+      "name": "IBMPlexSansArabic-ExtraLight.ttf",
+      "bytes": 241652,
+      "variable": false
+    },
+    {
+      "name": "IBMPlexSansArabic-Light.ttf",
+      "bytes": 238564,
+      "variable": false
+    },
+    {
+      "name": "IBMPlexSansArabic-Medium.ttf",
+      "bytes": 242100,
+      "variable": false
+    },
+    {
+      "name": "IBMPlexSansArabic-Regular.ttf",
+      "bytes": 235924,
+      "variable": false
+    },
+    {
+      "name": "IBMPlexSansArabic-SemiBold.ttf",
+      "bytes": 244616,
+      "variable": false
+    },
+    {
+      "name": "IBMPlexSansArabic-Thin.ttf",
+      "bytes": 242204,
+      "variable": false
+    }
+  ]
+}

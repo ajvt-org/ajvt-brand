@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <title>Comité de communication — اللجنة الإعلامية</title>
+
+  <!--
+    Drawn from the committee's existing badge: a broadcast microphone and a
+    STILLS camera beside it. Not a camcorder — the badge shows a prism hump and a
+    large lens, and getting that wrong changes what the committee appears to do.
+
+    The microphone sits on a SHORT stand. A tall stem turns the pair into a
+    lopsided drawing: the mic climbs out of the optical centre while the camera
+    stays put, and the whole glyph reads as tilted. Stem 9 units against a
+    capsule of 37, so the mass stays where the camera's mass is.
+
+    Filled masses rather than outlines, because that is how the mosque itself is
+    drawn: domes, towers and platform are all solid shapes. An outline glyph sits
+    inside it as a lighter, thinner object and never quite belongs.
+
+    Every light detail is a HOLE cut with fill-rule="evenodd", not a shape in the
+    soft tone. The soft tone drops out of the one-ink variants; a hole does not,
+    so the camera stays a camera in a single ink instead of collapsing to a blob.
+    The lens nests four deep: body fills, ring cuts, glass fills again, catchlight
+    cuts. That last hole is what stops the lens reading as a flat dot.
+
+    The prism and the hot shoe are separate elements, not subpaths. Two subpaths
+    of one evenodd path CANCEL where they overlap, so anything that has to weld
+    onto the body has to be its own element.
+  -->
+
+  <!-- Microphone: capsule with its grille cut out, yoke, short stem, base. -->
+  <path fill="var(--glyph, #b0643e)" fill-rule="evenodd" d="
+    M 21,18.5 a 11,11 0 0 1 11,11 V 45 a 11,11 0 0 1 -22,0 V 29.5 A 11,11 0 0 1 21,18.5 Z
+    M 14,27.5 h 14 v 3.8 H 14 Z
+    M 14,35 h 14 v 3.8 H 14 Z
+    M 14,42.5 h 14 v 3.8 H 14 Z"/>
+  <path d="M 5,50 a 16,16 0 0 0 32,0" fill="none" stroke="var(--glyph, #b0643e)" stroke-width="5.4" stroke-linecap="round"/>
+  <rect x="18" y="65.5" width="6" height="9" fill="var(--glyph, #b0643e)"/>
+  <rect x="7" y="74.5" width="28" height="7" rx="3.5" fill="var(--glyph, #b0643e)"/>
+
+  <!-- Camera: hot shoe and prism welded on top, body below, lens cut through. -->
+  <rect x="47.5" y="29.5" width="9.5" height="7.5" rx="2.4" fill="var(--glyph, #b0643e)"/>
+  <path fill="var(--glyph, #b0643e)" d="M 58,37 L 61,27 Q 62,23.5 65.5,23.5 H 76.5 Q 80,23.5 81,27 L 84,37 Z"/>
+  <path fill="var(--glyph, #b0643e)" fill-rule="evenodd" d="
+    M 53,34 H 89 a 9,9 0 0 1 9,9 V 71 a 9,9 0 0 1 -9,9 H 53 a 9,9 0 0 1 -9,-9 V 43 a 9,9 0 0 1 9,-9 Z
+    M 71,40.5 a 16.5,16.5 0 1 0 0.01,0 Z
+    M 71,47.5 a 9.5,9.5 0 1 1 -0.01,0 Z
+    M 66.6,50.1 a 2.5,2.5 0 1 0 0.01,0 Z
+    M 90,38.9 a 2.6,2.6 0 1 0 0.01,0 Z"/>
+</svg>

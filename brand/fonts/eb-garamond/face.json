@@ -1,0 +1,13 @@
+{
+  "key": "eb-garamond",
+  "family": "EB Garamond",
+  "license": "OFL-1.1",
+  "source": "https://github.com/octaviopardo/EBGaramond12",
+  "files": [
+    {
+      "name": "EBGaramond[wght].ttf",
+      "bytes": 851176,
+      "variable": true
+    }
+  ]
+}

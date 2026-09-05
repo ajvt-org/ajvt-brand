@@ -1,0 +1,53 @@
+{
+  "key": "poppins",
+  "family": "Poppins",
+  "license": "OFL-1.1",
+  "source": "https://fonts.google.com/specimen/Poppins",
+  "files": [
+    {
+      "name": "Poppins-Black.ttf",
+      "bytes": 153440,
+      "variable": false
+    },
+    {
+      "name": "Poppins-Bold.ttf",
+      "bytes": 155996,
+      "variable": false
+    },
+    {
+      "name": "Poppins-ExtraBold.ttf",
+      "bytes": 154836,
+      "variable": false
+    },
+    {
+      "name": "Poppins-ExtraLight.ttf",
+      "bytes": 163568,
+      "variable": false
+    },
+    {
+      "name": "Poppins-Light.ttf",
+      "bytes": 161936,
+      "variable": false
+    },
+    {
+      "name": "Poppins-Medium.ttf",
+      "bytes": 158576,
+      "variable": false
+    },
+    {
+      "name": "Poppins-Regular.ttf",
+      "bytes": 160316,
+      "variable": false
+    },
+    {
+      "name": "Poppins-SemiBold.ttf",
+      "bytes": 157312,
+      "variable": false
+    },
+    {
+      "name": "Poppins-Thin.ttf",
+      "bytes": 163672,
+      "variable": false
+    }
+  ]
+}

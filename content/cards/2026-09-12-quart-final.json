@@ -1,0 +1,17 @@
+{
+  "$comment": "A published card, kept as data so it can be re-rendered after a template change. The studio writes files in this shape.",
+  "template": "match-result",
+  "formats": ["square", "story"],
+  "locale": "ar",
+  "entity": "u18-cup-2026",
+  "competition": "كأس رابطة شباب التاكلالت",
+  "stage": "ربع النهائي",
+  "homeTeam": "فريق الوحدة",
+  "homeScore": 2,
+  "awayTeam": "فريق الأمل",
+  "awayScore": 1,
+  "date": "2026-09-12",
+  "venue": "ملعب التاكلالت",
+  "scorers": "محمد ولد أحمد ٢٣'\nسيدي ولد المختار ٥٨'\nالبشير ولد عبد الله ٧١'",
+  "note": "يتأهل فريق الوحدة إلى نصف النهائي"
+}

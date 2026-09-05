@@ -1,0 +1,13 @@
+{
+  "key": "inter",
+  "family": "Inter",
+  "license": "OFL-1.1",
+  "source": "https://github.com/rsms/inter",
+  "files": [
+    {
+      "name": "Inter[opsz,wght].ttf",
+      "bytes": 876576,
+      "variable": true
+    }
+  ]
+}

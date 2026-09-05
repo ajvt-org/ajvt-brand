@@ -1,0 +1,47 @@
+<!--
+  Match result. The most-published asset in this repository — regenerated after
+  every fixture, which is exactly why nobody should be opening a design tool to
+  make one.
+
+  Placeholders are {{field}} from card.json, plus {{#field}}…{{/field}} for a
+  block that disappears when the field is empty. Everything else comes from the
+  shared shell in templates/social/components/card.css: tokens, fonts, the event
+  mark, the safe area and the format's dimensions.
+
+  Keep the three-part structure — head, body, foot. The shell gives each one its
+  own space; content that sits outside them can overflow the card, and .stage
+  clips silently.
+-->
+<div class="card card--match">
+
+  <header class="card__head">
+    <div class="card__competition">{{competition}}</div>
+    <div class="card__stage">{{stage}}</div>
+  </header>
+
+  <div class="card__body">
+    <div class="score">
+      <div class="score__side">
+        <div class="score__team">{{homeTeam}}</div>
+        <div class="score__num">{{homeScore}}</div>
+      </div>
+      <div class="score__sep">—</div>
+      <div class="score__side">
+        <div class="score__team">{{awayTeam}}</div>
+        <div class="score__num">{{awayScore}}</div>
+      </div>
+    </div>
+    {{#penalties}}<div class="score__pens">ركلات الترجيح · {{penalties}}</div>{{/penalties}}
+    {{#scorers}}<div class="scorers">{{scorers}}</div>{{/scorers}}
+  </div>
+
+  <footer class="card__foot">
+    <div class="card__meta">
+      <span>{{dateLong}}</span>
+      {{#venue}}<span class="dot">·</span><span>{{venue}}</span>{{/venue}}
+    </div>
+    {{#note}}<div class="card__note">{{note}}</div>{{/note}}
+    <div class="card__mark">{{mark}}</div>
+  </footer>
+
+</div>

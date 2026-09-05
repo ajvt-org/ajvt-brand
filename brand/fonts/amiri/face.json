@@ -1,0 +1,18 @@
+{
+  "key": "amiri",
+  "family": "Amiri",
+  "license": "OFL-1.1",
+  "source": "https://github.com/aliftype/amiri",
+  "files": [
+    {
+      "name": "Amiri-Bold.ttf",
+      "bytes": 413480,
+      "variable": false
+    },
+    {
+      "name": "Amiri-Regular.ttf",
+      "bytes": 431116,
+      "variable": false
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "match-result",
+  "name": { "ar": "نتيجة مباراة", "fr": "Résultat de match" },
+  "description": {
+    "ar": "بطاقة تُنشر بعد نهاية كل مباراة.",
+    "fr": "Carte publiée après chaque match."
+  },
+  "entity": "u18-cup-2026",
+  "formats": ["square", "story"],
+  "$comment": "`fields` is the contract between this template and the studio. The studio builds its form from this list — it has no knowledge of what a match is. Add a field here and an input appears; there is no second place to edit.",
+  "fields": [
+    { "key": "competition", "type": "text",   "label": { "ar": "البطولة", "fr": "Compétition" }, "default": "كأس رابطة شباب التاكلالت" },
+    { "key": "stage",       "type": "text",   "label": { "ar": "الدور", "fr": "Tour" }, "default": "دور المجموعات" },
+    { "key": "homeTeam",    "type": "text",   "label": { "ar": "الفريق الأول", "fr": "Équipe 1" }, "required": true },
+    { "key": "homeScore",   "type": "number", "label": { "ar": "النتيجة", "fr": "Score" }, "default": 0, "min": 0, "max": 99 },
+    { "key": "awayTeam",    "type": "text",   "label": { "ar": "الفريق الثاني", "fr": "Équipe 2" }, "required": true },
+    { "key": "awayScore",   "type": "number", "label": { "ar": "النتيجة", "fr": "Score" }, "default": 0, "min": 0, "max": 99 },
+    { "key": "penalties",   "type": "text",   "label": { "ar": "ركلات الترجيح", "fr": "Tirs au but" }, "hint": { "ar": "اتركه فارغًا إن لم تكن هناك ركلات", "fr": "Laisser vide s'il n'y en a pas" } },
+    { "key": "date",        "type": "date",   "label": { "ar": "التاريخ", "fr": "Date" }, "required": true },
+    { "key": "venue",       "type": "text",   "label": { "ar": "الملعب", "fr": "Stade" }, "default": "ملعب التاكلالت" },
+    { "key": "scorers",     "type": "textarea", "label": { "ar": "الأهداف", "fr": "Buteurs" }, "hint": { "ar": "سطر لكل هدف: اسم اللاعب ٢٣'", "fr": "Une ligne par but" } },
+    { "key": "note",        "type": "text",   "label": { "ar": "ملاحظة", "fr": "Note" } }
+  ]
+}

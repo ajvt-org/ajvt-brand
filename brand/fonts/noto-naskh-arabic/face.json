@@ -1,0 +1,13 @@
+{
+  "key": "noto-naskh-arabic",
+  "family": "Noto Naskh Arabic",
+  "license": "OFL-1.1",
+  "source": "https://fonts.google.com/noto/specimen/Noto+Naskh+Arabic",
+  "files": [
+    {
+      "name": "NotoNaskhArabic[wght].ttf",
+      "bytes": 307592,
+      "variable": true
+    }
+  ]
+}

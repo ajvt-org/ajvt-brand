@@ -1,0 +1,7 @@
+{
+  "$comment": "Every size AJVT publishes at. A card template declares which of these it supports; the builder and the studio both read this list, so adding a platform size is one entry here.",
+  "square":    { "w": 1080, "h": 1080, "label": { "ar": "مربع", "fr": "Carré" },   "use": "Facebook, Instagram feed, WhatsApp" },
+  "story":     { "w": 1080, "h": 1920, "label": { "ar": "ستوري", "fr": "Story" },  "use": "Instagram and WhatsApp stories" },
+  "portrait":  { "w": 1080, "h": 1350, "label": { "ar": "عمودي", "fr": "Portrait" }, "use": "Instagram feed, tallest allowed" },
+  "landscape": { "w": 1200, "h": 630,  "label": { "ar": "أفقي", "fr": "Paysage" }, "use": "Link previews, ajvt.net" }
+}

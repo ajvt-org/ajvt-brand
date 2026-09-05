@@ -1,0 +1,43 @@
+{
+  "key": "tajawal",
+  "family": "Tajawal",
+  "license": "OFL-1.1",
+  "source": "https://fonts.google.com/specimen/Tajawal",
+  "files": [
+    {
+      "name": "Tajawal-Black.ttf",
+      "bytes": 59028,
+      "variable": false
+    },
+    {
+      "name": "Tajawal-Bold.ttf",
+      "bytes": 59988,
+      "variable": false
+    },
+    {
+      "name": "Tajawal-ExtraBold.ttf",
+      "bytes": 59648,
+      "variable": false
+    },
+    {
+      "name": "Tajawal-ExtraLight.ttf",
+      "bytes": 55784,
+      "variable": false
+    },
+    {
+      "name": "Tajawal-Light.ttf",
+      "bytes": 61864,
+      "variable": false
+    },
+    {
+      "name": "Tajawal-Medium.ttf",
+      "bytes": 62280,
+      "variable": false
+    },
+    {
+      "name": "Tajawal-Regular.ttf",
+      "bytes": 60364,
+      "variable": false
+    }
+  ]
+}

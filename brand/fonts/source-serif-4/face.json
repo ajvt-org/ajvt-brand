@@ -1,0 +1,13 @@
+{
+  "key": "source-serif-4",
+  "family": "Source Serif 4",
+  "license": "OFL-1.1",
+  "source": "https://github.com/adobe-fonts/source-serif",
+  "files": [
+    {
+      "name": "SourceSerif4[opsz,wght].ttf",
+      "bytes": 1209508,
+      "variable": true
+    }
+  ]
+}

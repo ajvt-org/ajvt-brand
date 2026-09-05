@@ -1,0 +1,355 @@
+{
+  "$comment": "TYPOGRAPHY — ONE SWITCH.  Change a value in `active` and every logo wordmark, document, slide and social card follows on the next `npm run build`. Nothing downstream names a font; templates ask for role `arabic.wordmark` or `latin.content` and this file decides what that is. Switch from the CLI with `npm run font:set arabic.content=noto-naskh-arabic`, which validates the choice against the catalogue and rebuilds.  RULE: two Arabic faces, never three. One draws wordmarks, one sets content. A wordmark face is picked for a handful of letters at one size; a content face is picked for paragraphs. Keeping them apart is what stops a document from slowly starting to look like a logo. The Latin side mirrors the split for French.",
+  "active": {
+    "$description": "THE SWITCH. Each value is EITHER a key in `catalog` whose `roles` allow that use, OR the name of another role on the same script, which makes it an alias. `npm run check:fonts` fails the build otherwise.",
+    "$roles": "wordmark = logo lockups. content = documents, slides, cards. motto = the motto on the roundel-motto lockup, which is set on a curve at about a third the wordmark's size and can reasonably want a face of its own.",
+    "$aliases": "`\"motto\": \"content\"` means the motto follows whatever the content face is. That is the default, and it is what keeps the count at two faces per script. Point it at a catalogue key instead and the motto gets its own face — a deliberate third, not an accident.",
+    "arabic": {
+      "wordmark": "tajawal",
+      "content": "amiri",
+      "motto": "content"
+    },
+    "latin": {
+      "wordmark": "tajawal",
+      "content": "eb-garamond",
+      "motto": "content"
+    }
+  },
+  "motto": {
+    "$description": "How the motto is set, beyond which face draws it. Its geometry — radius, size and sweep on the roundel — is `logo.motto` in space.json.",
+    "weight": 700,
+    "$weight": "The motto runs small and on a curve, where a regular weight goes thin. Ignored by a face that has no weight above its default."
+  },
+  "catalog": {
+    "$description": "Vetted faces. Every one is SIL Open Font Licence, so the association can embed it in a PDF and hand files to a print shop without asking permission. `roles` says what a face may be switched in as; `scripts` says what it can actually set. To add a face: put the files in brand/fonts/<key>/ with its OFL.txt, add an entry here, then switch to it.",
+    "tajawal": {
+      "family": "Tajawal",
+      "scripts": [
+        "arabic",
+        "latin"
+      ],
+      "roles": [
+        "wordmark",
+        "content"
+      ],
+      "stack": [
+        "Tajawal",
+        "Arial",
+        "sans-serif"
+      ],
+      "weights": [
+        300,
+        400,
+        500,
+        700,
+        800,
+        900
+      ],
+      "wordmark-weight": 800,
+      "tracking": "-0.01em",
+      "license": "OFL-1.1",
+      "source": "https://fonts.google.com/specimen/Tajawal",
+      "$note": "The wordmark face for BOTH scripts. Its Latin is drawn to sit with its Arabic, so the French and Arabic marks are the same family rather than a pairing that has to be judged — and it matches the letterforms already in the existing mark. Set Latin at 800 to hold its weight beside the Arabic."
+    },
+    "reem-kufi": {
+      "family": "Reem Kufi",
+      "scripts": [
+        "arabic"
+      ],
+      "roles": [
+        "wordmark"
+      ],
+      "stack": [
+        "Reem Kufi",
+        "sans-serif"
+      ],
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "wordmark-weight": 600,
+      "tracking": "0",
+      "license": "OFL-1.1",
+      "source": "https://github.com/aliftype/reem-kufi",
+      "$note": "The strongest alternative wordmark. Geometric kufi, built for display; more distinctive than Tajawal but less warm. Never use for content — it has no comfortable reading weight."
+    },
+    "cairo": {
+      "family": "Cairo",
+      "scripts": [
+        "arabic",
+        "latin"
+      ],
+      "roles": [
+        "wordmark",
+        "content"
+      ],
+      "stack": [
+        "Cairo",
+        "Arial",
+        "sans-serif"
+      ],
+      "weights": [
+        200,
+        300,
+        400,
+        600,
+        700,
+        900
+      ],
+      "wordmark-weight": 700,
+      "license": "OFL-1.1",
+      "source": "https://fonts.google.com/specimen/Cairo"
+    },
+    "ibm-plex-sans-arabic": {
+      "family": "IBM Plex Sans Arabic",
+      "scripts": [
+        "arabic"
+      ],
+      "roles": [
+        "wordmark",
+        "content"
+      ],
+      "stack": [
+        "IBM Plex Sans Arabic",
+        "Arial",
+        "sans-serif"
+      ],
+      "weights": [
+        300,
+        400,
+        500,
+        600,
+        700
+      ],
+      "wordmark-weight": 600,
+      "license": "OFL-1.1",
+      "source": "https://github.com/IBM/plex",
+      "$note": "The choice if AJVT ever needs a screen-first content face — it holds up far better than Amiri at 12px."
+    },
+    "amiri": {
+      "family": "Amiri",
+      "scripts": [
+        "arabic"
+      ],
+      "roles": [
+        "content"
+      ],
+      "stack": [
+        "Amiri",
+        "Noto Naskh Arabic",
+        "serif"
+      ],
+      "weights": [
+        400,
+        700
+      ],
+      "license": "OFL-1.1",
+      "source": "https://github.com/aliftype/amiri",
+      "$note": "Current content face. The naskh already used in the association's décisions, règlements and official seal — it is what an AJVT paper looks like."
+    },
+    "noto-naskh-arabic": {
+      "family": "Noto Naskh Arabic",
+      "scripts": [
+        "arabic"
+      ],
+      "roles": [
+        "content"
+      ],
+      "stack": [
+        "Noto Naskh Arabic",
+        "serif"
+      ],
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "license": "OFL-1.1",
+      "source": "https://fonts.google.com/noto/specimen/Noto+Naskh+Arabic",
+      "$note": "Safest fallback. Plainer than Amiri, wider language coverage, and renders identically on every device — worth switching to if printed documents ever come back wrong from a print shop."
+    },
+    "inter": {
+      "family": "Inter",
+      "scripts": [
+        "latin"
+      ],
+      "roles": [
+        "wordmark",
+        "content"
+      ],
+      "stack": [
+        "Inter",
+        "Helvetica Neue",
+        "Arial",
+        "sans-serif"
+      ],
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "wordmark-weight": 700,
+      "tracking": "0.02em",
+      "license": "OFL-1.1",
+      "source": "https://github.com/rsms/inter",
+      "$note": "A neutral grotesque. Correct but anonymous next to a heavy geometric Arabic, which is why the Latin wordmark moved to Tajawal. Still the right choice for a UI or a dense table."
+    },
+    "outfit": {
+      "family": "Outfit",
+      "scripts": [
+        "latin"
+      ],
+      "roles": [
+        "wordmark",
+        "content"
+      ],
+      "stack": [
+        "Outfit",
+        "Helvetica Neue",
+        "Arial",
+        "sans-serif"
+      ],
+      "weights": [
+        300,
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "wordmark-weight": 700,
+      "tracking": "0",
+      "license": "OFL-1.1",
+      "source": "https://github.com/Outfitio/Outfit-Fonts",
+      "$note": "Geometric with near-circular bowls. AVOID for wordmarks containing a double t: it joins the crossbars, and \"Taguilalett\" ends up reading as \"TaguilaleH\"."
+    },
+    "poppins": {
+      "family": "Poppins",
+      "scripts": [
+        "latin"
+      ],
+      "roles": [
+        "wordmark",
+        "content"
+      ],
+      "stack": [
+        "Poppins",
+        "Helvetica Neue",
+        "Arial",
+        "sans-serif"
+      ],
+      "weights": [
+        300,
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "wordmark-weight": 600,
+      "license": "OFL-1.1",
+      "source": "https://fonts.google.com/specimen/Poppins",
+      "$note": "Geometric with a tall x-height, warm and round. The best option if the French should be visibly its own face rather than Tajawal's Latin. Set it a weight lighter or it overpowers the Arabic."
+    },
+    "montserrat": {
+      "family": "Montserrat",
+      "scripts": [
+        "latin"
+      ],
+      "roles": [
+        "wordmark",
+        "content"
+      ],
+      "stack": [
+        "Montserrat",
+        "Helvetica Neue",
+        "Arial",
+        "sans-serif"
+      ],
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "wordmark-weight": 700,
+      "license": "OFL-1.1",
+      "source": "https://fonts.google.com/specimen/Montserrat",
+      "$note": "Wide and sturdy. Reads well small, but its width makes a long name like Taguilalett dominate a horizontal lockup."
+    },
+    "eb-garamond": {
+      "family": "EB Garamond",
+      "scripts": [
+        "latin"
+      ],
+      "roles": [
+        "content"
+      ],
+      "stack": [
+        "EB Garamond",
+        "Georgia",
+        "serif"
+      ],
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "license": "OFL-1.1",
+      "source": "https://github.com/octaviopardo/EBGaramond12",
+      "$note": "Current Latin content face. The serif already used in the Termes de référence; pairs with Amiri at a similar optical weight, which is what lets a bilingual page hold together."
+    },
+    "source-serif-4": {
+      "family": "Source Serif 4",
+      "scripts": [
+        "latin"
+      ],
+      "roles": [
+        "content"
+      ],
+      "stack": [
+        "Source Serif 4",
+        "Georgia",
+        "serif"
+      ],
+      "weights": [
+        400,
+        600,
+        700
+      ],
+      "license": "OFL-1.1",
+      "source": "https://github.com/adobe-fonts/source-serif",
+      "$note": "Switch here if EB Garamond reads too light next to a heavier Arabic content face."
+    }
+  },
+  "pairing": {
+    "$description": "Optical correction, applied by the theme. Arabic and Latin faces almost never share an x-height, so a bilingual line looks mismatched unless one side is nudged. This is the nudge, per active pair. Regenerate with `npm run font:calibrate` after switching.",
+    "arabic-size-ratio": 1.08,
+    "$note": "Amiri sets smaller than EB Garamond at the same pt. 1.08 makes them read as equals on a bilingual cover page."
+  },
+  "scale": {
+    "$description": "A 1.25 major-third scale on a 16px base. Documents, slides and cards all step through this, which is why a heading in a PDF and a heading on a card feel related.",
+    "xs": "0.64rem",
+    "sm": "0.8rem",
+    "base": "1rem",
+    "md": "1.25rem",
+    "lg": "1.563rem",
+    "xl": "1.953rem",
+    "2xl": "2.441rem",
+    "3xl": "3.052rem",
+    "4xl": "3.815rem"
+  },
+  "leading": {
+    "tight": 1.25,
+    "latin-body": 1.6,
+    "arabic-body": 1.9,
+    "$note": "Naskh needs more leading than a Latin serif — the dots below the line collide with the next line's ascenders at 1.6. Never set an Arabic paragraph tighter than 1.8; the document theme enforces it."
+  }
+}

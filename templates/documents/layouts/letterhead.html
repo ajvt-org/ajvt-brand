@@ -1,0 +1,15 @@
+<!--
+  LAYOUT: letterhead — identity across the top of page one, then straight into
+  the text. For termes de référence, rapports, courriers, notes.
+-->
+<header class="letterhead">
+  <div class="letterhead__mark">{{mark}}</div>
+  <div>
+    <div class="letterhead__org">{{org}}</div>
+    <div class="letterhead__seat">{{seat}}</div>
+  </div>
+</header>
+<h1 class="doc-title">{{title}}</h1>
+{{#subtitle}}<div class="doc-subtitle">{{subtitle}}</div>{{/subtitle}}
+{{#dateline}}<div class="doc-dateline">{{dateline}}</div>{{/dateline}}
+{{body}}

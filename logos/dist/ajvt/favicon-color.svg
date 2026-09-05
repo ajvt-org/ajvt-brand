@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="رابطة شباب قرية التاكلالت">
+  <title>رابطة شباب قرية التاكلالت</title>
+    <g>
+  <title id="i1a25mev0-ajvt-symbol-title">AJVT — رابطة شباب قرية التاكلالت</title>
+
+  <defs>
+    <clipPath id="i1a25mev0-roundel-clip">
+      <circle cx="256" cy="256" r="254"/>
+    </clipPath>
+
+    <!-- Crescent-and-bead finial, drawn once with its foot at the origin and
+         growing upward, then placed four times at different scales. Bottom to
+         top: a bulb, a neck, a small bead, a stem, the crescent, a spike.
+         The crescent's second radius (9) must stay LARGER than its first (7) or
+         the arc degenerates and the shape disappears; see the note in the
+         space.json panel-safe token for how that failure looks. -->
+    <g id="i1a25mev0-finial" fill="#6b6244">
+      <rect x="-1.7" y="-7" width="3.4" height="7"/>
+      <ellipse cx="0" cy="-10" rx="4.7" ry="3.9"/>
+      <rect x="-1.7" y="-15" width="3.4" height="4"/>
+      <ellipse cx="0" cy="-16.9" rx="3.5" ry="2.8"/>
+      <rect x="-1.6" y="-27" width="3.2" height="10"/>
+      <!-- The crescent is an explicit path, not two arcs. A two-circle crescent
+           always curls its horns INWARD; the original's splay outward and taper
+           to points. It is also wide and shallow, which the non-uniform
+           scale below produces from one drawn shape. -->
+      <g transform="translate(0,-28.5) scale(0.84,0.74)">
+        <path d="M -9,-6.8 C -9.4,-1 -5.6,3 0,4.6 C 5.6,3 9.4,-1 9,-6.8 L 6.2,-5 C 6.3,-1.4 3.8,0.9 0,1.9 C -3.8,0.9 -6.3,-1.4 -6.2,-5 Z"/>
+      </g>
+      <rect x="-1.6" y="-32.5" width="3.2" height="5.5"/>
+    </g>
+
+    <!-- A minaret comes in two halves, and they are drawn at different points
+         in the stack.
+
+         The SHAFT sits inside the roundel clip, under the platform, so the
+         platform crosses in front of it the way it does in the original.
+
+         The TOP is drawn OUTSIDE the clip, because the finial deliberately
+         breaks the circle — in the original artwork the crescent stands proud
+         of the mint ground against bare paper. Clipped, everything above the
+         roundel's edge disappears and the finial collapses to a single bead. -->
+    <!-- One dome, drawn once with its base at the origin and placed twice at
+         different scales. Defining it once is what keeps the pair the same
+         shape: as two hand-written paths the smaller one drifted into an egg,
+         nearly as tall as it was wide, while the larger stayed round.
+         Width 97, height 65. Scale it; do not redraw it. -->
+    <g id="i1a25mev0-dome">
+      <path d="M 0,0 C 0,-42 18,-63 48,-65 C 78,-63 97,-42 97,0 Z" fill="#d4905e"/>
+      <path d="M 48,-65 C 78,-63 97,-42 97,0 L 75,0 C 75,-38 64,-58 48,-65 Z"
+            fill="#c47c5a" opacity="0.5"/>
+    </g>
+
+    <g id="i1a25mev0-minaret-shaft">
+      <rect x="-32" y="-165" width="64" height="165" fill="#c5e8dc"/>
+      <rect x="20" y="-165" width="12" height="165" fill="none" opacity="0.6"/>
+      <rect x="-9" y="-125" width="18" height="26" rx="2.5" fill="#4b4539"/>
+      <rect x="-9" y="-37" width="18" height="25" rx="2.5" fill="#4b4539"/>
+    </g>
+
+    <!-- The cap is narrower than the shaft, which is what gives the original
+         its tapered, drawn-by-hand silhouette. The ribs are what make it read
+         as a fluted onion dome rather than a plain bell. -->
+    <g id="i1a25mev0-minaret-top">
+      <!-- A half ellipse: rx 19, ry 33. Sampling the original's cap width at
+           six heights matches an ellipse to within half a unit, where the bezier
+           this replaces rose too steeply and read as a bullet rather than a
+           dome. -->
+      <path d="M -19,-162 A 19,33 0 0 1 19,-162 Z" fill="#f7f3ee"/>
+      <!-- Two ribs, not three. The original has no centre rib: its middle
+           panel is a single wide face. Each rib is the cap's own ellipse at
+           0.57 of the width, so they read as meridians on the dome rather than
+           as lines drawn over it. -->
+      <g fill="none" stroke="none" stroke-width="1.5" stroke-linecap="round">
+        <path d="M 0,-195 A 10.8,33 0 0 0 -10.8,-162"/>
+        <path d="M 0,-195 A 10.8,33 0 0 1 10.8,-162"/>
+      </g>
+      <use href="#i1a25mev0-finial" transform="translate(0,-197)"/>
+    </g>
+  </defs>
+
+  <!-- ── Ground ──────────────────────────────────────────────────────────── -->
+  <circle cx="256" cy="256" r="254" fill="#c5e8dc"/>
+
+  <g clip-path="url(#i1a25mev0-roundel-clip)">
+
+    <!-- The body barely separates from the ground — in the original the two
+         mints differ by one value per channel. Almost all of the tonal interest
+         below the platform comes from the banding and the shading, not from
+         this rectangle. Raise its opacity and the mark grows a visible box. -->
+    <!-- ── Panel ─────────────────────────────────────────────────────────
+         A full DISC, not a half one: its radius is the arch's inner edge, and
+         the mosque body is laid over it. That is what leaves a white strip down
+         each flank between the arch and the body — visible from y 174 to 338 in
+         the original, and easy to miss, because the eye reads the white as the
+         courtyard and stops looking once the courtyard is right.
+
+         The usable white area for type is much smaller than this disc, since
+         the minarets, domes and their finials are painted over it. That area is
+         `logo.panel-safe` in brand/tokens/space.json. -->
+    <circle cx="256" cy="256" r="198" fill="#ffffff"/>
+
+    <!-- The mosque body, over the panel, leaving the flanks white. It barely
+         separates from the ground — in the original the two mints differ by one
+         value per channel — so almost all the tonal interest below the platform
+         comes from the banding and the shading, not from this rectangle. -->
+    <rect x="77" y="249" width="357" height="270" fill="#c5e8dc"/>
+    <rect x="345" y="249" width="89" height="270" fill="none" opacity="0.22"/>
+    <g fill="none" opacity="0.45">
+      <ellipse cx="196" cy="292" rx="38" ry="9"/>
+      <ellipse cx="330" cy="322" rx="46" ry="10"/>
+      <ellipse cx="180" cy="356" rx="52" ry="11"/>
+      <ellipse cx="336" cy="392" rx="42" ry="10"/>
+      <ellipse cx="212" cy="424" rx="58" ry="12"/>
+    </g>
+
+
+    <!-- ── Arch ──────────────────────────────────────────────────────────
+         NOT a full ring. It runs from 241 degrees round through the top to 120
+         degrees, leaving a 120 degree gap centred on the bottom of the roundel.
+         That gap is deliberate in the original: it is where the association's
+         motto is set along the curve.
+
+         It is a filled annular sector rather than a stroked circle, because the
+         two ends TAPER to a point. A stroke cannot narrow, and butt ends read
+         as though the ring had simply been cut.
+
+         Angles are clockwise from the top. Outer radius 208, inner 198, so
+         the arch is 10 wide at its thickest, tapering over 6 degrees at each
+         end.
+
+         The INNER edge runs the full length at exactly r 198, and the taper is
+         cut entirely from the outer edge, ending in a point on the inner edge.
+         This is load-bearing, not styling: r 198 is also the panel disc's
+         radius, so the arch's inner edge and the white disc's edge are the same
+         curve and cannot separate. Any tip that pulls the inner edge off that
+         radius opens a sliver of bare ground between the arch and the white —
+         small, but it reads as a stray green wedge exactly where the eye
+         follows the arch down. -->
+    <path d="M 82.83,351.99 L 67.49,343.9 A 208,208 0 1 1 442.95,347.18 L 427.47,355 A 198,198 0 1 0 82.83,351.99 Z" fill="#b0643e"/>
+
+    <!-- ── Minaret shafts ────────────────────────────────────────────────
+         BEFORE the domes. In the original the domes pass in front of the
+         shafts: at y 230 the large dome starts at x 123 and covers the shaft
+         out to its edge at 143. Drawn the other way round, that covered strip
+         shows as a slab of mint between the aperture and the dome — visible,
+         wrong, and easy to mistake for stray geometry.
+
+         The caps and finials come later, outside the clip. -->
+    <use href="#i1a25mev0-minaret-shaft" transform="translate(110,257)"/>
+    <use href="#i1a25mev0-minaret-shaft" transform="translate(402,257)"/>
+
+
+    <!-- ── Domes ─────────────────────────────────────────────────────────
+         Two, unequal and well apart, the way the village mosque actually sits.
+         A symmetric pair reads as a generic icon. Drawn over the shafts, so
+         each dome is whole and it is the minaret that is interrupted. -->
+    <use href="#i1a25mev0-dome" transform="translate(121,252)"/>
+    <use href="#i1a25mev0-finial" transform="translate(169,188) scale(0.92)"/>
+
+    <!-- 0.4948 = 48/97, so the smaller dome is 48 wide and keeps the larger
+         one's proportions exactly. The finial is placed separately, or it would
+         scale with the dome and shrink to nothing. -->
+    <use href="#i1a25mev0-dome" transform="translate(324,252) scale(0.4948)"/>
+    <use href="#i1a25mev0-finial" transform="translate(348,221) scale(0.72)"/>
+
+    <!-- ── Platform ──────────────────────────────────────────────────────
+         The mark's optical baseline. It crosses in front of the shafts. -->
+    <rect x="77" y="249" width="357" height="14" fill="#b0643e"/>
+    <rect x="77" y="261" width="357" height="4" fill="#c47c5a" opacity="0.55"/>
+
+    <!-- ── Courtyard window ──────────────────────────────────────────────
+         The one asymmetric detail. It keeps the lower half from reading as
+         empty and gives the eye somewhere to land. -->
+    <g transform="translate(296,300)">
+      <rect x="0" y="0" width="46" height="38" rx="3" fill="none"/>
+      <rect x="5" y="5" width="36" height="28" rx="2" fill="none"/>
+      <rect x="5" y="13" width="36" height="3.5" fill="none"/>
+      <rect x="5" y="22" width="36" height="3.5" fill="none"/>
+      <rect x="16" y="5" width="3.5" height="28" fill="none"/>
+    </g>
+
+  </g>
+
+  <!-- ── Minaret caps and finials ─────────────────────────────────────────
+       OUTSIDE the roundel clip, deliberately. The finials break the circle, as
+       they do in the original mark. -->
+  <use href="#i1a25mev0-minaret-top" transform="translate(110,257)"/>
+  <use href="#i1a25mev0-minaret-top" transform="translate(402,257)"/>
+</g>
+</svg>

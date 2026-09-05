@@ -1,0 +1,13 @@
+{
+  "key": "reem-kufi",
+  "family": "Reem Kufi",
+  "license": "OFL-1.1",
+  "source": "https://github.com/aliftype/reem-kufi",
+  "files": [
+    {
+      "name": "ReemKufi[wght].ttf",
+      "bytes": 127152,
+      "variable": true
+    }
+  ]
+}

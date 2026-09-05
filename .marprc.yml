@@ -1,0 +1,10 @@
+# Marp configuration. `npm run build:decks` reads this.
+# The theme lives in templates/presentations/theme/ajvt.css and is the single
+# place a deck's appearance is decided.
+allowLocalFiles: true
+themeSet: ./templates/presentations/theme
+options:
+  markdown:
+    breaks: false
+pdf: true
+html: true

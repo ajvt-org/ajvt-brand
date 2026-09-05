@@ -1,0 +1,147 @@
+{
+  "$comment": "Single source of truth for every colour AJVT uses. tokens.css, the logo engine, the document theme and the card templates all read from here. Change a value, run `npm run build`, and it propagates everywhere. Mint and copper are sampled from the original mark; they are duplicated in ajvt-app/src/app/globals.css and the two must stay identical.",
+  "palette": {
+    "mint": {
+      "$description": "Primary. Sampled from the logo roundel.",
+      "50":  "#f0faf5",
+      "100": "#d8f0e6",
+      "200": "#c5e8dc",
+      "300": "#a0d4c0",
+      "400": "#70b89c",
+      "500": "#4a9c7e",
+      "600": "#357a62",
+      "700": "#265c49",
+      "800": "#1a3f33",
+      "900": "#10271f"
+    },
+    "copper": {
+      "$description": "Secondary. Sampled from the logo arch and the domes. Carries headings in documents.",
+      "300": "#e8b08a",
+      "400": "#d4905e",
+      "500": "#c47c5a",
+      "600": "#b0643e",
+      "700": "#8c4a2a"
+    },
+    "cream": {
+      "$description": "Paper. The ground for printed documents.",
+      "base": "#f7f3ee",
+      "dark": "#ede7dc"
+    },
+    "ink": {
+      "$description": "Text.",
+      "main":  "#1a2e24",
+      "muted": "#5a7868",
+      "faint": "#98aca2"
+    },
+    "khaki": {
+      "$description": "The metal of the finials — the crescents and beads on the minarets and domes. The one colour in the mark outside the mint and copper families, carried over from the original artwork, where it reads as weathered brass against the cream caps. Used nowhere else.",
+      "base": "#6b6244"
+    },
+    "seal": {
+      "$description": "Reserved for the official stamp and nothing else. Deliberately outside the brand palette so a sealed document is never mistaken for a designed one.",
+      "navy": "#2c4372"
+    },
+    "neutral": {
+      "white": "#ffffff",
+      "black": "#000000"
+    }
+  },
+  "accents": {
+    "$description": "One accent per committee. Assigned in brand/entities.yml by name. All are tuned to sit beside mint without fighting it — do not invent ad-hoc hex values in a template.",
+    "copper":    { "base": "#b0643e", "soft": "#f2e0d4", "deep": "#7a3f22" },
+    "clinical":  { "base": "#2f8f7d", "soft": "#d9efea", "deep": "#1d5c50" },
+    "azure":     { "base": "#3a6ea5", "soft": "#dbe7f3", "deep": "#25486e" },
+    "saffron":   { "base": "#c08a1e", "soft": "#f6ead0", "deep": "#835d10" },
+    "plum":      { "base": "#7a4b6e", "soft": "#ecdfe9", "deep": "#4f2f47" },
+    "sand":      { "base": "#9a8558", "soft": "#efe9db", "deep": "#665739" }
+  },
+  "marks": {
+    "$description": "Colours for an EVENT'S OWN artwork in logos/src/marks/. A committee wears the mosque and takes an accent from the block above; an event is allowed a mark of its own, so what keeps it in the family is this block. A value is either a dotted path into this file, a literal hex, or \"none\" to drop the shape entirely. One entry per var() the artwork uses, in all four variants, or the build refuses to emit the file.",
+    "u18-cup": {
+      "$description": "Traced from the committee's own poster, where the trophy is pale on maroon. Here it is inverted to read on the light grounds a logo actually lands on, and the maroon is dropped for mint. The RELATIONSHIPS are the poster's: cup mid, plinth lighter, foot darkest, ball dark carrying light patches. The ball goes a full two steps below the cup rather than one, because the ring around it is drawn in the cup colour and at one step apart the two closed up and the ring stopped reading.",
+      "color": {
+        "cup": "palette.mint.700", "plinth": "palette.mint.600", "foot": "palette.mint.800",
+        "ball": "palette.mint.900", "ball-patch": "palette.copper.300", "flare": "palette.copper.500"
+      },
+      "$grayscale": "Literal, like the grayscale block below and for the same reason: a one-ink print has to be predictable, and luminance-matching mint against copper by eye beats matching them by formula.",
+      "grayscale": {
+        "cup": "#4a4a4a", "plinth": "#5e5e5e", "foot": "#2e2e2e",
+        "ball": "#2e2e2e", "ball-patch": "#b4b4b4", "flare": "#8f8f8f"
+      },
+      "$mono": "One ink. The patch disc drops to none, so the ball's pentagons open onto the page and it stays a ball instead of a solid blob; everything that carries the silhouette takes the ink.",
+      "mono-dark": {
+        "cup": "palette.mint.800", "plinth": "palette.mint.800", "foot": "palette.mint.800",
+        "ball": "palette.mint.800", "ball-patch": "none", "flare": "palette.mint.800"
+      },
+      "mono-light": {
+        "cup": "palette.neutral.white", "plinth": "palette.neutral.white", "foot": "palette.neutral.white",
+        "ball": "palette.neutral.white", "ball-patch": "none", "flare": "palette.neutral.white"
+      }
+    },
+    "medical-caravan": {
+      "$description": "A crescent, a line across its opening that beats and then becomes a stethoscope, and a khaima pitched under it. The chestpiece deliberately has no slot of its own — it hangs on the tube and shares its colour, and a separate entry would only let the two drift apart. The camp does have one: it is a second mass rather than part of the line, and it is set a step lighter than the crescent so the two read as separate objects at badge size. The crescent takes the event's own accent rather than the mint every other mark uses, because the badge ring around it is drawn in that accent and the two are seen together far more often than the mark is seen alone.",
+      "color": {
+        "crescent": "accents.clinical.deep", "trace": "palette.copper.600",
+        "camp": "accents.clinical.base"
+      },
+      "$grayscale": "Literal, like the U18 cup's and for the same reason: a one-ink print has to be predictable, and luminance-matching teal against copper by eye beats matching them by formula. The trace is the lighter of the two because it sits on the open page, not on the mass.",
+      "grayscale": {
+        "crescent": "#3f3f3f", "trace": "#6e6e6e", "camp": "#5e5e5e"
+      },
+      "$mono": "One ink, and nothing dropped. Unlike the cup this mark has no shape that only carries detail — the crescent is the silhouette and the trace is the reading. They stay apart because the drawing keeps them apart; see the clearance the generator enforces in tools/draw/medical-caravan.py.",
+      "mono-dark": {
+        "crescent": "palette.mint.800", "trace": "palette.mint.800", "camp": "palette.mint.800"
+      },
+      "mono-light": {
+        "crescent": "palette.neutral.white", "trace": "palette.neutral.white",
+        "camp": "palette.neutral.white"
+      }
+    },
+    "mayor-cup": {
+      "$description": "A crown over a chalice, redrawn from the committee's sketch. The cup is near-black there; mint.900 is the darkest thing in the palette and reads as black at any size a logo is used, so nothing is lost by staying inside the family. Saffron is the one accent that is actually gold, which is what a crown has to be — and it is the only place in the system saffron is spent, so the Mayor's Cup owns it. Two slots: the cup is stroked geometry and the crown is filled, and neither has a part that wants a colour of its own.",
+      "color": {
+        "cup": "palette.mint.900", "crown": "accents.saffron.base"
+      },
+      "$grayscale": "Literal, like the two blocks above. The crown has to stay clearly lighter than the cup or the two merge into one silhouette and the mark loses its top half.",
+      "grayscale": {
+        "cup": "#1f1f1f", "crown": "#8f8f8f"
+      },
+      "$mono": "One ink, nothing dropped. The bowl stays open because it is a stroke rather than a filled shape, and the crown stays a crown because the drawing holds it clear of the rim — see the gap the generator enforces in tools/draw/mayor-cup.py.",
+      "mono-dark": {
+        "cup": "palette.mint.800", "crown": "palette.mint.800"
+      },
+      "mono-light": {
+        "cup": "palette.neutral.white", "crown": "palette.neutral.white"
+      }
+    }
+  },
+
+  "semantic": {
+    "$description": "What the palette means. Templates reference these, not raw palette steps, so a rebrand touches one block.",
+    "brand":            "palette.mint.700",
+    "brand-strong":     "palette.mint.800",
+    "brand-soft":       "palette.mint.100",
+    "brand-surface":    "palette.mint.50",
+    "accent":           "palette.copper.600",
+    "accent-soft":      "palette.copper.300",
+    "paper":            "palette.cream.base",
+    "paper-edge":       "palette.cream.dark",
+    "text":             "palette.ink.main",
+    "text-muted":       "palette.ink.muted",
+    "text-faint":       "palette.ink.faint",
+    "rule":             "palette.cream.dark",
+    "stamp":            "palette.seal.navy"
+  },
+  "grayscale": {
+    "$description": "How each brand colour resolves in the grayscale logo variants. Fixed here rather than computed, so a one-ink print is predictable.",
+    "palette.mint.100":   "#e6e6e6",
+    "palette.mint.200":   "#d5d5d5",
+    "palette.mint.300":   "#b4b4b4",
+    "palette.mint.600":   "#5e5e5e",
+    "palette.mint.700":   "#4a4a4a",
+    "palette.mint.800":   "#2e2e2e",
+    "palette.copper.500": "#8f8f8f",
+    "palette.copper.600": "#6e6e6e",
+    "palette.ink.main":   "#1a1a1a"
+  }
+}
