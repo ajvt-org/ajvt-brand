@@ -83,19 +83,33 @@ async function svgToPngViaBrowser(svg, { width, background = null } = {}) {
   return buf
 }
 
-/** Chrome stamps every PDF it writes with the wall-clock time of the run, so an
- *  otherwise byte-identical rebuild comes back with 243 files changed and six
- *  bytes differing in each. That is the whole of the difference: the dates sit
- *  uncompressed in the Info dictionary, and rewriting only their fourteen digits
- *  leaves the file the same length, so every xref offset stays valid.
+/** Chrome stamps every PDF it writes with the wall-clock time of the run and
+ *  with its own version, so an otherwise byte-identical rebuild comes back with
+ *  243 files changed and a handful of bytes differing in each. That is the whole
+ *  of the difference: both sit uncompressed in the Info dictionary, and
+ *  overwriting digits in place leaves the file the same length, so every xref
+ *  offset stays valid. Zeroing rather than deleting is what keeps that true —
+ *  a shorter replacement would move every offset after it and break the file.
+ *
+ *  The version matters as much as the date. A Chrome upgrade on one machine
+ *  rewrites the producer string in all 243 files and buries the actual change
+ *  in noise, which is exactly what the dates were normalised to prevent.
  *
  *  Committed output has to be reproducible -- logos/dist is in the repository so
  *  that a printer or a member can take a file without installing Node, and a
  *  build that dirties the tree every time makes a real change impossible to see. */
 const PDF_DATE = '19700101000000'
 const datePattern = /(\/(?:CreationDate|ModDate)\s*\(D:)\d{14}/g
-function undate(buf) {
-  return Buffer.from(buf.toString('latin1').replace(datePattern, `$1${PDF_DATE}`), 'latin1')
+const versionPattern = /((?:HeadlessChrome\/|Chrome\/|Skia\/PDF m)\d*)/g
+const zeroDigits = (s) => s.replace(/\d/g, '0')
+function normalise(buf) {
+  return Buffer.from(
+    buf
+      .toString('latin1')
+      .replace(datePattern, `$1${PDF_DATE}`)
+      .replace(versionPattern, zeroDigits),
+    'latin1'
+  )
 }
 
 /** Vector PDF. Chrome embeds the outlined paths; no font is required downstream. */
@@ -115,7 +129,7 @@ export async function svgToPdf(svg) {
   )
   const buf = await page.pdf({ width: mm(w), height: mm(h), printBackground: true, pageRanges: '1' })
   await page.close()
-  return undate(buf)
+  return normalise(buf)
 }
 
 /** Full HTML document to PDF — documents, decks, anything paginated.
@@ -139,7 +153,7 @@ export async function htmlToPdf(html, { baseUrl = `file://${p('.')}/`, format = 
     ...(footer ? { displayHeaderFooter: true, headerTemplate: '<div></div>', footerTemplate: footer } : {}),
   })
   await page.close()
-  return undate(buf)
+  return normalise(buf)
 }
 
 /** Full HTML document to a PNG of an exact size — social cards. */
