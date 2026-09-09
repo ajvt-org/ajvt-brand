@@ -59,13 +59,22 @@ function formatDate(v) {
   return `${d} / ${m} / ${y}`
 }
 
-/** Wraps each `## Article`/`## المادة` run in .article so the theme can rule them. */
+/**
+ * Wraps each `## Article`/`## المادة` run in .article so the theme can rule them.
+ *
+ * `# الباب الثاني` ends the run. Splitting on the article heading alone left a
+ * part heading inside the article above it, where `page-break-inside: avoid`
+ * then carried the heading along and could push half a page of white space
+ * ahead of it — the article and the part it opens are not one unbreakable block.
+ */
+const ARTICLE_H2 = /<h2[^>]*>\s*(?:Article|المادة|البند)/i
 function groupArticles(html) {
-  if (!/<h2[^>]*>\s*(?:Article|المادة|البند)/i.test(html)) return html
-  const parts = html.split(/(?=<h2[^>]*>\s*(?:Article|المادة|البند))/i)
-  return parts
-    .map((chunk, i) => (i === 0 && !/^<h2/i.test(chunk) ? chunk : `<section class="article">${chunk}</section>`))
-    .join('\n')
+  if (!ARTICLE_H2.test(html)) return html
+  const chunks = html.split(/(?=<h1[^>]*>)/i).flatMap((part) => {
+    const [head, ...rest] = part.split(new RegExp(`(?=${ARTICLE_H2.source})`, 'i'))
+    return [head, ...rest.map((c) => `<section class="article">${c}</section>`)]
+  })
+  return chunks.filter(Boolean).join('\n')
 }
 
 function markFor(entity, locale, layout) {
