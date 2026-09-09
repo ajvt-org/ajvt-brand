@@ -118,8 +118,17 @@ export async function svgToPdf(svg) {
   return undate(buf)
 }
 
-/** Full HTML document to PDF — documents, decks, anything paginated. */
-export async function htmlToPdf(html, { baseUrl = `file://${p('.')}/`, format = 'A4', margin, landscape = false } = {}) {
+/** Full HTML document to PDF — documents, decks, anything paginated.
+ *
+ * `footer` is a running footer for the page margin. A `position: fixed` element
+ * cannot do this: Chrome paints it on the first page only, which is how the
+ * footer ended up on the cover and nowhere else. The page margin is the one
+ * place Chrome repeats, and it is also the only place the page number exists —
+ * `.pageNumber` and `.totalPages` are substituted per page. The template renders
+ * in its own document, so it inherits nothing from the page and has to carry its
+ * own @font-face rules or the Arabic falls back to a system face.
+ */
+export async function htmlToPdf(html, { baseUrl = `file://${p('.')}/`, format = 'A4', margin, landscape = false, footer } = {}) {
   const b = await getBrowser()
   const page = await b.newPage()
   await page.setContent(html, { waitUntil: 'networkidle' })
@@ -127,6 +136,7 @@ export async function htmlToPdf(html, { baseUrl = `file://${p('.')}/`, format = 
   const buf = await page.pdf({
     format, landscape, printBackground: true,
     margin: margin ?? { top: '0', bottom: '0', left: '0', right: '0' },
+    ...(footer ? { displayHeaderFooter: true, headerTemplate: '<div></div>', footerTemplate: footer } : {}),
   })
   await page.close()
   return undate(buf)

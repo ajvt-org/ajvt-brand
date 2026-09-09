@@ -28,8 +28,23 @@ const { entities, meta } = loadEntities(tokens)
 const byId = Object.fromEntries(entities.map((e) => [e.id, e]))
 
 const LABELS = {
-  ar: { date: 'تاريخ الاعتماد:', page: 'صفحة' },
-  fr: { date: "Date d'approbation :", page: 'Page' },
+  ar: { date: 'تاريخ الاعتماد:', page: 'صفحة', of: 'من' },
+  fr: { date: "Date d'approbation :", page: 'Page', of: 'sur' },
+}
+
+/**
+ * The running footer, drawn in the page margin rather than in the page.
+ * Chrome renders this template in its own document, so it inherits nothing —
+ * the fonts, the direction and the colours all have to be restated here.
+ */
+function footerTemplate({ left, right, dir, locale, L }) {
+  const face = locale === 'ar' ? 'Amiri' : 'EB Garamond'
+  return `<style>${fontFaceCss()}</style>
+<div style="width:100%;box-sizing:border-box;padding:0 18mm;margin-top:6mm;font-family:'${face}',serif;font-size:7.5pt;color:#8a8a8a;letter-spacing:0.04em;display:flex;justify-content:space-between;direction:${dir}">
+  <span>${left}</span>
+  <span>${L.page} <span class="pageNumber"></span> ${L.of} <span class="totalPages"></span></span>
+  <span>${right}</span>
+</div>`
 }
 
 /**
@@ -104,8 +119,11 @@ for (const file of files) {
     body,
   })
 
-  const footerLeft = fm.footer ?? `${entity.name[locale]}`
-  const footerRight = fm.footerRight ?? fm.subtitle ?? fm.title ?? ''
+  const footer = footerTemplate({
+    left: fm.footer ?? entity.name[locale],
+    right: fm.footerRight ?? fm.subtitle ?? fm.title ?? '',
+    dir, locale, L,
+  })
 
   const html = `<!doctype html>
 <html lang="${locale}" dir="${dir}">
@@ -118,12 +136,11 @@ ${readFileSync(p('templates/documents/theme/document.css'), 'utf8')}
 </style>
 <body dir="${dir}">
 ${inner}
-<div class="running-footer"><span>${footerLeft}</span><span>${footerRight}</span></div>
 </body>
 </html>`
 
   writeFileSync(p('dist/documents', `${name}.html`), html)
-  const pdf = await htmlToPdf(html, { format: 'A4' })
+  const pdf = await htmlToPdf(html, { format: 'A4', footer })
   writeFileSync(p('dist/documents', `${name}.pdf`), pdf)
   console.log(`  ${name.padEnd(44)} ${layout}/${locale}  ${(pdf.length / 1024 | 0)} KB`)
 }
