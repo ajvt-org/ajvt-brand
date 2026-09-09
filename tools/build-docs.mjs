@@ -48,6 +48,27 @@ function footerTemplate({ left, right, dir, locale, L }) {
 }
 
 /**
+ * The signature block, from front matter. A règlement is signed by two or three
+ * office holders, so the roles are the document's to declare and the spacing is
+ * the theme's to decide.
+ *
+ *   signatures:
+ *     - رئيس اللجنة المنظمة
+ *     - { role: رئيس الرابطة, name: ... }
+ */
+function signatureBlock(list) {
+  if (!Array.isArray(list) || !list.length) return ''
+  const cells = list
+    .map((s) => (typeof s === 'string' ? { role: s } : s))
+    .map((s) => `  <div class="signature">
+    <div class="signature__role">${s.role ?? ''}</div>
+    <div class="signature__line">${s.name ?? ''}</div>
+  </div>`)
+    .join('\n')
+  return `<div class="signatures">\n${cells}\n</div>`
+}
+
+/**
  * YAML turns an unquoted `2026-08-01` into a Date at UTC midnight. Reading it
  * back with local-time getters lands on the previous day for anyone west of
  * UTC, so an approval date silently shifts. Always read it in UTC.
@@ -126,6 +147,7 @@ for (const file of files) {
     dateLabel: fm.dateLabel ?? L.date,
     date: formatDate(fm.date),
     body,
+    signatures: signatureBlock(fm.signatures),
   })
 
   const footer = footerTemplate({
