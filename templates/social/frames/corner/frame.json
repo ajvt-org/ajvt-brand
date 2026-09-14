@@ -1,0 +1,11 @@
+{
+  "id": "corner",
+  "name": { "ar": "الركن", "fr": "Le coin" },
+  "description": {
+    "ar": "إطار يوضع فوق الصورة دون اقتطاع أي جزء منها.",
+    "fr": "Un cadre posé sur la photo, sans rien rogner."
+  },
+  "entity": "mayor-cup-2026",
+  "formats": ["photo", "square", "portrait", "story"],
+  "$comment": "A frame is NOT a card. It carries no data fields: every string on it comes from brand/entities.yml, because an overlay that could be retyped per match is an overlay that will eventually go out with the competition misspelled. It renders to a transparent PNG that is laid over a photograph at exactly the photograph's size — see logos/dist/frames/README.md for what a committee member does with it."
+}

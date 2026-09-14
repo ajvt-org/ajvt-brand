@@ -1,0 +1,72 @@
+.frame {
+  container-type: inline-size;
+  position: relative;
+  width: var(--w);
+  height: var(--h);
+  overflow: hidden;
+}
+
+/* Legibility without a fill. It reaches 82% at the very bottom edge, where the
+   two small lines sit, and is gone by a third of the way up — so faces, the
+   pitch and the sky are never touched. */
+.haze {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+    rgba(16, 39, 31, 0.82) 0%,
+    rgba(16, 39, 31, 0.3) 15%,
+    rgba(16, 39, 31, 0) 34%);
+}
+
+/* The frame line proper: a hairline drawn ON the picture, costing no area. The
+   dark spread behind it is what keeps it visible over a white wall. */
+.keyline {
+  position: absolute;
+  inset: 2.1cqw;
+  border: 0.16cqw solid rgba(247, 243, 238, 0.62);
+  box-shadow: 0 0 0.35cqw rgba(16, 39, 31, 0.35);
+}
+
+/* Both marks go on in their own colours with nothing behind them. The
+   association's roundel carries its own mint disc — that disc is part of the
+   drawing, not a plate: the courtyard is clipped to it. */
+.mk { position: absolute; display: block; filter: drop-shadow(0 0.22cqw 0.9cqw rgba(16, 39, 31, 0.55)); }
+.mk svg { display: block; height: 9cqw; width: auto; }
+.mk-cup  { top: 5cqw; left: 5cqw; }
+.mk-ajvt { top: 5cqw; right: 5cqw; }
+
+.sign {
+  position: absolute;
+  left: 5.2cqw;
+  bottom: 5cqw;
+  display: flex;
+  flex-direction: column;
+  /* The document is RTL, where flex-start on the cross axis is the RIGHT edge —
+     which stacked the tick and the season under the END of the name instead of
+     its start. The children carry their own dir, so the box can be LTR. */
+  direction: ltr;
+  align-items: flex-start;
+  gap: 1.15cqw;
+  text-shadow: 0 0.16cqw 0.7cqw rgba(16, 39, 31, 0.72);
+}
+.tick { width: 4.5cqw; height: 0.42cqw; background: var(--accent-base); }
+
+.name, .sub, .org {
+  font-family: Tajawal, sans-serif;
+  line-height: 1;
+  white-space: nowrap;
+}
+.name { font-weight: 800; font-size: 2.6cqw; color: #fdfaf4; }
+.sub  { font-weight: 500; font-size: 1.6cqw; letter-spacing: 0.08em; color: rgba(253, 250, 244, 0.85); }
+
+/* The endorsement closes the foot opposite the season, on the same baseline. */
+.org {
+  position: absolute;
+  right: 5.2cqw;
+  bottom: 5cqw;
+  font-weight: 500;
+  font-size: 1.6cqw;
+  letter-spacing: 0.04em;
+  color: rgba(253, 250, 244, 0.85);
+  text-shadow: 0 0.16cqw 0.7cqw rgba(16, 39, 31, 0.72);
+}

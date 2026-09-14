@@ -156,13 +156,17 @@ export async function htmlToPdf(html, { baseUrl = `file://${p('.')}/`, format = 
   return normalise(buf)
 }
 
-/** Full HTML document to a PNG of an exact size — social cards. */
-export async function htmlToPng(html, { width, height, scale = 2 } = {}) {
+/** Full HTML document to a PNG of an exact size — social cards, and frames.
+ *
+ * `omitBackground` keeps the alpha channel: a frame is laid over a photograph,
+ * so everything the template does not paint has to come out transparent rather
+ * than white. */
+export async function htmlToPng(html, { width, height, scale = 2, omitBackground = false } = {}) {
   const b = await getBrowser()
   const page = await b.newPage({ viewport: { width, height }, deviceScaleFactor: scale })
   await page.setContent(html, { waitUntil: 'networkidle' })
   await page.evaluate(() => document.fonts.ready)
-  const buf = await page.screenshot({ type: 'png' })
+  const buf = await page.screenshot({ type: 'png', omitBackground })
   await page.close()
   return buf
 }
