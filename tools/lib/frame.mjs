@@ -3,21 +3,24 @@ import { join } from 'node:path'
 import { p } from './paths.mjs'
 import { loadTokens } from './tokens.mjs'
 import { loadEntities } from './entities.mjs'
-import { render, stripLayoutComment } from './template.mjs'
-import { fontFaceCss, htmlToPng } from './render.mjs'
-import { formats } from './card.mjs'
+import { textToPathBidi } from './text-to-path.mjs'
+import { frameSvg } from './frame-svg.mjs'
+import { svgToPng } from './render.mjs'
+import sharp from 'sharp'
 
 /**
  * Frames — furniture laid OVER a photograph, not a card.
  *
- * The difference that shapes this file: a card is composed of values someone
- * types, a frame is composed of nothing at all. Every string on a frame comes
- * out of brand/entities.yml, so the competition cannot be misspelled on a
- * matchday and the association's endorsement cannot drift from the one the
- * lockups use. There is deliberately no `data` argument.
+ * A frame carries no data fields. Every string on it comes out of
+ * brand/entities.yml, so the competition cannot be misspelled on a matchday and
+ * the endorsement cannot drift from the one the lockups use. There is
+ * deliberately no `data` argument.
  *
- * The output is a transparent PNG at the photograph's own dimensions. See
- * logos/dist/frames/README.md for what a committee member does with it.
+ * SVG, not HTML. A frame is scaled onto whatever a phone happened to shoot —
+ * 4032px and rising — and a raster overlay built for 2160 is soft by the time
+ * it gets there. Vector is the only form that is right at every size, and it is
+ * what lets the offline compositor draw the frame at the photograph's own
+ * pixel dimensions instead of resampling anything.
  */
 
 export function listFrames() {
@@ -28,65 +31,98 @@ export function listFrames() {
     .map((d) => JSON.parse(readFileSync(p('templates/social/frames', d, 'frame.json'), 'utf8')))
 }
 
-/** The mark as inline SVG, in colour. A frame sits on a photograph rather than
- *  on a ground of its own, so the one-ink knockout a card uses is wrong here —
- *  there is nothing for it to knock out of. */
-function markSvg(dir) {
+/** A mark as embeddable geometry: its viewBox, its contents, and — the part
+ *  that matters for placing it — where the INK actually is inside that box.
+ *
+ *  A symbol file is not full-bleed. It carries the clear space the guidelines
+ *  require, a quarter of the symbol's diameter on every side, which is why a
+ *  mark set to "9% of the width" arrives looking like 6%: a third of the box it
+ *  was given is deliberately empty. Sizing and insetting by the ink instead
+ *  means the number in the layout is the size you actually see, and that both
+ *  marks come out equally far from their corners even though the cup is a tall
+ *  narrow object and the roundel is a circle.
+ *
+ *  Measured rather than assumed: the padding is a convention of the generator
+ *  that draws these files, not something this one can read off the viewBox, and
+ *  a redrawn mark would silently shift. One rasterise per mark per build. */
+async function loadMark(dir) {
   const f = p('logos/dist', dir, 'symbol-color.svg')
   if (!existsSync(f)) throw new Error(`no colour symbol at logos/dist/${dir}/symbol-color.svg — run \`npm run build:logos\``)
-  return readFileSync(f, 'utf8').replace(/<\?xml[^>]*\?>/, '')
+  const raw = readFileSync(f, 'utf8')
+  const vb = raw.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/)
+  if (!vb) throw new Error(`${f}: no viewBox`)
+  const vbW = parseFloat(vb[1]), vbH = parseFloat(vb[2])
+  const inner = raw.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '')
+
+  const N = 256
+  const { data, info } = await sharp(Buffer.from(raw), { density: 96 })
+    .resize({ width: N, height: N, fit: 'fill' })
+    .ensureAlpha().raw().toBuffer({ resolveWithObject: true })
+  let minX = info.width, minY = info.height, maxX = -1, maxY = -1
+  for (let y = 0; y < info.height; y++) {
+    for (let x = 0; x < info.width; x++) {
+      if (data[(y * info.width + x) * info.channels + 3] > 8) {
+        if (x < minX) minX = x
+        if (x > maxX) maxX = x
+        if (y < minY) minY = y
+        if (y > maxY) maxY = y
+      }
+    }
+  }
+  if (maxX < 0) throw new Error(`${f}: rasterises to nothing`)
+  const sx = vbW / info.width, sy = vbH / info.height
+  return {
+    vbW, vbH, inner,
+    inkX: minX * sx, inkY: minY * sy,
+    inkW: (maxX - minX + 1) * sx, inkH: (maxY - minY + 1) * sy,
+  }
 }
 
-export function frameHtml(frameId, { format = 'photo', locale = 'ar' } = {}) {
+const EM = 100  // every string is baked at this size and scaled at emit time
+
+/** Outlines one string. Arabic is a joining script and the year is a Latin run
+ *  inside an Arabic one, so this goes through the bidi-aware shaper — see the
+ *  note in text-to-path.mjs about what shaping it by hand gets wrong. */
+function bake(text, weight) {
+  const file = p('brand/fonts/tajawal', weight >= 800 ? 'Tajawal-ExtraBold.ttf' : 'Tajawal-Medium.ttf')
+  if (!existsSync(file)) throw new Error(`Tajawal is not vendored at ${file} — run \`npm run fonts:fetch\``)
+  const r = textToPathBidi(text, { fontFile: file, size: EM, baseDir: 'rtl', weight })
+  return { d: r.d, width: r.width, minY: r.bounds.minY, em: EM }
+}
+
+/** Everything a frame needs, resolved from the registry once. */
+export async function frameParts(frameId, { locale = 'ar' } = {}) {
   const dir = p('templates/social/frames', frameId)
   if (!existsSync(dir)) throw new Error(`no frame template "${frameId}" in templates/social/frames/`)
   const def = JSON.parse(readFileSync(join(dir, 'frame.json'), 'utf8'))
-  const tpl = stripLayoutComment(readFileSync(join(dir, 'frame.html'), 'utf8'))
 
   const tokens = loadTokens()
   const { entities, primary } = loadEntities(tokens)
   const entity = entities.find((e) => e.id === def.entity)
   if (!entity) throw new Error(`${frameId}: frame.json names entity "${def.entity}", which is not in entities.yml`)
 
-  const fmt = formats()[format]
-  if (!fmt) throw new Error(`unknown format "${format}"`)
-
-  const values = {
-    markCup: markSvg(entity.dir),
-    markAjvt: markSvg(primary.dir),
-    name: entity.name[locale],
-    // The eyebrow every non-parent mark inherits from the association — the
-    // short endorsement, not the full registered name, which runs too wide at
-    // a size meant to stay quiet.
-    org: entity.wordmark?.[locale]?.eyebrow ?? primary.name[locale],
-    season: locale === 'ar' ? `موسم ${entity.season}` : `Saison ${entity.season}`,
+  return {
+    def,
+    accent: entity.accentColor.base,
+    marks: { cup: await loadMark(entity.dir), ajvt: await loadMark(primary.dir) },
+    text: {
+      name: bake(entity.name[locale], 800),
+      season: bake(locale === 'ar' ? `موسم ${entity.season}` : `Saison ${entity.season}`, 500),
+      // The eyebrow every non-parent mark inherits from the association — the
+      // short endorsement, not the full registered name, which runs too wide at
+      // a size meant to stay quiet.
+      org: bake(entity.wordmark?.[locale]?.eyebrow ?? primary.name[locale], 500),
+    },
   }
-
-  return `<!doctype html>
-<html lang="${locale}" dir="${locale === 'ar' ? 'rtl' : 'ltr'}">
-<meta charset="utf-8">
-<style>
-${fontFaceCss()}
-html, body { margin: 0; padding: 0; background: transparent; }
-:root {
-  --w: ${fmt.w}px;
-  --h: ${fmt.h}px;
-  --accent-base: ${entity.accentColor.base};
-}
-${readFileSync(join(dir, 'frame.css'), 'utf8')}
-</style>
-<body>
-${render(tpl, values)}
-</body>
-</html>`
 }
 
-export async function framePng(frameId, { format = 'photo', locale = 'ar', scale } = {}) {
-  const fmt = formats()[format]
-  // Export at roughly 2000px on the short edge whatever the format declares, so
-  // a frame never has to be scaled UP onto a photograph off a modern phone.
-  const s = scale ?? Math.max(1, Math.ceil(2048 / fmt.w))
-  return htmlToPng(frameHtml(frameId, { format, locale }), {
-    width: fmt.w, height: fmt.h, scale: s, omitBackground: true,
-  })
+export function frameSvgFor(frameId, { w, h, parts }) {
+  const { accent, marks, text } = parts
+  return frameSvg({ w, h, accent, marks, text })
 }
+
+export async function framePng(frameId, { w, h, parts }) {
+  return svgToPng(frameSvgFor(frameId, { w, h, parts }), { width: w, density: 96 })
+}
+
+export { frameSvg }

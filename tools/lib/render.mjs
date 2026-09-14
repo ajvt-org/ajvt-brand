@@ -81,9 +81,14 @@ export function fontFaceCss() {
  * Anything still carrying live type (the seal) needs a real text engine and
  * falls back to the browser.
  */
-export async function svgToPng(svg, { width, background = null } = {}) {
+export async function svgToPng(svg, { width, background = null, density = 400 } = {}) {
+  // density is relative to the SVG's own intrinsic size. 400 is right for a
+  // lockup, which is 512 units across and has to be scaled UP. An SVG that
+  // already declares its size in output pixels — a frame — must be rendered at
+  // 96, or sharp is asked for a canvas four times the requested width and
+  // refuses with "Input image exceeds pixel limit".
   if (!/<text[\s>]/.test(svg)) {
-    let img = sharp(Buffer.from(svg), { density: 400 }).resize({ width: Math.round(width) })
+    let img = sharp(Buffer.from(svg), { density }).resize({ width: Math.round(width) })
     if (background) img = img.flatten({ background })
     return img.png().toBuffer()
   }
