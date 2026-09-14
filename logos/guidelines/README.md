@@ -15,7 +15,7 @@ Every mark the association owns. Each page is generated from `brand/entities.yml
 | اللجنة الإعلامية<br>Comité de communication | committee | `copper` | [`communication`](committees/communication.md) |
 | اللجنة الرياضية<br>Comité des sports | committee | `azure` | [`sports`](committees/sports.md) |
 | كأس رابطة شباب التاكلالت الناشئين<br>Coupe des juniors de l'Association des Jeunes de Taguilalett | event | `copper` | [`u18-cup-2026`](events/u18-cup-2026.md) |
-| كأس رابطة شباب التاكلالت<br>Coupe de l'Association des Jeunes de Taguilalett | event | `saffron` | [`ajvt-cup-2026`](events/ajvt-cup-2026.md) |
+| كأس عمدة التاكلالت<br>Coupe du maire de Taguilalett | event | `saffron` | [`mayor-cup-2026`](events/mayor-cup-2026.md) |
 | القافلة الطبية<br>Caravane médicale | event | `clinical` | [`medical-caravan-2026`](events/medical-caravan-2026.md) |
 
 ## Adding a mark

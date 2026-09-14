@@ -3,7 +3,7 @@
  * Builds the team crests: logos/src/teams/<event>/*.svg -> logos/dist/teams/<event>/.
  *
  *   node tools/build-team-crests.mjs                 every event
- *   node tools/build-team-crests.mjs ajvt-cup-2026  just that one
+ *   node tools/build-team-crests.mjs mayor-cup-2026  just that one
  *
  * A team crest is NOT a lockup. It carries no mosque, no endorsement and no
  * wordmark composed by the engine, so it does not go through buildLockup and it

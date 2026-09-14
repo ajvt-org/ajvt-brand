@@ -97,8 +97,8 @@
         "camp": "palette.neutral.white"
       }
     },
-    "ajvt-cup": {
-      "$description": "A crown over a chalice, redrawn from the committee's sketch. The cup is near-black there; mint.900 is the darkest thing in the palette and reads as black at any size a logo is used, so nothing is lost by staying inside the family. Saffron is the one accent that is actually gold, which is what a crown has to be — and it is the only place in the system saffron is spent, so the cup owns it. Two slots: the cup is stroked geometry and the crown is filled, and neither has a part that wants a colour of its own.",
+    "mayor-cup": {
+      "$description": "A crown over a chalice, redrawn from the committee's sketch. The cup is near-black there; mint.900 is the darkest thing in the palette and reads as black at any size a logo is used, so nothing is lost by staying inside the family. Saffron is the one accent that is actually gold, which is what a crown has to be — and it is the only place in the system saffron is spent, so the Mayor's Cup owns it. Two slots: the cup is stroked geometry and the crown is filled, and neither has a part that wants a colour of its own.",
       "color": {
         "cup": "palette.mint.900", "crown": "accents.saffron.base"
       },
@@ -106,7 +106,7 @@
       "grayscale": {
         "cup": "#1f1f1f", "crown": "#8f8f8f"
       },
-      "$mono": "One ink, nothing dropped. The bowl stays open because it is a stroke rather than a filled shape, and the crown stays a crown because the drawing holds it clear of the rim — see the gap the generator enforces in tools/draw/ajvt-cup.py.",
+      "$mono": "One ink, nothing dropped. The bowl stays open because it is a stroke rather than a filled shape, and the crown stays a crown because the drawing holds it clear of the rim — see the gap the generator enforces in tools/draw/mayor-cup.py.",
       "mono-dark": {
         "cup": "palette.mint.800", "crown": "palette.mint.800"
       },
