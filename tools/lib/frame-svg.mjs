@@ -37,7 +37,7 @@ export function frameSvg({ w, h, accent = '#c08a1e', ink = '#fdfaf4', text, mark
     return `<g transform="translate(${round(x)} ${round(top - m.inkY * k)}) scale(${round(k, 4)})" filter="url(#mshadow)">${m.inner}</g>`
   }
 
-  const MARK = 11      // visible height of each mark, in % of the frame's width
+  const MARK = 8.5     // visible height of each mark, in % of the frame's width
   const inset = 2.1 * u
   const foot = h - 5 * u                       // season and endorsement share this baseline
   const nameSize = 2.6 * u
