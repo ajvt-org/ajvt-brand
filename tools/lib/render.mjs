@@ -32,14 +32,41 @@ export async function closeBrowser() {
   if (browser) { await browser.close(); browser = null }
 }
 
-/** Self-hosted @font-face rules, inlined so a rendered page never waits on the network. */
+/** Self-hosted @font-face rules, with every face inlined as a data URI.
+ *
+ * It has to be a data URI, not a file:// URL. A page built with `setContent`
+ * has an about:blank origin, and Chrome refuses to load file:// subresources
+ * into one — so a file:// src here fails for every face, SILENTLY: the render
+ * still succeeds, Arabic just comes out in whatever sans-serif the machine
+ * happens to have, and nobody notices until they compare a PNG against the
+ * wordmark. Every generated card, document and frame went out that way.
+ *
+ * The cost is bounded: fonts.css declares the ACTIVE faces only — the two
+ * families in brand/tokens/type.json, about 1.2 MB — and this is read and
+ * encoded once per build, then cached here. */
 let fontCss
 export function fontFaceCss() {
   if (fontCss !== undefined) return fontCss
   const f = p('brand/tokens/fonts.css')
-  fontCss = existsSync(f)
-    ? readFileSync(f, 'utf8').replace(/url\("\.\.\/fonts\//g, `url("file://${p('brand/fonts')}/`)
-    : ''
+  if (!existsSync(f)) return (fontCss = '')
+
+  const MIME = { woff2: 'font/woff2', woff: 'font/woff', truetype: 'font/ttf', opentype: 'font/otf' }
+  const missing = []
+  fontCss = readFileSync(f, 'utf8').replace(
+    /url\("\.\.\/fonts\/([^"]+)"\)(\s*format\("([^"]+)"\))?/g,
+    (whole, rel, fmtClause = '', fmt) => {
+      const file = p('brand/fonts', decodeURIComponent(rel))
+      if (!existsSync(file)) { missing.push(rel); return whole }
+      const b64 = readFileSync(file).toString('base64')
+      return `url("data:${MIME[fmt] ?? 'font/ttf'};base64,${b64}")${fmtClause}`
+    }
+  )
+  if (missing.length) {
+    throw new Error(
+      `brand/tokens/fonts.css points at ${missing.length} font file(s) that are not there:\n  ` +
+      `${missing.join('\n  ')}\nRun \`npm run fonts:fetch\`.`
+    )
+  }
   return fontCss
 }
 
