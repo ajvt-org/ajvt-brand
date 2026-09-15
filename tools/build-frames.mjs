@@ -19,11 +19,20 @@
  * Output goes to logos/dist rather than dist/ for the same reason the lockups
  * do: a committee member with a photograph has to be able to take the file out
  * of a GitHub download without installing Node.
+ *
+ * It also writes dist/ajvt-photo-frames.zip — the thing you actually attach to
+ * a message, since nobody sends eleven files one at a time over WhatsApp. It is
+ * rebuilt here rather than made by hand so it cannot quietly go stale against
+ * the files it packs, and it goes in dist/ because that is where this
+ * repository keeps output it does not commit: the folder inside it is already
+ * committed under logos/dist/frames, and a binary that changes on every build
+ * has no business in the history.
  */
 import { writeFileSync, mkdirSync, copyFileSync, existsSync } from 'node:fs'
 import { p } from './lib/paths.mjs'
 import { listFrames, frameParts, frameSvgFor, framePng } from './lib/frame.mjs'
 import { closeBrowser } from './lib/render.mjs'
+import { zipDir } from './lib/zip.mjs'
 
 /** The shapes a photograph actually comes in, longest edge 4096. */
 const SHAPES = {
@@ -33,6 +42,8 @@ const SHAPES = {
   story:    { w: 2304, h: 4096, note: '9:16 — Instagram and WhatsApp stories' },
   wide:     { w: 4096, h: 2304, note: '16:9 — video stills, YouTube thumbnails' },
 }
+
+const ZIP = 'dist/ajvt-photo-frames.zip'
 
 const only = process.argv[2]
 const frames = listFrames().filter((f) => !only || f.id === only)
@@ -67,5 +78,11 @@ const readme = p('templates/social/frames/README.md')
 if (frames.length && existsSync(readme)) {
   mkdirSync(p('logos/dist/frames'), { recursive: true })
   copyFileSync(readme, p('logos/dist/frames/README.md'))
+}
+if (frames.length) {
+  const zip = zipDir(p('logos/dist/frames'), 'ajvt-photo-frames')
+  mkdirSync(p('dist'), { recursive: true })
+  writeFileSync(p(ZIP), zip)
+  console.log(`\n  ${ZIP.padEnd(44)} ${(zip.length / 1024 | 0)} KB  — attach this one`)
 }
 await closeBrowser()
