@@ -13,5 +13,8 @@ brand/tokens/tokens.json
 # logo file without installing Node: a printer, a partner, a member making a
 # poster. `git clone` or a GitHub download has to be enough.
 
+# The draw scripts import each other now — the two cups share one drawing.
+__pycache__/
+
 .DS_Store
 *.log

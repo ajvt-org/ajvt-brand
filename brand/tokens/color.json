@@ -98,20 +98,24 @@
       }
     },
     "mayor-cup": {
-      "$description": "A crown over a chalice, redrawn from the committee's sketch. The cup is near-black there; mint.900 is the darkest thing in the palette and reads as black at any size a logo is used, so nothing is lost by staying inside the family. Saffron is the one accent that is actually gold, which is what a crown has to be — and it is the only place in the system saffron is spent, so the Mayor's Cup owns it. Two slots: the cup is stroked geometry and the crown is filled, and neither has a part that wants a colour of its own.",
+      "$description": "The same trophy as the U18 cup, in gold — see marks.u18-cup above, and tools/draw/trophy.py for the one drawing they share. The cup had a crown over a chalice until September 2026; it was the Copa del Rey and it went. What tells the two cups apart now is this block alone, so it is built to differ from the U18's at badge size and in one glance: the blades and the ball's panels are saffron, the only accent in the system that is actually gold and the only place saffron is spent, so the Mayor's Cup still owns what its crown was drawn in. Everything under them is mint — the mayor's cup standing on the association's base, which is the relation the mark is there to state. The flare goes to mint.900 rather than a second warm step: it meets the blades' tips, and anything nearer the gold fuses with it.",
       "color": {
-        "cup": "palette.mint.900", "crown": "accents.saffron.base"
+        "cup": "accents.saffron.base", "plinth": "palette.mint.600", "foot": "palette.mint.900",
+        "ball": "palette.mint.900", "ball-patch": "accents.saffron.soft", "flare": "palette.mint.900"
       },
-      "$grayscale": "Literal, like the two blocks above. The crown has to stay clearly lighter than the cup or the two merge into one silhouette and the mark loses its top half.",
+      "$grayscale": "Literal, like the two blocks above and for the same reason: a one-ink print has to be predictable, and luminance-matching gold against mint by eye beats matching them by formula. Gold is a light colour and the cup is the largest mass, so the whole drawing sits lighter here than the U18's — the plinth stays lighter still, or the base reads as a bar under the trophy rather than part of it.",
       "grayscale": {
-        "cup": "#1f1f1f", "crown": "#8f8f8f"
+        "cup": "#6e6e6e", "plinth": "#8f8f8f", "foot": "#1f1f1f",
+        "ball": "#1f1f1f", "ball-patch": "#d5d5d5", "flare": "#1f1f1f"
       },
-      "$mono": "One ink, nothing dropped. The bowl stays open because it is a stroke rather than a filled shape, and the crown stays a crown because the drawing holds it clear of the rim — see the gap the generator enforces in tools/draw/mayor-cup.py.",
+      "$mono": "One ink. As in the U18 block, the patch disc drops to none so the ball's pentagons open onto the page and it stays a ball; everything that carries the silhouette takes the ink. In one ink the two cups are the same mark — they are the same drawing — and what separates them is the wordmark under it.",
       "mono-dark": {
-        "cup": "palette.mint.800", "crown": "palette.mint.800"
+        "cup": "palette.mint.800", "plinth": "palette.mint.800", "foot": "palette.mint.800",
+        "ball": "palette.mint.800", "ball-patch": "none", "flare": "palette.mint.800"
       },
       "mono-light": {
-        "cup": "palette.neutral.white", "crown": "palette.neutral.white"
+        "cup": "palette.neutral.white", "plinth": "palette.neutral.white", "foot": "palette.neutral.white",
+        "ball": "palette.neutral.white", "ball-patch": "none", "flare": "palette.neutral.white"
       }
     }
   },

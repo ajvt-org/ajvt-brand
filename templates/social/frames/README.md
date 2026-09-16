@@ -98,7 +98,9 @@ shop's.
 
 ### One thing to watch
 
-In colour, the cup's chalice is drawn in `mint.900`, which is nearly black. On a
-very dark photograph it goes quiet and only the gold crown reads clearly. If
-that turns out to matter on real match photos, the fix is a one-ink variant of
-that corner — ask, and it becomes another file here.
+In colour, the cup's blades are gold and everything under them — the plinth,
+the foot, the wedges and the ball — is `mint`, the darkest steps of it. On a
+very dark photograph the base goes quiet and the trophy reads as the gold half
+alone, standing on nothing. If that turns out to matter on real match photos,
+the fix is a one-ink variant of that corner — ask, and it becomes another file
+here.
