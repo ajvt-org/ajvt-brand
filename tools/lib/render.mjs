@@ -32,14 +32,41 @@ export async function closeBrowser() {
   if (browser) { await browser.close(); browser = null }
 }
 
-/** Self-hosted @font-face rules, inlined so a rendered page never waits on the network. */
+/** Self-hosted @font-face rules, with every face inlined as a data URI.
+ *
+ * It has to be a data URI, not a file:// URL. A page built with `setContent`
+ * has an about:blank origin, and Chrome refuses to load file:// subresources
+ * into one — so a file:// src here fails for every face, SILENTLY: the render
+ * still succeeds, Arabic just comes out in whatever sans-serif the machine
+ * happens to have, and nobody notices until they compare a PNG against the
+ * wordmark. Every generated card, document and frame went out that way.
+ *
+ * The cost is bounded: fonts.css declares the ACTIVE faces only — the two
+ * families in brand/tokens/type.json, about 1.2 MB — and this is read and
+ * encoded once per build, then cached here. */
 let fontCss
 export function fontFaceCss() {
   if (fontCss !== undefined) return fontCss
   const f = p('brand/tokens/fonts.css')
-  fontCss = existsSync(f)
-    ? readFileSync(f, 'utf8').replace(/url\("\.\.\/fonts\//g, `url("file://${p('brand/fonts')}/`)
-    : ''
+  if (!existsSync(f)) return (fontCss = '')
+
+  const MIME = { woff2: 'font/woff2', woff: 'font/woff', truetype: 'font/ttf', opentype: 'font/otf' }
+  const missing = []
+  fontCss = readFileSync(f, 'utf8').replace(
+    /url\("\.\.\/fonts\/([^"]+)"\)(\s*format\("([^"]+)"\))?/g,
+    (whole, rel, fmtClause = '', fmt) => {
+      const file = p('brand/fonts', decodeURIComponent(rel))
+      if (!existsSync(file)) { missing.push(rel); return whole }
+      const b64 = readFileSync(file).toString('base64')
+      return `url("data:${MIME[fmt] ?? 'font/ttf'};base64,${b64}")${fmtClause}`
+    }
+  )
+  if (missing.length) {
+    throw new Error(
+      `brand/tokens/fonts.css points at ${missing.length} font file(s) that are not there:\n  ` +
+      `${missing.join('\n  ')}\nRun \`npm run fonts:fetch\`.`
+    )
+  }
   return fontCss
 }
 
@@ -54,9 +81,14 @@ export function fontFaceCss() {
  * Anything still carrying live type (the seal) needs a real text engine and
  * falls back to the browser.
  */
-export async function svgToPng(svg, { width, background = null } = {}) {
+export async function svgToPng(svg, { width, background = null, density = 400 } = {}) {
+  // density is relative to the SVG's own intrinsic size. 400 is right for a
+  // lockup, which is 512 units across and has to be scaled UP. An SVG that
+  // already declares its size in output pixels — a frame — must be rendered at
+  // 96, or sharp is asked for a canvas four times the requested width and
+  // refuses with "Input image exceeds pixel limit".
   if (!/<text[\s>]/.test(svg)) {
-    let img = sharp(Buffer.from(svg), { density: 400 }).resize({ width: Math.round(width) })
+    let img = sharp(Buffer.from(svg), { density }).resize({ width: Math.round(width) })
     if (background) img = img.flatten({ background })
     return img.png().toBuffer()
   }
@@ -156,13 +188,17 @@ export async function htmlToPdf(html, { baseUrl = `file://${p('.')}/`, format = 
   return normalise(buf)
 }
 
-/** Full HTML document to a PNG of an exact size — social cards. */
-export async function htmlToPng(html, { width, height, scale = 2 } = {}) {
+/** Full HTML document to a PNG of an exact size — social cards, and frames.
+ *
+ * `omitBackground` keeps the alpha channel: a frame is laid over a photograph,
+ * so everything the template does not paint has to come out transparent rather
+ * than white. */
+export async function htmlToPng(html, { width, height, scale = 2, omitBackground = false } = {}) {
   const b = await getBrowser()
   const page = await b.newPage({ viewport: { width, height }, deviceScaleFactor: scale })
   await page.setContent(html, { waitUntil: 'networkidle' })
   await page.evaluate(() => document.fonts.ready)
-  const buf = await page.screenshot({ type: 'png' })
+  const buf = await page.screenshot({ type: 'png', omitBackground })
   await page.close()
   return buf
 }

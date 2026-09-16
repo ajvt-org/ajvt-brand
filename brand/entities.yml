@@ -186,25 +186,25 @@ entities:
     layouts: [badge, vertical, horizontal, symbol]
     cards: [match-result, match-fixture, standings, squad-announcement]
 
-  # The mayor withdrew from the 2026 edition, so the cup is the association's
-  # own and says so. The wordmark splits the full name the way the parent's
-  # does, because the endorsement line would otherwise repeat "رابطة شباب"
-  # directly above it.
-  - id: ajvt-cup-2026
+  # The mayor sponsors the 2026 edition, so the cup carries his office and not
+  # the association's name. The wordmark is the short name alone: the parent
+  # endorsement line already puts "رابطة شباب التاكلالت" under it, which is
+  # exactly the relation — the association runs it, the mayor's office backs it.
+  - id: mayor-cup-2026
     kind: event
     season: "2026"
-    mark: ajvt-cup
+    mark: mayor-cup
     accent: saffron
     ground: "#10271f"
     name:
-      ar: كأس رابطة شباب التاكلالت
-      fr: Coupe de l'Association des Jeunes de Taguilalett
+      ar: كأس عمدة التاكلالت
+      fr: Coupe du maire de Taguilalett
     short:
-      ar: كأس الرابطة
-      fr: Coupe de l'AJVT
+      ar: كأس العمدة
+      fr: Coupe du maire
     wordmark:
-      ar: { eyebrow: كأس رابطة شباب, main: التاكلالت }
-      fr: { eyebrow: Coupe de l'Association des Jeunes de, main: Taguilalett }
+      ar: { main: كأس العمدة }
+      fr: { main: Coupe du maire }
     layouts: [badge, vertical, horizontal, symbol]
     cards: [match-result, match-fixture, standings, squad-announcement]
 
