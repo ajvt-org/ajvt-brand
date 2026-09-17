@@ -94,6 +94,35 @@ touch styling.
 `npm run studio`, fill in the form, download the PNG. The preview is a real
 render from the same code the build uses, so what you approve is what you get.
 
+## Framing photographs
+
+`npm run build:frames` draws the overlay frames into
+`logos/dist/frames/<entity>/`, one PNG per shape. To lay them over a day's
+photographs and videos:
+
+```bash
+tools/frame-media.py --frames logos/dist/frames/mayor-cup-2026 \
+                     --input whatsapp --output whatsapp-framed --recursive
+```
+
+Add `--dry-run` first: it prints the frame each file is matched to and what the
+match costs, and writes nothing.
+
+The frames are overlays with transparent middles, and they are never stretched
+to a shape they were not drawn for — the *picture* is centre-cropped to the
+nearest shape instead. Anything more than 15% away from every shape is skipped
+rather than mangled, so a panorama comes back untouched and says so.
+
+This is Python, not Node: it needs Pillow, and ffmpeg on `PATH` for video.
+Without ffmpeg the photographs still process and the videos are skipped with a
+message.
+
+Clips off WhatsApp regularly carry a rotation flag that is simply wrong — the
+stored frames are already the right way up, and honouring it lays the picture on
+its side. The tool ignores the flag and says so on the file it ignored it for;
+that line is worth checking by eye, because no rule can tell a wrong flag from a
+genuinely portrait clip.
+
 ## Changing the fonts
 
 Two Arabic faces, and no third: one draws wordmarks, one sets content. Both are
@@ -121,6 +150,7 @@ so the switch is genuinely one line.
 | `npm run check` | Validate tokens, registry, artwork, licences, output |
 | `npm run fonts:fetch` | Vendor the active typefaces |
 | `npm run font:set` | Switch a typeface |
+| `tools/frame-media.py` | Lay the event frames over photographs and videos (Python; see above) |
 
 ## Relationship to ajvt-app
 
