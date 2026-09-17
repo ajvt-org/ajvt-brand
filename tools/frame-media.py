@@ -111,6 +111,24 @@ def pick_frame(frames: list[Frame], w: int, h: int) -> tuple[Frame, float]:
     return best, math.expm1(drift)  # ~= relative difference
 
 
+def part_file(dst: Path) -> Path:
+    """Where a file is written before it is allowed to be the output.
+
+    Both writers below work into this and rename onto `dst` only once they have
+    finished, because a job that is skipped is chosen by asking whether its
+    output already exists. Writing straight to `dst` breaks that: ffmpeg creates
+    the file before it writes anything into it, so a clip that fails leaves an
+    empty one behind, and the next run reads it as work already done and skips
+    it for good. A rename is atomic, so `dst` exists only when it is complete
+    and a failed or interrupted run leaves nothing to mistake for output.
+
+    The extension stays on the end. Both writers choose the output format from
+    it — ffmpeg refuses a name it cannot read a container from, and Pillow picks
+    its encoder the same way — so a suffix appended after the extension breaks
+    the write for every type rather than protecting it."""
+    return dst.with_name(f"{dst.stem}.part{dst.suffix}")
+
+
 def crop_box(w: int, h: int, target: float, even: bool = False) -> tuple[int, int, int, int]:
     """Centre-crop rectangle of `w`x`h` matching aspect `target`."""
     if w / h > target:
@@ -164,12 +182,18 @@ def do_image(src: Path, dst: Path, frames: list[Frame], args) -> Result:
             im.alpha_composite(fr)
 
         dst.parent.mkdir(parents=True, exist_ok=True)
-        if dst.suffix.lower() in (".jpg", ".jpeg"):
-            im.convert("RGB").save(
-                dst, "JPEG", quality=args.jpeg_quality, subsampling=0, optimize=True
-            )
-        else:
-            im.save(dst)
+        tmp = part_file(dst)
+        try:
+            if dst.suffix.lower() in (".jpg", ".jpeg"):
+                im.convert("RGB").save(
+                    tmp, "JPEG", quality=args.jpeg_quality, subsampling=0, optimize=True
+                )
+            else:
+                im.save(tmp)
+            tmp.replace(dst)
+        except BaseException:
+            tmp.unlink(missing_ok=True)
+            raise
     r.dst = dst
     return r
 
@@ -222,6 +246,7 @@ def do_video(src: Path, dst: Path, frames: list[Frame], args) -> Result:
         return r
 
     dst.parent.mkdir(parents=True, exist_ok=True)
+    tmp = part_file(dst)
     cmd = [
         "ffmpeg", "-y", "-loglevel", "error",
         # Take the frames exactly as stored and ignore the display matrix.
@@ -244,13 +269,19 @@ def do_video(src: Path, dst: Path, frames: list[Frame], args) -> Result:
         "-c:a", "copy",
         "-c:v", "libx264", "-preset", args.preset, "-crf", str(args.crf),
         "-movflags", "+faststart",
-        str(dst),
+        str(tmp),
     ]
-    out = subprocess.run(cmd, capture_output=True, text=True)
+    try:
+        out = subprocess.run(cmd, capture_output=True, text=True)
+    except BaseException:
+        tmp.unlink(missing_ok=True)
+        raise
     if out.returncode != 0:
+        tmp.unlink(missing_ok=True)
         r.status = "failed"
         r.detail = (out.stderr.strip().splitlines() or ["ffmpeg failed"])[-1]
         return r
+    tmp.replace(dst)
     r.dst = dst
     return r
 
