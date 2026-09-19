@@ -13,8 +13,13 @@
   margin: 22mm 18mm 20mm 18mm;
 }
 
-/* Cover pages carry the logo, so they set their own margins. */
-@page :first { margin: 0; }
+/* Cover pages carry the logo and bleed to the paper's edge, so they set their
+   own margins. Scoped to a named page the cover claims for itself: `@page
+   :first` would also strip the margins off page one of a letterhead document,
+   which has no cover and relies on the default ones — its text then runs into
+   the paper's edge and collides with the running footer. */
+@page cover { margin: 0; }
+.cover { page: cover; }
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -178,7 +183,21 @@ td:first-child { color: var(--text); width: 34%; }
 .signatures { display: flex; gap: 14mm; margin-top: 14mm; page-break-inside: avoid; }
 .signature { flex: 1; }
 .signature__role { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 16mm; }
-.signature__line { border-top: 1px solid var(--text-muted); padding-top: 1.5mm; font-size: var(--text-sm); }
+.signature__line {
+  border-top: 1px solid var(--text-muted);
+  padding-top: 1.5mm;
+  /* The signatory is a person, not a caption: set at reading size and in the
+     body colour, so the name carries more weight than the role above it. */
+  font-size: var(--text-md);
+  color: var(--text);
+}
+
+/* A signature that names its signatory is a statement of authorship, already
+   made: the name sits directly under its role, with no rule. A role left
+   without a name is the opposite — blank space someone still has to sign in —
+   so it keeps the rule and the 16mm of clearance above it. */
+.signature:has(.signature__line:not(:empty)) .signature__role { margin-bottom: 1.5mm; }
+.signature__line:not(:empty) { border-top: 0; padding-top: 0; }
 
 @media screen {
   body { background: var(--paper); padding: 10mm; }
