@@ -61,7 +61,7 @@ entities:
       ar: شباب التاكلالت
       fr: AJVT
     wordmark:
-      ar: { eyebrow: رابطة شباب, main: التاكلالت }
+      ar: { eyebrow: رابطة شباب قرية, main: التاكلالت }   # the legal name in full — قرية is part of it
       fr: { eyebrow: Association des Jeunes de, main: Taguilalett }
     motto:
       ar: خيرية - وحدة - تعاون
