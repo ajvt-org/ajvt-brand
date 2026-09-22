@@ -1,6 +1,9 @@
 import { chromium } from 'playwright'
 import sharp from 'sharp'
-import { readFileSync, existsSync } from 'node:fs'
+import { readFileSync, existsSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs'
+import { spawnSync } from 'node:child_process'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { p } from './paths.mjs'
 
 /**
@@ -134,6 +137,41 @@ const PDF_DATE = '19700101000000'
 const datePattern = /(\/(?:CreationDate|ModDate)\s*\(D:)\d{14}/g
 const versionPattern = /((?:HeadlessChrome\/|Chrome\/|Skia\/PDF m)\d*)/g
 const zeroDigits = (s) => s.replace(/\d/g, '0')
+/**
+ * Swaps the first pages of a rendered PDF for ones rendered without the running
+ * footer, so a cover carries no page number.
+ *
+ * Not a concatenation. Chrome writes internal links as named destinations held
+ * in the document catalogue, and pdfunite drops that name table while mutool
+ * and ghostscript drop the links outright — a contents page of two hundred
+ * entries then points at nothing. The whole document is rendered once and keeps
+ * its catalogue; only the page images at the front are exchanged.
+ *
+ * Returns null when pypdf is not installed, and the document then keeps its
+ * footer on every page rather than losing its links.
+ */
+function swapFrontPages(whole, front) {
+  const dir = mkdtempSync(join(tmpdir(), 'ajvt-pdf-'))
+  try {
+    const w = join(dir, 'whole.pdf')
+    const f = join(dir, 'front.pdf')
+    const o = join(dir, 'out.pdf')
+    writeFileSync(w, whole)
+    writeFileSync(f, front)
+    const r = spawnSync('python3', [p('tools/lib/pdf-front.py'), w, f, o], { encoding: 'utf8' })
+    if (r.error || r.status !== 0) return null
+    return readFileSync(o)
+  } catch {
+    return null
+  } finally {
+    rmSync(dir, { recursive: true, force: true })
+  }
+}
+
+/** Whether a document can be given a cover with no running footer. */
+export const canSwapFrontPages = () =>
+  spawnSync('python3', ['-c', 'import pypdf'], { encoding: 'utf8' }).status === 0
+
 function normalise(buf) {
   return Buffer.from(
     buf
@@ -174,16 +212,37 @@ export async function svgToPdf(svg) {
  * in its own document, so it inherits nothing from the page and has to carry its
  * own @font-face rules or the Arabic falls back to a system face.
  */
-export async function htmlToPdf(html, { baseUrl = `file://${p('.')}/`, format = 'A4', margin, landscape = false, footer } = {}) {
+export async function htmlToPdf(html, { baseUrl = `file://${p('.')}/`, format = 'A4', margin, landscape = false, footer, outline = false, footerFrom = 1 } = {}) {
   const b = await getBrowser()
   const page = await b.newPage()
   await page.setContent(html, { waitUntil: 'networkidle' })
   await page.evaluate(() => document.fonts.ready)
-  const buf = await page.pdf({
+  const shared = {
     format, landscape, printBackground: true,
+    // The bookmark tree a reader opens in the sidebar, built by Chrome from the
+    // heading structure. It needs a tagged PDF to hang off, which is worth
+    // having on its own for anything read on a screen.
+    ...(outline ? { outline: true, tagged: true } : {}),
     margin: margin ?? { top: '0', bottom: '0', left: '0', right: '0' },
-    ...(footer ? { displayHeaderFooter: true, headerTemplate: '<div></div>', footerTemplate: footer } : {}),
-  })
+  }
+  const running = footer
+    ? { displayHeaderFooter: true, headerTemplate: '<div></div>', footerTemplate: footer }
+    : {}
+
+  const buf = await page.pdf({ ...shared, ...running })
+
+  // A cover is a title page, not page one of the text: it carries no page
+  // number and no running title. It is rendered again on its own, without the
+  // footer, and put back in front of the document that was just made.
+  if (footer && footerFrom > 1) {
+    const front = await page.pdf({ ...shared, pageRanges: `1-${footerFrom - 1}` })
+    const swapped = swapFrontPages(buf, front)
+    if (swapped) {
+      await page.close()
+      return normalise(swapped)
+    }
+  }
+
   await page.close()
   return normalise(buf)
 }
