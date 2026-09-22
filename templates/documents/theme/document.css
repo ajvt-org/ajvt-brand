@@ -19,16 +19,20 @@
    which has no cover and relies on the default ones — its text then runs into
    the paper's edge and collides with the running footer. */
 @page cover { margin: 0; }
-.cover { page: cover; }
 
 *, *::before, *::after { box-sizing: border-box; }
 
 html { font-size: 11pt; }
 
+/* The sheet stays white, and the colour lives in the things printed on it.
+   Not a preference: Chrome paints a root background onto the first printed
+   page and no other, so a tinted sheet comes out tinted on the cover and white
+   for the next forty pages. Anything that has to carry colour on every page
+   carries it on its own box — the part bands and the article cards below. */
 body {
   margin: 0;
   color: var(--text);
-  background: #fff;
+  background: var(--neutral-white);
   font-family: var(--font-latin-content);
   line-height: var(--leading-latin-body);
   -webkit-font-smoothing: antialiased;
@@ -45,54 +49,131 @@ body[dir="rtl"] {
 }
 
 /* ── Cover ───────────────────────────────────────────────────────────────
-   Used by décisions and règlements: mark, association name, rule, title,
-   subtitle, a short standfirst, then the approval date. */
+   A deep mint panel across the top of the sheet carrying the mark, the
+   association's name and the title reversed out of it, and cream below it for
+   the standfirst and the approval seal. The panel is a fixed share of the page
+   rather than a colour that stops where the text happens to end, so every
+   document's cover breaks at the same line however long its title runs. */
 .cover {
   height: 296mm;
-  box-sizing: border-box;
-  padding: 46mm 26mm 24mm;
+  page: cover;
+  page-break-after: always;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background: var(--paper);
+  position: relative;
+}
+
+.cover__panel {
+  flex: 0 0 57%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  page-break-after: always;
-  background: #fff;
+  padding: 18mm 26mm 16mm;
+  color: var(--neutral-white);
+  background: linear-gradient(168deg, var(--brand-strong) 0%, var(--brand) 62%, var(--brand-strong) 100%);
+  position: relative;
 }
-.cover__mark { width: 42mm; margin-bottom: 7mm; }
+
+/* The copper edge where the panel meets the paper. It is the only copper on
+   the cover apart from the diamond, and it is what stops the panel reading as
+   a block somebody dropped on the page. */
+.cover__panel::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1.4mm;
+  background: linear-gradient(90deg, var(--accent-soft) 0%, var(--accent) 50%, var(--accent-soft) 100%);
+}
+
+/* The roundel keeps its own white ground: the mark is drawn for light paper
+   and laying it straight onto deep mint loses half of it. */
+.cover__mark {
+  width: 44mm;
+  margin-bottom: 8mm;
+  padding: 3mm;
+  border-radius: 50%;
+  background: var(--neutral-white);
+  box-shadow: 0 0 0 0.6mm var(--brand);
+}
 .cover__mark img, .cover__mark svg { width: 100%; height: auto; display: block; }
+
 .cover__org {
   font-size: var(--text-md);
-  color: var(--accent);
+  color: var(--brand-soft);
   letter-spacing: 0.02em;
   margin-bottom: 5mm;
 }
-.cover__rule { width: 26mm; height: 1px; background: var(--accent-soft); margin: 0 0 11mm; }
+
+/* A copper diamond on a fading hairline. The association's papers are read in
+   a village hall, not a design review: the ornament says "this is the real
+   document" faster than any wording under the title can. */
+.cover__rule {
+  position: relative;
+  width: 46mm;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-soft) 22%, var(--accent-soft) 78%, transparent);
+  margin: 0 0 9mm;
+}
+.cover__rule::after {
+  content: "";
+  position: absolute;
+  top: -1.4mm;
+  left: 50%;
+  margin-left: -1.4mm;
+  width: 2.8mm;
+  height: 2.8mm;
+  transform: rotate(45deg);
+  background: var(--accent-soft);
+}
+
 .cover__title {
   font-size: var(--text-3xl);
   font-weight: 400;
   line-height: 1.15;
   margin: 0 0 4mm;
-  color: var(--text);
+  color: var(--neutral-white);
 }
 .cover__subtitle {
   font-size: var(--text-xl);
-  color: var(--accent);
+  color: var(--accent-soft);
   font-weight: 400;
-  margin: 0 0 9mm;
+  margin: 0;
+}
+
+.cover__foot {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 14mm 26mm 22mm;
 }
 .cover__standfirst {
-  max-width: 118mm;
+  max-width: 128mm;
   color: var(--text-muted);
   font-size: var(--text-base);
   margin: 0 0 auto;
+  padding: 5mm 7mm;
+  background: var(--neutral-white);
+  border: 1px solid var(--brand-soft);
+  border-radius: 1.5mm;
 }
+
+/* The approval date is the one fact on the cover that decides whether the
+   paper is in force, so it is set as a seal rather than as a caption. */
 .cover__meta {
   margin-top: auto;
-  padding-top: 6mm;
-  color: var(--text-muted);
+  padding: 2.6mm 8mm;
+  border-radius: 99mm;
+  background: var(--brand-strong);
+  color: var(--brand-soft);
   font-size: var(--text-sm);
 }
-.cover__meta strong { color: var(--text); font-weight: 400; }
+.cover__meta strong { color: var(--neutral-white); font-weight: 600; }
 .cover__seal { width: 30mm; margin: 8mm auto 0; opacity: 0.9; }
 
 /* ── Letterhead ──────────────────────────────────────────────────────────
@@ -133,8 +214,71 @@ body[dir="rtl"] .doc-subtitle { font-style: normal; }
 h1, h2, h3, h4 { color: var(--accent); font-weight: 400; page-break-after: avoid; }
 h1 { font-size: var(--text-xl); margin: 9mm 0 3mm; }
 h2 { font-size: var(--text-lg); margin: 7mm 0 2.5mm; }
-h3 { font-size: var(--text-md); margin: 5mm 0 2mm; color: var(--accent-soft); }
-h3 { color: var(--text-muted); }
+h3 { font-size: var(--text-md); margin: 5mm 0 2mm; color: var(--text-muted); }
+
+/* A part — `# الباب الأول` — opens on a mint band the width of the text. In a
+   statute the parts are the navigation, and a reader flicking for one finds a
+   band in a second and a slightly larger copper line never.
+
+   `.part` is put there by the build on the author's `#` headings only. The
+   layout's own h1 — `.cover__title`, `.doc-title` — never gets it, so a band
+   can never be painted across a title page. */
+h1.part {
+  font-size: var(--text-lg);
+  color: var(--neutral-white);
+  background: linear-gradient(90deg, var(--brand-strong), var(--brand) 78%, var(--brand) 100%);
+  padding: 3.5mm 6mm;
+  margin: 0 0 6mm;
+  border-radius: 1.5mm;
+}
+body[dir="rtl"] h1.part {
+  background: linear-gradient(270deg, var(--brand-strong), var(--brand) 78%, var(--brand) 100%);
+}
+
+/* Each part starts its own page, which is how a statute is read and how it is
+   argued from — "the fourth part" should be somewhere a thumb can find. Only
+   in documents that have a cover: a letterhead note's first heading is its
+   opening line, and a page break before it would print a blank sheet. */
+.cover ~ h1.part { page-break-before: always; }
+.cover + h1.part, .toc + h1.part { page-break-before: avoid; }
+
+/* A part that is not one of the numbered parts of the instrument — an annex,
+   a schedule — carries copper instead of mint and a small label above the
+   band saying what it is. That is what a reader needs to know before the first
+   line of it, and it keeps the title itself free of the dash and the second
+   clause it used to need to say the same thing. */
+h1.part.annex {
+  background: linear-gradient(90deg, var(--copper-700), var(--accent) 78%);
+  margin-top: 8mm;
+}
+body[dir="rtl"] h1.part.annex {
+  background: linear-gradient(270deg, var(--copper-700), var(--accent) 78%);
+}
+/* The label rides on the title's own line, at the far end of the band — the
+   left of a right-to-left page. `order` and the auto margin rather than `left`,
+   because generated content comes first in the flow and a French document has
+   to mirror the whole arrangement rather than strand the label on its title. */
+h1.part[data-label] {
+  display: flex;
+  align-items: center;
+  gap: 4mm;
+}
+h1.part[data-label]::before {
+  content: attr(data-label);
+  order: 1;
+  flex: none;
+  margin-inline-start: auto;
+  padding: 0.7mm 3.4mm;
+  border-radius: 99mm;
+  background: var(--accent-soft);
+  color: var(--copper-700);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+}
+
+/* An article heading names the rule. Mint, because copper is now the
+   ornament's colour and a page of 20 copper headings on cream turns to rust. */
+h2:not([class]) { color: var(--brand-strong); font-size: var(--text-md); margin: 0 0 2.5mm; }
 
 p { margin: 0 0 3.5mm; text-align: justify; hyphens: auto; }
 body[dir="rtl"] p { text-align: justify; }
@@ -143,18 +287,49 @@ ul, ol { margin: 0 0 4mm; padding-inline-start: 8mm; }
 li { margin-bottom: 1.8mm; padding-inline-start: 1mm; }
 li > ul, li > ol { margin: 1.8mm 0 0; }
 li::marker { color: var(--accent); }
+/* Inside an article the list is the rule's own clauses, so its markers take
+   the mint of the heading above them rather than the ornament's copper. */
+.article li::marker { color: var(--brand); }
 
 strong { font-weight: 600; color: var(--text); }
 a { color: var(--brand); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
 
+/* A quoted passage in these papers is nearly always a clause being cited from
+   the statute, so it is given a panel of its own rather than a margin bar.
+   White and copper-led, because inside an article it sits on the mint card and
+   a second mint panel there would simply disappear. */
 blockquote {
   margin: 4mm 0;
-  padding-inline-start: 5mm;
-  border-inline-start: 2px solid var(--accent-soft);
+  padding: 3.5mm 5mm;
+  background: var(--neutral-white);
+  border: 1px solid var(--rule);
+  border-inline-start: 1mm solid var(--accent-soft);
+  border-radius: 1.5mm;
   color: var(--text-muted);
 }
+blockquote > :last-child { margin-bottom: 0; }
 
-hr { border: 0; height: 1px; background: var(--rule); margin: 7mm 0; }
+/* A divider inside the text is a pause, not a border: the same copper diamond
+   as the cover, on the same fading hairline. */
+hr {
+  position: relative;
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-soft) 30%, var(--accent-soft) 70%, transparent);
+  margin: 8mm 0;
+  overflow: visible;
+}
+hr::after {
+  content: "";
+  position: absolute;
+  top: -1.1mm;
+  left: 50%;
+  margin-left: -1.1mm;
+  width: 2.2mm;
+  height: 2.2mm;
+  transform: rotate(45deg);
+  background: var(--accent-soft);
+}
 
 /* A règlement's tables are the points system and the sanctions schedule: two
    columns, a long second one. They read as a schedule rather than data, so the
@@ -167,21 +342,129 @@ table {
   page-break-inside: avoid;
 }
 th, td { padding: 2.2mm 3mm; border-bottom: 1px solid var(--rule); text-align: start; vertical-align: top; }
-th { color: var(--accent); font-weight: 600; border-bottom: 1px solid var(--accent-soft); }
+th {
+  color: var(--brand-strong);
+  font-weight: 600;
+  background: var(--brand-soft);
+  border-bottom: 1px solid var(--brand);
+}
 tbody tr:last-child td { border-bottom: 0; }
+.article table { background: var(--neutral-white); border-radius: 1.5mm; overflow: hidden; }
+.article td { border-bottom: 1px solid var(--rule); }
 /* The first column is the case being ruled on; the second is the ruling. */
 td:first-child { color: var(--text); width: 34%; }
+
+/* The blank verso of a title page. Height, because a box with none is not
+   laid out and the break then falls on the cover itself and makes no page. */
+.page-blank { height: 1mm; page-break-after: always; }
+
+/* ── Contents ────────────────────────────────────────────────────────────
+   Built by the build, from the author's own headings, with the page numbers
+   read back off the first render. Every row is a link, so the contents page
+   works on a screen as well as on paper.
+
+   Two columns for the articles of each part and one for the parts themselves.
+   A statute of two hundred articles indexed one to a line is five pages of
+   index; in two columns it is under three, and nobody reads an index in prose
+   order anyway. */
+.toc {
+  page-break-after: always;
+  page-break-before: always;
+}
+.toc__title {
+  font-size: var(--text-xl);
+  color: var(--brand-strong);
+  padding-bottom: 3mm;
+  margin-bottom: 7mm;
+  border-bottom: 1px solid var(--brand-soft);
+}
+.toc__group { margin-bottom: 5mm; page-break-inside: auto; }
+
+.toc a { text-decoration: none; border-bottom: 0; display: flex; align-items: baseline; gap: 2mm; }
+
+/* The part, as the band it opens on, at index scale. */
+.toc__part {
+  color: var(--neutral-white);
+  background: linear-gradient(90deg, var(--brand-strong), var(--brand) 78%);
+  padding: 2mm 4mm;
+  border-radius: 1mm;
+  margin-bottom: 2.5mm;
+  font-size: var(--text-base);
+  page-break-after: avoid;
+}
+body[dir="rtl"] .toc__part {
+  background: linear-gradient(270deg, var(--brand-strong), var(--brand) 78%);
+}
+.toc__part .toc__dots { border-bottom-color: transparent; }
+.toc__part .toc__page { color: var(--brand-soft); }
+
+.toc__rows { columns: 2; column-gap: 9mm; }
+.toc__row {
+  color: var(--text);
+  font-size: var(--text-sm);
+  padding: 0.5mm 0 0.5mm 1mm;
+  break-inside: avoid;
+}
+
+/* The leader: a growing span with a dotted underline. A row of full stops
+   would be typed characters the renderer is free to break; a border cannot
+   wrap, and it stays put when the number beside it changes width. */
+.toc__label { flex: 0 1 auto; }
+.toc__dots {
+  flex: 1 1 auto;
+  min-width: 4mm;
+  align-self: center;
+  border-bottom: 1px dotted var(--text-faint);
+  transform: translateY(-0.6mm);
+}
+/* Fixed width, so the second pass can fill in one, two or three digits without
+   moving a single line of the page it is describing. */
+.toc__page {
+  flex: 0 0 8mm;
+  text-align: end;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
 
 /* ── Articles ────────────────────────────────────────────────────────────
    `## المادة (1): ...` and `## Article 1 — ...` get the rule and spacing the
    association's existing décisions use. Applied by the build, not by the
    author — the author just writes a heading. */
-.article { page-break-inside: avoid; }
-.article + .article { border-top: 1px solid var(--rule); padding-top: 5mm; margin-top: 5mm; }
+/* Each article is a card in the palest mint, led by a mint bar. A rule
+   between articles works while there are eight of them; past a hundred the
+   reader needs every article to be a thing with edges, and the card is what
+   stops one article's clauses running on visually into the next article's
+   heading. The tint is two steps above white on purpose — it has to survive a
+   village photocopier without turning the page grey. */
+.article {
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-soft);
+  border-inline-start: 1.2mm solid var(--brand);
+  border-radius: 1.5mm;
+  padding: 3.4mm 5mm 2.6mm;
+  margin: 0 0 2.6mm;
+  /* An article may break across a page. `avoid` reads better on a règlement of
+     twenty articles and is ruinous on a statute of two hundred: every card that
+     will not fit pushes a third of a page of white ahead of it, and the paper
+     grows by half again. What has to hold together is the heading and the
+     clause under it, which is what the orphan and widow counts below do. */
+  page-break-inside: auto;
+  orphans: 2;
+  widows: 2;
+}
+.article > h2 { page-break-after: avoid; }
+.article > :last-child { margin-bottom: 0; }
 
 /* ── Signature block ─────────────────────────────────────────────────────── */
-.signatures { display: flex; gap: 14mm; margin-top: 14mm; page-break-inside: avoid; }
-.signature { flex: 1; }
+.signatures { display: flex; gap: 8mm; margin-top: 14mm; page-break-inside: avoid; }
+.signature {
+  flex: 1;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-top: 1mm solid var(--accent-soft);
+  border-radius: 1.5mm;
+  padding: 4mm 5mm;
+}
 .signature__role { font-size: var(--text-sm); color: var(--text-muted); margin-bottom: 16mm; }
 .signature__line {
   border-top: 1px solid var(--text-muted);
