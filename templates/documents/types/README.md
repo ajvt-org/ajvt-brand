@@ -18,3 +18,25 @@ every document ever written.
 | `termes-de-reference.md` | letterhead | Termes de référence for a project or partner |
 | `proces-verbal.md` | letterhead | محضر — minutes of a meeting |
 | `lettre.md` | letterhead | Official correspondence |
+
+## Two keys worth knowing, for anything long
+
+    numbering: true      # the build numbers the parts and the articles
+    toc: true            # a contents page, with page numbers, after the cover
+
+**`numbering`** means you write the title of a part or an article and nothing
+else — `# الجمعية العامة`, `## تعريف الجمعية العامة` — and the build writes
+`الباب الثاني:` and `المادة (12):` in front of them. Insert an article in the
+middle of two hundred and the rest renumber themselves. Leave it off for a
+document that already carries its numbers in its text, or it will be numbered
+twice.
+
+A part marked `{.annex}` is still a numbered part, but its subheadings are not
+articles: they take `أولا`, `ثانيا` and then `1.`, `2.` restarting under each.
+`{.unnumbered}` opts a single heading out, and `{data-label="ملحق"}` prints a
+small label in the corner of the part's band.
+
+**`toc`** builds the contents from those same headings. The page numbers are
+read back off the rendered PDF, which needs `pdftotext`; without it the contents
+page is still built, and still links, but carries no numbers. The build says so
+when that happens.
